@@ -1,0 +1,18 @@
+:root {
+  --mp-result-border-radius: 10px;
+}
+#waqf-header {
+  background: url(../images/header-bg.png) no-repeat;
+  background-position: 50%;
+  background-size: cover;
+}
+#certificate-section,
+#customization-by-orgnization,
+#customization-by-project {
+  display: none;
+}
+#certificate:checked ~ div,
+#orgnization:checked ~ div,
+#project-type:checked ~ div {
+  display: block !important;
+}
