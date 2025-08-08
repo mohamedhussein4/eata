@@ -15,8 +15,8 @@ class VolunteerController extends Controller
      */
     public function index()
     {
-        $volunteers = Volunteer::where('is_approved', true)
-            ->orderBy('created_at', 'desc')
+        $volunteers = Volunteer::
+            orderBy('created_at', 'desc')
             ->paginate(12);
 
         return view('frontend.volunteers.index', compact('volunteers'));
@@ -84,4 +84,4 @@ class VolunteerController extends Controller
 
         return redirect()->back()->with('success', 'تم تسجيل طلبك بنجاح وجاري مراجعته');
     }
-} 
+}

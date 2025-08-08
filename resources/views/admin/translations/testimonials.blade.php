@@ -42,7 +42,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">إجمالي الآراء</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $testimonials->total() ?? 0 }}</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $totalCount ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
                     <i class="fas fa-star text-white"></i>
@@ -55,7 +55,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">المترجمة</p>
-                    <p class="text-2xl font-bold text-green-600">{{ $testimonials->where('is_translated', true)->count() ?? 0 }}</p>
+                    <p class="text-2xl font-bold text-green-600">{{ $translatedCount ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
                     <i class="fas fa-check-circle text-white"></i>
@@ -68,7 +68,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">في انتظار الترجمة</p>
-                    <p class="text-2xl font-bold text-orange-600">{{ $testimonials->where('is_translated', false)->count() ?? 0 }}</p>
+                    <p class="text-2xl font-bold text-orange-600">{{ $pendingCount ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center">
                     <i class="fas fa-clock text-white"></i>
@@ -82,6 +82,9 @@
                 <div>
                     <p class="text-sm font-medium text-gray-500">نسبة الترجمة</p>
                     <p class="text-2xl font-bold text-purple-600">{{ $translationProgress ?? 0 }}%</p>
+                    <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                        <div class="bg-purple-600 h-1.5 rounded-full" style="width: {{ $translationProgress ?? 0 }}%"></div>
+                    </div>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
                     <i class="fas fa-chart-pie text-white"></i>
@@ -96,8 +99,8 @@
             {{-- Search --}}
             <div>
                 <label for="search" class="block text-sm font-medium text-gray-700 mb-2">البحث</label>
-                <input type="text" id="search" name="search" value="{{ request('search') }}" 
-                       placeholder="ابحث في الآراء..." 
+                <input type="text" id="search" name="search" value="{{ request('search') }}"
+                       placeholder="ابحث في الآراء..."
                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300">
             </div>
 
@@ -167,11 +170,11 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm font-medium text-gray-900">{{ $testimonial->name }}</div>
-                                <div class="text-sm text-gray-500">{{ $testimonial->name_en ?? '' }}</div>
+                                <div class="text-sm text-gray-500">{{ $testimonial->translation('en')?->name }}</div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-900">{{ Str::limit($testimonial->content, 80) }}</div>
-                                <div class="text-sm text-gray-500">{{ Str::limit($testimonial->content_en ?? '', 80) }}</div>
+                                <div class="text-sm text-gray-500">{{ Str::limit($testimonial->translation('en')?->content, 80) }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
@@ -186,7 +189,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if($testimonial->is_translated ?? false)
+                                @if($testimonial->translations_count > 0)
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <i class="fas fa-check-circle {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>
                                         مترجم
@@ -200,12 +203,12 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href="{{ route('admin.translations.testimonials.edit', $testimonial->id) }}" 
+                                    <a href="{{ route('admin.translations.testimonials.edit', $testimonial->id) }}"
                                        class="inline-flex items-center justify-center w-8 h-8 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 rounded-lg transition-all duration-200"
                                        title="تعديل الترجمة">
                                         <i class="fas fa-edit text-sm"></i>
                                     </a>
-                                    <a href="{{ route('admin.testimonials.show', $testimonial->id) }}" 
+                                    <a href="{{ route('admin.testimonials.show', $testimonial->id) }}"
                                        class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-all duration-200"
                                        title="عرض الرأي">
                                         <i class="fas fa-eye text-sm"></i>

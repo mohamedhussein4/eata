@@ -49,6 +49,38 @@ class User extends Authenticatable
     ];
 
     /**
+     * العلاقة مع التبرعات
+     */
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
+
+    /**
+     * العلاقة مع الإشعارات
+     */
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    /**
+     * العلاقة مع الرسائل
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    /**
+     * العلاقة مع التذاكر
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
      * العلاقة مع الدور
      */
     public function role()

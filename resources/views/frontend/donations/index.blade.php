@@ -7,7 +7,7 @@
     <!--==============================
         Hero Section - تصميم جديد عصري
         ==============================-->
-    <section class="relative py-[25vh] bg-gradient-to-br from-charity-500 via-charity-600 to-charity-700 overflow-hidden">
+    <section class="relative py-20 bg-gradient-to-br from-charity-500 via-charity-600 to-charity-700 overflow-hidden">
         <!-- خلفية متحركة -->
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-10 {{ app()->getLocale() === 'ar' ? 'right-10' : 'left-10' }} w-72 h-72 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
@@ -78,11 +78,11 @@
                                 {{ app()->getLocale() === 'ar' ? 'مبلغ التبرع' : 'Donation Amount' }}
                             </label>
                             <div class="relative mb-6">
-                                <input type="text" 
-                                       value="100" 
-                                       id="amount" 
-                                       name="total_price" 
-                                       required 
+                                <input type="text"
+                                       value="100"
+                                       id="amount"
+                                       name="total_price"
+                                       required
                                        class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-charity-500 focus:border-transparent text-lg font-semibold">
                                 <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">$</span>
                             </div>
@@ -154,15 +154,15 @@
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">
                                 {{ app()->getLocale() === 'ar' ? 'معلومات المتبرع' : 'Donor Information' }}
                             </h3>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">
                                         {{ app()->getLocale() === 'ar' ? 'الاسم الأول' : 'First Name' }}
                                     </label>
-                                    <input type="text" 
-                                           name="first_name" 
-                                           id="first_name" 
+                                    <input type="text"
+                                           name="first_name"
+                                           id="first_name"
                                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-charity-500 focus:border-transparent transition-all duration-300"
                                            placeholder="{{ app()->getLocale() === 'ar' ? 'اسمك' : 'Your name' }}">
                                 </div>
@@ -171,9 +171,9 @@
                                     <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">
                                         {{ app()->getLocale() === 'ar' ? 'الاسم الأخير' : 'Last Name' }}
                                     </label>
-                                    <input type="text" 
-                                           name="last_name" 
-                                           id="last_name" 
+                                    <input type="text"
+                                           name="last_name"
+                                           id="last_name"
                                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-charity-500 focus:border-transparent transition-all duration-300"
                                            placeholder="{{ app()->getLocale() === 'ar' ? 'اسم العائلة' : 'Family name' }}">
                                 </div>
@@ -182,9 +182,9 @@
                                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
                                         {{ app()->getLocale() === 'ar' ? 'البريد الإلكتروني' : 'Email' }}
                                     </label>
-                                    <input type="email" 
-                                           name="email" 
-                                           id="email" 
+                                    <input type="email"
+                                           name="email"
+                                           id="email"
                                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-charity-500 focus:border-transparent transition-all duration-300"
                                            placeholder="{{ app()->getLocale() === 'ar' ? 'بريدك الإلكتروني' : 'Your email' }}">
                                 </div>
@@ -193,9 +193,9 @@
                                     <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
                                         {{ app()->getLocale() === 'ar' ? 'رقم الهاتف' : 'Phone Number' }}
                                     </label>
-                                    <input type="text" 
-                                           name="phone" 
-                                           id="phone" 
+                                    <input type="text"
+                                           name="phone"
+                                           id="phone"
                                            class="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-charity-500 focus:border-transparent transition-all duration-300"
                                            placeholder="{{ app()->getLocale() === 'ar' ? 'رقم هاتفك' : 'Your phone number' }}">
                                 </div>
@@ -204,7 +204,7 @@
 
                         <!-- زر التبرع -->
                         <div class="text-center pt-6">
-                            <button type="submit" 
+                            <button type="submit"
                                     class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-charity-500 to-charity-600 hover:from-charity-600 hover:to-charity-700 rounded-full transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
                                 <i class="fas fa-heart {{ app()->getLocale() === 'ar' ? 'ml-3' : 'mr-3' }}"></i>
                                 {{ app()->getLocale() === 'ar' ? 'تبرع الآن' : 'Donate Now' }}
@@ -255,11 +255,11 @@
                 btn.classList.remove('active', 'bg-charity-600', 'text-white');
                 btn.classList.add('bg-gray-100', 'text-gray-700');
             });
-            
+
             // إضافة الفئة النشطة للزر المحدد
             this.classList.remove('bg-gray-100', 'text-gray-700');
             this.classList.add('active', 'bg-charity-600', 'text-white');
-            
+
             // تحديث قيمة المبلغ
             const amount = this.getAttribute('data-amount');
             if (amount !== 'custom') {
@@ -271,11 +271,11 @@
     // إظهار خيارات الدفع
     function showPaymentOptions() {
         const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
-        
+
         // إخفاء جميع الخيارات
         document.getElementById('bank_options').classList.add('hidden');
         document.getElementById('wallet_options').classList.add('hidden');
-        
+
         // إظهار الخيار المناسب
         if (paymentMethod === 'bank_account') {
             document.getElementById('bank_options').classList.remove('hidden');
@@ -288,11 +288,11 @@
     function showBankDetails() {
         const select = document.getElementById('bank_account_select');
         const detailsDiv = document.getElementById('bank_details');
-        
+
         if (select.value) {
             detailsDiv.innerHTML = '<div class="flex justify-center"><i class="fas fa-spinner fa-spin text-charity-600"></i></div>';
             detailsDiv.classList.remove('hidden');
-            
+
             fetch(`/bank-accounts/${select.value}/details`)
                 .then(response => response.json())
                 .then(data => {
@@ -337,11 +337,11 @@
     function showWalletDetails() {
         const select = document.getElementById('wallet_account_select');
         const detailsDiv = document.getElementById('wallet_details');
-        
+
         if (select.value) {
             detailsDiv.innerHTML = '<div class="flex justify-center"><i class="fas fa-spinner fa-spin text-charity-600"></i></div>';
             detailsDiv.classList.remove('hidden');
-            
+
             fetch(`/e-wallets/${select.value}/details`)
                 .then(response => response.json())
                 .then(data => {
@@ -361,7 +361,7 @@
                             </div>
                             ${data.wallet_link ? `
                                 <div class="mt-4">
-                                    <a href="${data.wallet_link}" target="_blank" 
+                                    <a href="${data.wallet_link}" target="_blank"
                                        class="inline-flex items-center justify-center w-full px-4 py-2 bg-charity-100 text-charity-600 rounded-xl hover:bg-charity-200 transition-all duration-300">
                                         <i class="fas fa-external-link-alt ${isRTL ? 'ml-2' : 'mr-2'}"></i>
                                         ${translations[currentLocale].openWalletLink}
@@ -391,7 +391,7 @@
             input.addEventListener('focus', function() {
                 this.parentElement.classList.add('ring-2', 'ring-charity-500');
             });
-            
+
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('ring-2', 'ring-charity-500');
             });

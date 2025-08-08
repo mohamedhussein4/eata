@@ -13,7 +13,7 @@
 @endphp
 
 <!-- Navbar أنيقة وفاخرة -->
-<nav class="fixed w-full top-0 z-50 transition-all duration-500" id="navbar">
+<nav class="relative w-full top-0 z-50 transition-all duration-500" id="navbar">
     <!-- الشريط العلوي الأنيق -->
     <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white py-3 relative overflow-hidden">
         <!-- خلفية متحركة -->
@@ -547,20 +547,6 @@
         </div>
     </div>
 </div>
-
-<!-- تحديث عدد الإشعارات في زر الإشعارات -->
-@auth
-    <!-- الإشعارات الأنيقة -->
-    <button id="notifications-btn"
-        class="relative p-3 text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-300">
-        <i class="fas fa-bell text-lg"></i>
-        @if($unreadCount > 0)
-            <span class="absolute -top-1 -{{ app()->getLocale() === 'ar' ? 'left' : 'right' }}-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                {{ $unreadCount }}
-            </span>
-        @endif
-    </button>
-@endauth
 
 <!-- الخلفية الشفافة الأنيقة -->
 <div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden transition-all duration-300"></div>

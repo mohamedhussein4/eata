@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-[25vh]">
+<div class="container mx-auto px-4 py-20">
     <!-- Breadcrumbs -->
     <nav class="flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} mb-8" data-aos="fade-right">
         <a href="{{ route('home') }}" class="text-gray-500 hover:text-charity-600 transition-colors">
@@ -50,12 +50,12 @@
                 {{ app()->getLocale() === 'ar' ? 'انضم إلينا في رحلة العطاء وساعدنا في تحقيق أهدافنا الإنسانية' : 'Join us in our journey of giving and help us achieve our humanitarian goals' }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="{{ route('donations.index') }}" 
+                <a href="{{ route('donations.index') }}"
                    class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-charity-600 bg-white rounded-full hover:bg-gray-50 transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
                     <i class="fas fa-heart {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }} group-hover:animate-pulse"></i>
                     {{ app()->getLocale() === 'ar' ? 'تبرع الآن' : 'Donate Now' }}
                 </a>
-                <a href="{{ route('volunteers.index') }}" 
+                <a href="{{ route('volunteers.index') }}"
                    class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transform hover:scale-105 transition-all duration-300 border-2 border-white/30 hover:border-white/50">
                     <i class="fas fa-hands-helping {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }} group-hover:animate-pulse"></i>
                     {{ app()->getLocale() === 'ar' ? 'كن متطوعاً' : 'Become a Volunteer' }}
@@ -64,4 +64,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2025 at 06:08 AM
+-- Generation Time: Aug 08, 2025 at 07:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.3.13
 
@@ -412,7 +412,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (95, '2025_08_07_235404_add_read_at_to_admin_notifications_table', 13),
 (96, '2025_08_07_235415_add_status_columns_to_various_tables', 13),
 (97, '2024_04_05_000000_add_soft_deletes_to_projects_table', 14),
-(98, '2024_04_05_000001_add_soft_deletes_to_donations_table', 14);
+(98, '2024_04_05_000001_add_soft_deletes_to_donations_table', 14),
+(99, '2025_08_08_040000_add_content_to_project_translations_table', 15),
+(100, '2025_08_08_040001_add_missing_columns_to_page_translations_table', 16),
+(101, '2025_08_08_040002_add_missing_columns_to_testimonial_translations_table', 17),
+(102, '2025_08_08_040003_fix_testimonial_translations_table', 18);
 
 -- --------------------------------------------------------
 
@@ -525,6 +529,14 @@ CREATE TABLE `page_translations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `page_translations`
+--
+
+INSERT INTO `page_translations` (`id`, `page_id`, `locale`, `title`, `content`, `meta_title`, `meta_description`, `created_at`, `updated_at`) VALUES
+(1, 1, 'en', '22', '22', NULL, NULL, '2025-08-08 13:48:06', '2025-08-08 13:48:06'),
+(2, 2, 'en', 'ww', 'ww', NULL, NULL, '2025-08-08 14:34:38', '2025-08-08 14:34:38');
 
 -- --------------------------------------------------------
 
@@ -658,6 +670,7 @@ CREATE TABLE `project_translations` (
   `locale` varchar(2) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `content` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -666,8 +679,9 @@ CREATE TABLE `project_translations` (
 -- Dumping data for table `project_translations`
 --
 
-INSERT INTO `project_translations` (`id`, `project_id`, `locale`, `title`, `description`, `created_at`, `updated_at`) VALUES
-(2, 1, 'en', 'test', 'test 2', '2025-08-08 01:00:10', '2025-08-08 01:00:10');
+INSERT INTO `project_translations` (`id`, `project_id`, `locale`, `title`, `description`, `content`, `created_at`, `updated_at`) VALUES
+(2, 1, 'en', 'test', 'test 2', NULL, '2025-08-08 01:00:10', '2025-08-08 01:00:10'),
+(3, 12, 'en', '22', '22', NULL, '2025-08-08 13:47:23', '2025-08-08 13:47:23');
 
 -- --------------------------------------------------------
 
@@ -856,11 +870,18 @@ CREATE TABLE `testimonial_translations` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `testimonial_id` bigint(20) UNSIGNED NOT NULL,
   `locale` varchar(2) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `testimonial_translations`
+--
+
+INSERT INTO `testimonial_translations` (`id`, `testimonial_id`, `locale`, `name`, `content`, `created_at`, `updated_at`) VALUES
+(1, 15, 'en', 'احمد محمد', 'سس', '2025-08-08 14:39:57', '2025-08-08 14:39:57');
 
 -- --------------------------------------------------------
 
@@ -1323,7 +1344,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -1347,7 +1368,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `page_translations`
 --
 ALTER TABLE `page_translations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -1371,7 +1392,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `project_translations`
 --
 ALTER TABLE `project_translations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1419,7 +1440,7 @@ ALTER TABLE `testimonials`
 -- AUTO_INCREMENT for table `testimonial_translations`
 --
 ALTER TABLE `testimonial_translations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tickets`

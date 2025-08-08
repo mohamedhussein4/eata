@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 text-white py-[25vh] overflow-hidden">
+<section class="relative bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 text-white py-20 overflow-hidden">
     <!-- خلفية متحركة -->
     <div class="absolute inset-0">
         <div class="absolute top-10 right-10 w-32 h-32 bg-white/10 rounded-full animate-bounce"></div>

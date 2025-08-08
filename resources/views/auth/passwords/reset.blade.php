@@ -1,65 +1,137 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<div class="min-h-screen bg-gradient-to-br from-charity-50 via-white to-charity-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-charity-200 to-charity-300 rounded-full opacity-20 animate-float"></div>
+        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-br from-warm-200 to-warm-300 rounded-full opacity-20 animate-float animation-delay-400"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-charity-100 to-warm-100 rounded-full opacity-30 animate-pulse-slow"></div>
+    </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    <div class="max-w-md w-full space-y-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center">
+            <div class="mx-auto h-16 w-16 bg-gradient-to-br from-charity-500 to-charity-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                <i class="fas fa-key text-white text-2xl"></i>
             </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                {{ app()->getLocale() === 'ar' ? 'إعادة تعيين كلمة المرور' : 'Reset Password' }}
+            </h2>
+            <p class="text-gray-600">
+                {{ app()->getLocale() === 'ar' ? 'أدخل كلمة المرور الجديدة' : 'Enter your new password' }}
+            </p>
+        </div>
+
+        <!-- Reset Form -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+            <form class="space-y-6" method="POST" action="{{ route('password.update') }}">
+                @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
+
+                <!-- Email Field -->
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700">
+                        {{ app()->getLocale() === 'ar' ? 'البريد الإلكتروني' : 'Email Address' }}
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-400"></i>
+                        </div>
+                        <input id="email" name="email" type="email" required
+                               class="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-charity-500 focus:border-charity-500 focus:z-10 sm:text-sm transition-all duration-300"
+                               placeholder="{{ app()->getLocale() === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email' }}"
+                               value="{{ $email ?? old('email') }}">
+                    </div>
+                    @error('email')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">
+                        {{ app()->getLocale() === 'ar' ? 'كلمة المرور الجديدة' : 'New Password' }}
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input id="password" name="password" type="password" required
+                               class="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-charity-500 focus:border-charity-500 focus:z-10 sm:text-sm transition-all duration-300"
+                               placeholder="{{ app()->getLocale() === 'ar' ? 'أدخل كلمة المرور الجديدة' : 'Enter new password' }}">
+                    </div>
+                    @error('password')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="space-y-2">
+                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
+                        {{ app()->getLocale() === 'ar' ? 'تأكيد كلمة المرور' : 'Confirm Password' }}
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input id="password_confirmation" name="password_confirmation" type="password" required
+                               class="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-charity-500 focus:border-charity-500 focus:z-10 sm:text-sm transition-all duration-300"
+                               placeholder="{{ app()->getLocale() === 'ar' ? 'أعد إدخال كلمة المرور' : 'Confirm new password' }}">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit"
+                            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-2xl text-white bg-gradient-to-r from-charity-500 to-charity-600 hover:from-charity-600 hover:to-charity-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-charity-500 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <i class="fas fa-save text-charity-200 group-hover:text-charity-100 transition-colors duration-300"></i>
+                        </span>
+                        {{ app()->getLocale() === 'ar' ? 'إعادة تعيين كلمة المرور' : 'Reset Password' }}
+                    </button>
+                </div>
+
+                <!-- Back to Login -->
+                <div class="text-center">
+                    <p class="text-sm text-gray-600">
+                        {{ app()->getLocale() === 'ar' ? 'تذكر كلمة المرور؟' : 'Remember your password?' }}
+                        <a href="{{ route('login') }}" class="font-medium text-charity-600 hover:text-charity-500 transition-colors duration-300">
+                            {{ app()->getLocale() === 'ar' ? 'سجل دخولك' : 'Sign in' }}
+                        </a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center">
+            <p class="text-xs text-gray-500">
+                {{ app()->getLocale() === 'ar' ? 'بإعادة تعيين كلمة المرور، أنت توافق على' : 'By resetting your password, you agree to our' }}
+                <a href="#" class="text-charity-600 hover:text-charity-500">{{ app()->getLocale() === 'ar' ? 'الشروط والأحكام' : 'Terms of Service' }}</a>
+                {{ app()->getLocale() === 'ar' ? 'و' : 'and' }}
+                <a href="#" class="text-charity-600 hover:text-charity-500">{{ app()->getLocale() === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy' }}</a>
+            </p>
         </div>
     </div>
 </div>
+
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animation-delay-400 {
+        animation-delay: 0.4s;
+    }
+
+    .animate-pulse-slow {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+</style>
 @endsection

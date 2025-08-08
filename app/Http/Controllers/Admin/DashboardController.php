@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $projects = Project::withCount(['donations'])
             ->withSum('donations', 'amount')
             ->get();
-        
+
         $projectStats = [
             'total' => $projects->count(),
             'active' => $projects->where('status', 'active')->count(),
@@ -36,10 +36,10 @@ class DashboardController extends Controller
             ->take(6)
             ->get()
             ->map(function ($project) {
-                $progress = $project->total_amount > 0 
-                    ? ($project->donations_sum_amount / $project->total_amount) * 100 
+                $progress = $project->total_amount > 0
+                    ? ($project->donations_sum_amount / $project->total_amount) * 100
                     : 0;
-                
+
                 return [
                     'title' => $project->title,
                     'description' => $project->description,
@@ -58,7 +58,7 @@ class DashboardController extends Controller
         // إحصائيات المستخدمين
         $userStats = [
             'total' => User::count(),
-            'donors' => User::whereHas('donations')->count(),
+            'donors' => Donation::distinct('user_id')->count('user_id'),
             'volunteers' => Volunteer::count(),
             'beneficiaries' => User::where('type', 'beneficiary')->count(),
         ];
@@ -115,7 +115,7 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             $notifications = collect();
         }
-        
+
         return view('admin.notifications.index', compact('notifications'));
     }
 
@@ -150,4 +150,4 @@ class DashboardController extends Controller
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
     }
-} 
+}

@@ -87,9 +87,10 @@ class Page extends Model
     /**
      * الحصول على الترجمة الحالية
      */
-    public function translation()
+    public function translation($locale = null)
     {
-        return $this->translations()->where('locale', app()->getLocale())->first();
+        $locale = $locale ?? app()->getLocale();
+        return $this->translations()->where('locale', $locale)->first();
     }
 
     /**

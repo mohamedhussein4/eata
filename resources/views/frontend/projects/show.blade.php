@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-[25vh]">
+<div class="container mx-auto px-4 py-20">
     <!-- Breadcrumbs -->
     <nav class="flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} mb-8" data-aos="fade-right">
         <a href="{{ route('home') }}" class="text-gray-500 hover:text-charity-600 transition-colors">
@@ -28,7 +28,7 @@
         <div class="p-8">
             <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ $project->translated_title }}</h1>
             <p class="text-gray-600 text-lg mb-6">{{ $project->translated_description }}</p>
-            
+
             <!-- Progress Bar -->
             <div class="mb-6">
                 <div class="flex justify-between text-sm text-gray-500 mb-2">
@@ -36,7 +36,7 @@
                     <span>{{ number_format(($project->total_amount - $project->remaining_amount) / $project->total_amount * 100, 1) }}%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-3">
-                    <div class="bg-gradient-to-r from-charity-500 to-charity-600 h-3 rounded-full transition-all duration-500" 
+                    <div class="bg-gradient-to-r from-charity-500 to-charity-600 h-3 rounded-full transition-all duration-500"
                          style="width: {{ ($project->total_amount - $project->remaining_amount) / $project->total_amount * 100 }}%">
                     </div>
                 </div>
@@ -72,7 +72,7 @@
 
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-4">
-                <a href="{{ route('donations.index') }}" 
+                <a href="{{ route('donations.index') }}"
                    class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-charity-500 to-charity-600 rounded-full hover:from-charity-600 hover:to-charity-700 transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl text-center">
                     <i class="fas fa-heart {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }} group-hover:animate-pulse"></i>
                     {{ app()->getLocale() === 'ar' ? 'تبرع الآن' : 'Donate Now' }}
@@ -113,11 +113,11 @@
                         <p class="text-gray-600 text-sm mb-3">{{ Str::limit($relatedProject->translated_description, 100) }}</p>
                         <div class="flex justify-between items-center">
                             <span class="text-sm text-gray-500">
-                                {{ number_format($relatedProject->total_amount - $relatedProject->remaining_amount) }} / 
-                                {{ number_format($relatedProject->total_amount) }} 
+                                {{ number_format($relatedProject->total_amount - $relatedProject->remaining_amount) }} /
+                                {{ number_format($relatedProject->total_amount) }}
                                 {{ app()->getLocale() === 'ar' ? 'ل.س' : 'SYP' }}
                             </span>
-                            <a href="{{ route('projects.show', $relatedProject->id) }}" 
+                            <a href="{{ route('projects.show', $relatedProject->id) }}"
                                class="text-charity-600 hover:text-charity-700 text-sm font-semibold group-hover:translate-x-1 transition-all duration-300">
                                 {{ app()->getLocale() === 'ar' ? 'عرض التفاصيل' : 'View Details' }}
                                 <i class="fas fa-arrow-{{ app()->getLocale() === 'ar' ? 'left' : 'right' }} ml-1"></i>
@@ -141,8 +141,8 @@
                     <div class="flex justify-between">
                         <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'الحالة' : 'Status' }}:</span>
                         <span class="font-semibold text-charity-600">
-                            {{ $project->status === 'active' ? 
-                                (app()->getLocale() === 'ar' ? 'نشط' : 'Active') : 
+                            {{ $project->status === 'active' ?
+                                (app()->getLocale() === 'ar' ? 'نشط' : 'Active') :
                                 (app()->getLocale() === 'ar' ? 'مكتمل' : 'Completed') }}
                         </span>
                     </div>
@@ -163,7 +163,7 @@
                 <p class="text-white/90 mb-4">
                     {{ app()->getLocale() === 'ar' ? 'ساعدنا في تحقيق هذا المشروع بتبرعك' : 'Help us achieve this project with your donation' }}
                 </p>
-                <a href="{{ route('donations.index') }}" 
+                <a href="{{ route('donations.index') }}"
                    class="block w-full bg-white text-charity-600 text-center py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors transform hover:scale-105">
                     {{ app()->getLocale() === 'ar' ? 'تبرع الآن' : 'Donate Now' }}
                 </a>

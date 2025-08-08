@@ -14,13 +14,72 @@ class TranslationController extends Controller
 {
     public function index()
     {
-        return view('admin.translations.index');
+        // إحصائيات المشاريع
+        $projectsCount = Project::count();
+        $projectsTranslatedCount = Project::whereHas('translations')->count();
+
+        // إحصائيات الصفحات
+        $pagesCount = Page::count();
+        $pagesTranslatedCount = Page::whereHas('translations')->count();
+
+        // إحصائيات الآراء
+        $testimonialsCount = Testimonial::count();
+        $testimonialsTranslatedCount = Testimonial::whereHas('translations')->count();
+
+        // إحصائيات القصص
+        $storiesCount = BeneficiaryStory::count();
+        $storiesTranslatedCount = BeneficiaryStory::whereHas('translations')->count();
+
+        // إجمالي المحتوى العربي والإنجليزي
+        $arabicContent = $projectsCount + $pagesCount + $testimonialsCount + $storiesCount;
+        $englishContent = $projectsTranslatedCount + $pagesTranslatedCount + $testimonialsTranslatedCount + $storiesTranslatedCount;
+
+        // حساب نسبة الترجمة الإجمالية
+        $translationProgress = $arabicContent > 0 ? round(($englishContent / $arabicContent) * 100) : 0;
+
+        return view('admin.translations.index', compact(
+            'projectsCount',
+            'pagesCount',
+            'testimonialsCount',
+            'storiesCount',
+            'arabicContent',
+            'englishContent',
+            'translationProgress'
+        ));
     }
 
-    public function projects()
+        public function projects()
     {
-        $projects = Project::withCount('translations')->latest()->paginate(10);
-        return view('admin.translations.projects', compact('projects'));
+        $totalCount = Project::count();
+        $translatedCount = Project::whereHas('translations')->count();
+        $pendingCount = $totalCount - $translatedCount;
+        $translationProgress = $totalCount > 0 ? round(($translatedCount / $totalCount) * 100) : 0;
+
+        $projects = Project::withCount('translations')
+            ->when(request('search'), function($query) {
+                $query->where(function($q) {
+                    $q->where('title', 'like', '%' . request('search') . '%')
+                      ->orWhere('description', 'like', '%' . request('search') . '%');
+                });
+            })
+            ->when(request('translation_status'), function($query) {
+                if (request('translation_status') === 'translated') {
+                    $query->whereHas('translations');
+                } elseif (request('translation_status') === 'pending') {
+                    $query->doesntHave('translations');
+                }
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.translations.projects', compact(
+            'projects',
+            'totalCount',
+            'translatedCount',
+            'pendingCount',
+            'translationProgress'
+        ));
     }
 
     public function editProject(Project $project)
@@ -61,8 +120,36 @@ class TranslationController extends Controller
 
     public function pages()
     {
-        $pages = Page::withCount('translations')->latest()->paginate(10);
-        return view('admin.translations.pages', compact('pages'));
+        $totalCount = Page::count();
+        $translatedCount = Page::whereHas('translations')->count();
+        $pendingCount = $totalCount - $translatedCount;
+        $translationProgress = $totalCount > 0 ? round(($translatedCount / $totalCount) * 100) : 0;
+
+        $pages = Page::withCount('translations')
+            ->when(request('search'), function($query) {
+                $query->where(function($q) {
+                    $q->where('title', 'like', '%' . request('search') . '%')
+                      ->orWhere('content', 'like', '%' . request('search') . '%');
+                });
+            })
+            ->when(request('translation_status'), function($query) {
+                if (request('translation_status') === 'translated') {
+                    $query->whereHas('translations');
+                } elseif (request('translation_status') === 'pending') {
+                    $query->doesntHave('translations');
+                }
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.translations.pages', compact(
+            'pages',
+            'totalCount',
+            'translatedCount',
+            'pendingCount',
+            'translationProgress'
+        ));
     }
 
     public function editPage(Page $page)
@@ -101,8 +188,36 @@ class TranslationController extends Controller
 
     public function testimonials()
     {
-        $testimonials = Testimonial::withCount('translations')->latest()->paginate(10);
-        return view('admin.translations.testimonials', compact('testimonials'));
+        $totalCount = Testimonial::count();
+        $translatedCount = Testimonial::whereHas('translations')->count();
+        $pendingCount = $totalCount - $translatedCount;
+        $translationProgress = $totalCount > 0 ? round(($translatedCount / $totalCount) * 100) : 0;
+
+        $testimonials = Testimonial::withCount('translations')
+            ->when(request('search'), function($query) {
+                $query->where(function($q) {
+                    $q->where('name', 'like', '%' . request('search') . '%')
+                      ->orWhere('content', 'like', '%' . request('search') . '%');
+                });
+            })
+            ->when(request('translation_status'), function($query) {
+                if (request('translation_status') === 'translated') {
+                    $query->whereHas('translations');
+                } elseif (request('translation_status') === 'pending') {
+                    $query->doesntHave('translations');
+                }
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.translations.testimonials', compact(
+            'testimonials',
+            'totalCount',
+            'translatedCount',
+            'pendingCount',
+            'translationProgress'
+        ));
     }
 
     public function editTestimonial(Testimonial $testimonial)
@@ -112,6 +227,11 @@ class TranslationController extends Controller
 
     public function updateTestimonial(Request $request, Testimonial $testimonial)
     {
+        \Log::info('Testimonial Translation Update Request:', [
+            'testimonial_id' => $testimonial->id,
+            'request_data' => $request->all()
+        ]);
+
         $request->validate([
             'translations' => 'required|array',
             'translations.*.locale' => 'required|string|size:2',
@@ -131,6 +251,10 @@ class TranslationController extends Controller
                 );
             }
             DB::commit();
+            \Log::info('Testimonial Translation Updated Successfully:', [
+                'testimonial_id' => $testimonial->id,
+                'translations' => $testimonial->translations()->get()->toArray()
+            ]);
             return redirect()->route('admin.translations.testimonials')
                 ->with('success', 'تم تحديث الترجمة بنجاح');
         } catch (\Exception $e) {
@@ -141,8 +265,36 @@ class TranslationController extends Controller
 
     public function stories()
     {
-        $stories = BeneficiaryStory::withCount('translations')->latest()->paginate(10);
-        return view('admin.translations.stories', compact('stories'));
+        $totalCount = BeneficiaryStory::count();
+        $translatedCount = BeneficiaryStory::whereHas('translations')->count();
+        $pendingCount = $totalCount - $translatedCount;
+        $translationProgress = $totalCount > 0 ? round(($translatedCount / $totalCount) * 100) : 0;
+
+        $stories = BeneficiaryStory::withCount('translations')
+            ->when(request('search'), function($query) {
+                $query->where(function($q) {
+                    $q->where('title', 'like', '%' . request('search') . '%')
+                      ->orWhere('content', 'like', '%' . request('search') . '%');
+                });
+            })
+            ->when(request('translation_status'), function($query) {
+                if (request('translation_status') === 'translated') {
+                    $query->whereHas('translations');
+                } elseif (request('translation_status') === 'pending') {
+                    $query->doesntHave('translations');
+                }
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.translations.stories', compact(
+            'stories',
+            'totalCount',
+            'translatedCount',
+            'pendingCount',
+            'translationProgress'
+        ));
     }
 
     public function editStory(BeneficiaryStory $story)
@@ -178,4 +330,4 @@ class TranslationController extends Controller
             return back()->with('error', 'حدث خطأ أثناء حفظ الترجمة');
         }
     }
-} 
+}

@@ -85,7 +85,7 @@
     {{-- Translation Statistics --}}
     <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
         <h2 class="text-xl font-bold text-gray-900 mb-6">إحصائيات الترجمة</h2>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {{-- Arabic Content --}}
             <div class="text-center">
@@ -112,6 +112,9 @@
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900">{{ $translationProgress ?? 0 }}%</h3>
                 <p class="text-gray-600">نسبة الترجمة</p>
+                <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                    <div class="bg-purple-600 h-1.5 rounded-full" style="width: {{ $translationProgress ?? 0 }}%"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -119,23 +122,23 @@
     {{-- Quick Actions --}}
     <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
         <h2 class="text-xl font-bold text-gray-900 mb-6">إجراءات سريعة</h2>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <button onclick="syncTranslations()" class="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-2xl transition-all duration-300">
                 <i class="fas fa-sync {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                 مزامنة الترجمات
             </button>
-            
+
             <a href="{{ route('admin.translations.export') }}" class="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-2xl transition-all duration-300">
                 <i class="fas fa-download {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                 تصدير الترجمات
             </a>
-            
+
             <button onclick="document.getElementById('importFile').click()" class="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-orange-700 bg-orange-100 hover:bg-orange-200 rounded-2xl transition-all duration-300">
                 <i class="fas fa-upload {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                 استيراد ترجمات
             </button>
-            
+
             <a href="{{ route('admin.translations.statistics') }}" class="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-purple-700 bg-purple-100 hover:bg-purple-200 rounded-2xl transition-all duration-300">
                 <i class="fas fa-chart-bar {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                 إحصائيات مفصلة

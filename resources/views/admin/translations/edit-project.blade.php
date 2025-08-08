@@ -44,7 +44,7 @@
         <form action="{{ route('admin.translations.projects.update', $project->id) }}" method="POST">
             @csrf
             @method('PUT')
-            
+
             <div class="p-6 lg:p-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {{-- Arabic Content --}}
@@ -62,7 +62,8 @@
                                 العنوان العربي
                             </label>
                             <input type="text" value="{{ $project->title }}" disabled
-                                   class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-600">
+                                   class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-600"
+                                   dir="rtl">
                         </div>
 
                         {{-- Arabic Description --}}
@@ -71,7 +72,8 @@
                                 الوصف العربي
                             </label>
                             <textarea rows="4" disabled
-                                      class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-600 resize-none">{{ $project->description }}</textarea>
+                                      class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl bg-gray-50 text-gray-600 resize-none"
+                                      dir="rtl">{{ $project->description }}</textarea>
                         </div>
 
                         {{-- Project Details --}}
@@ -118,12 +120,13 @@
                             <label for="translations.en.title" class="block text-sm font-medium text-gray-700 mb-2">
                                 العنوان الإنجليزي <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" 
-                                   id="translations.en.title" 
-                                   name="translations[en][title]" 
+                            <input type="text"
+                                   id="translations.en.title"
+                                   name="translations[en][title]"
                                    required
                                    value="{{ old('translations.en.title', $project->translation('en')?->title) }}"
                                    class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 @error('translations.en.title') border-red-500 @enderror"
+                                   dir="ltr"
                                    placeholder="أدخل العنوان باللغة الإنجليزية">
                             @error('translations.en.title')
                                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -135,11 +138,12 @@
                             <label for="translations.en.description" class="block text-sm font-medium text-gray-700 mb-2">
                                 الوصف الإنجليزي <span class="text-red-500">*</span>
                             </label>
-                            <textarea id="translations.en.description" 
-                                      name="translations[en][description]" 
-                                      rows="4" 
+                            <textarea id="translations.en.description"
+                                      name="translations[en][description]"
+                                      rows="4"
                                       required
                                       class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 resize-none @error('translations.en.description') border-red-500 @enderror"
+                                      dir="ltr"
                                       placeholder="أدخل الوصف باللغة الإنجليزية">{{ old('translations.en.description', $project->translation('en')?->description) }}</textarea>
                             @error('translations.en.description')
                                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>

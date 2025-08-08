@@ -1,317 +1,163 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <style>
-        /*===== GOOGLE FONTS =====*/
-        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+<div class="min-h-screen bg-gradient-to-br from-charity-50 via-white to-charity-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-charity-200 to-charity-300 rounded-full opacity-20 animate-float"></div>
+        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-br from-warm-200 to-warm-300 rounded-full opacity-20 animate-float animation-delay-400"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-charity-100 to-warm-100 rounded-full opacity-30 animate-pulse-slow"></div>
+    </div>
 
-        /*===== VARIABLES CSS =====*/
+    <div class="max-w-md w-full space-y-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center">
+            <div class="mx-auto h-16 w-16 bg-gradient-to-br from-charity-500 to-charity-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                <i class="fas fa-heart text-white text-2xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                {{ app()->getLocale() === 'ar' ? 'مرحباً بك مرة أخرى' : 'Welcome Back' }}
+            </h2>
+            <p class="text-gray-600">
+                {{ app()->getLocale() === 'ar' ? 'سجل دخولك للمساهمة في الخير' : 'Sign in to contribute to charity' }}
+            </p>
+        </div>
 
-        /*=== Colores ===*/
-        :root {
-            --first-color: #4e75cc;
-            --text-color: #a1b1db;
-        }
-
-        /*=== Fuente y tipografia ===*/
-        :root {
-            --body-font: 'Roboto', sans-serif;
-            --big-font-size: 2rem;
-            --normal-font-size: 0.938rem;
-            --smaller-font-size: 0.875rem;
-        }
-
-        @media screen and (min-width: 768px) {
-            :root {
-                --big-font-size: 2.5rem;
-                --normal-font-size: 1rem;
-            }
-        }
-
-        /*===== BASE =====*/
-        *,
-        ::before,
-        ::after {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--body-font);
-            color: var(--first-color);
-        }
-
-        h1 {
-            margin: 0;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /*===== FORM =====*/
-        .l-form {
-            position: relative;
-            height: auto;
-            padding-top: 50px;
-            padding-bottom: 50px;
-            overflow: hidden;
-        }
-
-        /*=== Shapes ===*/
-        .shape1,
-        .shape2 {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-        }
-
-        .shape1 {
-            top: -7rem;
-            left: -3.5rem;
-            background: linear-gradient(180deg, var(--first-color) 0%, rgba(196, 196, 196, 0) 100%);
-        }
-
-        .shape2 {
-            bottom: -6rem;
-            right: -5.5rem;
-            background: linear-gradient(180deg, var(--first-color) 0%, rgba(196, 196, 196, 0) 100%);
-            transform: rotate(180deg);
-        }
-
-        /*=== Form ===*/
-        .form {
-            height: 100vh;
-            display: grid;
-            justify-content: center;
-            align-items: center;
-            padding: 0 1rem;
-        }
-
-        .form__content {
-            width: 290px;
-        }
-
-        .form__img {
-            display: none;
-        }
-
-        .form__title {
-            font-size: var(--big-font-size);
-            font-weight: 500;
-            margin-bottom: 2rem;
-            font-family: "Cairo", sans-serif !important;
-
-        }
-
-        .form__div {
-            position: relative;
-            display: grid;
-            grid-template-columns: 7% 93%;
-            margin-bottom: 1rem;
-            padding: .25rem 0;
-            border-bottom: 1px solid var(--text-color);
-        }
-
-        /*=== Div focus ===*/
-        .form__div.focus {
-            border-bottom: 1px solid var(--first-color);
-        }
-
-        .form__div-one {
-            margin-bottom: 3rem;
-        }
-
-        .form__icon {
-            font-size: 1.5rem;
-            color: var(--text-color);
-            transition: .3s;
-        }
-
-        /*=== Icon focus ===*/
-        .form__div.focus .form__icon {
-            color: var(--first-color);
-        }
-
-        .form__label {
-            display: block;
-            position: absolute;
-            left: .75rem;
-            top: .25rem;
-            font-size: var(--normal-font-size);
-            color: var(--text-color);
-            transition: .3s;
-        }
-
-        /*=== Label focus ===*/
-        .form__div.focus .form__label {
-            top: -1.5rem;
-            font-size: .875rem;
-            color: var(--first-color);
-        }
-
-        .form__div-input {
-            position: relative;
-        }
-
-        .form__input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            outline: none;
-            background: none;
-            padding: .5rem .75rem;
-            font-size: 1.2rem;
-            color: var(--first-color);
-            transition: .3s;
-        }
-
-        .form__forgot {
-            display: block;
-            text-align: right;
-            margin-bottom: 2rem;
-            font-size: var(--normal-font-size);
-            color: var(--text-color);
-            font-weight: 500;
-            transition: .5;
-        }
-
-        .form__forgot:hover {
-            color: var(--first-color);
-            transition: .5s;
-        }
-
-        .form__button {
-            width: 100%;
-            padding: 1rem;
-            font-size: var(--normal-font-size);
-            outline: none;
-            border: none;
-            margin-bottom: 3rem;
-            background-color: var(--first-color);
-            color: #fff;
-            border-radius: .5rem;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-        .form__button:hover {
-            box-shadow: 0px 15px 36px rgba(0, 0, 0, .15);
-        }
-
-        /*=== Form social===*/
-        .form__social {
-            text-align: center;
-        }
-
-        .form__social-text {
-            display: block;
-            font-size: var(--normal-font-size);
-            margin-bottom: 1rem;
-        }
-
-        .form__social-icon {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 30px;
-            height: 30px;
-            margin-right: 1rem;
-            padding: .5rem;
-            background-color: var(--text-color);
-            color: #fff;
-            font-size: 1.25rem;
-            border-radius: 50%;
-        }
-
-        .form__social-icon:hover {
-            background-color: var(--first-color);
-        }
-
-        /*===== MEDIA QUERIS =====*/
-        @media screen and (min-width: 968px) {
-            .shape1 {
-                width: 400px;
-                height: 400px;
-                top: -11rem;
-                left: -6.5rem;
-            }
-
-            .shape2 {
-                width: 300px;
-                height: 300px;
-                right: -6.5rem;
-            }
-
-            .form {
-                grid-template-columns: 1.5fr 1fr;
-                padding: 0 2rem;
-            }
-
-            .form__content {
-                width: 320px;
-            }
-
-            .form__img {
-                display: block;
-                width: 700px;
-                justify-self: center;
-            }
-        }
-    </style>
-    <div class="l-form">
-        <div class="shape1"></div>
-        <div class="shape2"></div>
-
-        <div class="form">
-            <img src="{{ asset('') }}assets/images/authentication.svg" alt="" class="form__img">
-
-            <form action="{{ route('login') }}" method="POST" class="form__content">
+        <!-- Login Form -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+            <form class="space-y-6" action="{{ route('login') }}" method="POST">
                 @csrf
-                <h1 class="form__title">تسجيل الدخول</h1>
 
-                <div class="form__div form__div-one">
-                    <div class="form__icon">
-                        <i class='bx bx-envelope'></i>
+                <!-- Email Field -->
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700">
+                        {{ app()->getLocale() === 'ar' ? 'البريد الإلكتروني' : 'Email Address' }}
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-400"></i>
+                        </div>
+                        <input id="email" name="email" type="email" required
+                               class="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-charity-500 focus:border-charity-500 focus:z-10 sm:text-sm transition-all duration-300"
+                               placeholder="{{ app()->getLocale() === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email' }}"
+                               value="{{ old('email') }}">
+                    </div>
+                    @error('email')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">
+                        {{ app()->getLocale() === 'ar' ? 'كلمة المرور' : 'Password' }}
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input id="password" name="password" type="password" required
+                               class="appearance-none relative block w-full pl-10 pr-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-charity-500 focus:border-charity-500 focus:z-10 sm:text-sm transition-all duration-300"
+                               placeholder="{{ app()->getLocale() === 'ar' ? 'أدخل كلمة المرور' : 'Enter your password' }}">
+                    </div>
+                    @error('password')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember_me" name="remember" type="checkbox"
+                               class="h-4 w-4 text-charity-600 focus:ring-charity-500 border-gray-300 rounded">
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-700">
+                            {{ app()->getLocale() === 'ar' ? 'تذكرني' : 'Remember me' }}
+                        </label>
                     </div>
 
-                    <div class="form__div-input">
-                        <input type="email" name="email" class="form__input" placeholder="البريد الاكتورني">
+                    <div class="text-sm">
+                        <a href="{{ route('password.request') }}" class="font-medium text-charity-600 hover:text-charity-500 transition-colors duration-300">
+                            {{ app()->getLocale() === 'ar' ? 'نسيت كلمة المرور؟' : 'Forgot password?' }}
+                        </a>
                     </div>
                 </div>
 
-                <div class="form__div">
-                    <div class="form__icon">
-                        <i class='bx bx-lock'></i>
-                    </div>
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit"
+                            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-2xl text-white bg-gradient-to-r from-charity-500 to-charity-600 hover:from-charity-600 hover:to-charity-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-charity-500 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <i class="fas fa-sign-in-alt text-charity-200 group-hover:text-charity-100 transition-colors duration-300"></i>
+                        </span>
+                        {{ app()->getLocale() === 'ar' ? 'تسجيل الدخول' : 'Sign In' }}
+                    </button>
+                </div>
 
-                    <div class="form__div-input">
-                        <input type="password" name="password" class="form__input" placeholder="كلمة المرور">
+                <!-- Divider -->
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">
+                            {{ app()->getLocale() === 'ar' ? 'أو' : 'Or' }}
+                        </span>
                     </div>
                 </div>
-                <a href="{{ route('register') }}" class="form__forgot">ليس لديك حساب؟</a>
 
-                <button type="submit" class="form__button">تسجيل الدخول</button>
+                <!-- Social Login -->
+                <div class="grid grid-cols-3 gap-3">
+                    <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-2xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105">
+                        <i class="fab fa-google text-red-500"></i>
+                    </button>
+                    <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-2xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105">
+                        <i class="fab fa-facebook text-blue-600"></i>
+                    </button>
+                    <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-2xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-all duration-300 transform hover:scale-105">
+                        <i class="fab fa-twitter text-blue-400"></i>
+                    </button>
+                </div>
 
-                <div class="form__social">
-                    <span class="form__social-text">او يمكنك التسجيل من خلال:</span>
-
-                    <a href="#" class="form__social-icon"><i class='bx bxl-facebook'></i></a>
-                    <a href="#" class="form__social-icon"><i class='bx bxl-google'></i></a>
-                    <a href="#" class="form__social-icon"><i class='bx bxl-instagram'></i></a>
+                <!-- Register Link -->
+                <div class="text-center">
+                    <p class="text-sm text-gray-600">
+                        {{ app()->getLocale() === 'ar' ? 'ليس لديك حساب؟' : "Don't have an account?" }}
+                        <a href="{{ route('register') }}" class="font-medium text-charity-600 hover:text-charity-500 transition-colors duration-300">
+                            {{ app()->getLocale() === 'ar' ? 'سجل الآن' : 'Sign up now' }}
+                        </a>
+                    </p>
                 </div>
             </form>
         </div>
 
+        <!-- Footer -->
+        <div class="text-center">
+            <p class="text-xs text-gray-500">
+                {{ app()->getLocale() === 'ar' ? 'بالتسجيل، أنت توافق على' : 'By signing in, you agree to our' }}
+                <a href="#" class="text-charity-600 hover:text-charity-500">{{ app()->getLocale() === 'ar' ? 'الشروط والأحكام' : 'Terms of Service' }}</a>
+                {{ app()->getLocale() === 'ar' ? 'و' : 'and' }}
+                <a href="#" class="text-charity-600 hover:text-charity-500">{{ app()->getLocale() === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy' }}</a>
+            </p>
+        </div>
     </div>
+</div>
+
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animation-delay-400 {
+        animation-delay: 0.4s;
+    }
+
+    .animate-pulse-slow {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+</style>
 @endsection

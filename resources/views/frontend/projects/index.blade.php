@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-[25vh]">
+<div class="container mx-auto px-4 py-20">
     <!-- Page Header -->
     <div class="text-center mb-12" data-aos="fade-up">
         <span class="inline-block px-6 py-2 text-sm font-medium text-charity-600 bg-charity-100 rounded-full mb-4">
@@ -22,7 +22,7 @@
     <div class="bg-white rounded-3xl shadow-xl p-6 mb-8" data-aos="fade-up">
         <div class="flex flex-col md:flex-row gap-4">
             <div class="flex-1">
-                <input type="text" placeholder="{{ app()->getLocale() === 'ar' ? 'البحث في المشاريع...' : 'Search projects...' }}" 
+                <input type="text" placeholder="{{ app()->getLocale() === 'ar' ? 'البحث في المشاريع...' : 'Search projects...' }}"
                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-charity-500 focus:border-transparent transition-all duration-300">
             </div>
             <div class="flex gap-4">
@@ -62,7 +62,7 @@
                     {{ $project->translated_title }}
                 </h3>
                 <p class="text-gray-600 mb-4">{{ Str::limit($project->translated_description, 120) }}</p>
-                
+
                 <!-- Progress Bar -->
                 <div class="mb-4">
                     <div class="flex justify-between items-center mb-2">
@@ -72,7 +72,7 @@
                         </span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-gradient-to-r from-charity-500 to-charity-600 h-2 rounded-full transition-all duration-500" 
+                        <div class="bg-gradient-to-r from-charity-500 to-charity-600 h-2 rounded-full transition-all duration-500"
                              style="width: {{ ($project->total_amount - $project->remaining_amount) / $project->total_amount * 100 }}%">
                         </div>
                     </div>
@@ -92,11 +92,11 @@
 
                 <!-- Action Buttons -->
                 <div class="flex gap-2">
-                    <a href="{{ route('projects.show', $project->id) }}" 
+                    <a href="{{ route('projects.show', $project->id) }}"
                        class="flex-1 bg-gradient-to-r from-charity-500 to-charity-600 hover:from-charity-600 hover:to-charity-700 text-white text-center py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                         {{ app()->getLocale() === 'ar' ? 'عرض التفاصيل' : 'View Details' }}
                     </a>
-                    <a href="{{ route('donations.index') }}" 
+                    <a href="{{ route('donations.index') }}"
                        class="bg-white border-2 border-charity-600 text-charity-600 px-4 py-3 rounded-xl hover:bg-charity-50 transition-colors">
                         <i class="fas fa-heart"></i>
                     </a>
@@ -122,7 +122,7 @@
         <div class="relative z-10">
             <h2 class="text-2xl font-bold mb-4">{{ app()->getLocale() === 'ar' ? 'ساعدنا في إحداث فرق' : 'Help Us Make a Difference' }}</h2>
             <p class="text-white/90 mb-6">{{ app()->getLocale() === 'ar' ? 'تبرعك مهما كان صغيراً يمكن أن يحدث فرقاً كبيراً في حياة شخص ما' : 'Your donation, no matter how small, can make a big difference in someone\'s life' }}</p>
-            <a href="{{ route('donations.index') }}" 
+            <a href="{{ route('donations.index') }}"
                class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-charity-600 bg-white rounded-full hover:bg-gray-50 transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
                 <i class="fas fa-heart {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                 {{ app()->getLocale() === 'ar' ? 'تبرع الآن' : 'Donate Now' }}
@@ -130,4 +130,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

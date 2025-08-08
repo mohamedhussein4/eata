@@ -50,7 +50,7 @@ class LoginController extends Controller
         // Check if the authenticated user is of type 'admin'
         if ($user->type === 'admin') {
             // Redirect admin users to the dashboard
-            return redirect()->route('admin.index');
+            return redirect()->route('admin.dashboard');
         }
 
         // For other users, redirect to the default home page
