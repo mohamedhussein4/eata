@@ -168,13 +168,13 @@
 
                 {{-- Action Buttons --}}
                 <div class="flex gap-3">
-                    <x-admin-button href="{{ route('admin.projects.show', $project->id) }}"
+                    {{-- <x-admin-button href="{{ route('admin.projects.show', $project->id) }}"
                                    variant="outline"
                                    size="sm"
                                    icon="fas fa-eye"
                                    class="flex-1">
                         عرض
-                    </x-admin-button>
+                    </x-admin-button> --}}
 
                     <x-admin-button href="{{ route('admin.projects.edit', $project->id) }}"
                                    variant="secondary"

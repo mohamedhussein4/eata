@@ -10,6 +10,7 @@ class Volunteer extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'email',
         'phone',
@@ -19,6 +20,14 @@ class Volunteer extends Model
         'charity_experience',
         'academic_degree',
         'id_document',
-        'cv',                
+        'cv',
     ];
+
+    /**
+     * العلاقة مع المستخدم
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

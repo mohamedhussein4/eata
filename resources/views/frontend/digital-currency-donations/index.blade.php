@@ -97,18 +97,18 @@
 
                         <!-- حقل المبلغ -->
                         <div class="relative">
-                            <input type="number" id="amount" name="total_price" value="100" min="1" required
+                            <input type="number" id="amount" name="amount" value="100" min="1" required
                                    class="w-full text-center text-3xl font-bold py-6 px-4 border-2 border-yellow-300 rounded-2xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300 bg-gradient-to-r from-yellow-50 to-orange-50">
-                            <span class="absolute {{ app()->getLocale() === 'ar' ? 'right-4' : 'left-4' }} top-1/2 transform -translate-y-1/2 text-2xl font-bold text-yellow-600">$</span>
+                            <span class="absolute {{ app()->getLocale() === 'ar' ? 'right-4' : 'left-4' }} top-1/2 transform -translate-y-1/2 text-2xl font-bold text-yellow-600">ل.س</span>
                         </div>
 
                         <!-- أزرار المبالغ السريعة -->
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="20">$20</button>
-                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="50">$50</button>
-                            <button type="button" class="amount-btn py-3 px-6 border-2 border-yellow-500 bg-yellow-50 rounded-xl font-semibold" data-amount="100">$100</button>
-                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="150">$150</button>
-                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="200">$200</button>
+                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="5000">5,000 ل.س</button>
+                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="10000">10,000 ل.س</button>
+                            <button type="button" class="amount-btn py-3 px-6 border-2 border-yellow-500 bg-yellow-50 rounded-xl font-semibold" data-amount="25000">25,000 ل.س</button>
+                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="50000">50,000 ل.س</button>
+                            <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="100000">100,000 ل.س</button>
                             <button type="button" class="amount-btn py-3 px-6 border-2 border-gray-300 rounded-xl hover:border-yellow-500 hover:bg-yellow-50 transition-all duration-300 font-semibold" data-amount="custom">{{ app()->getLocale() === 'ar' ? 'مبلغ آخر' : 'Custom' }}</button>
                         </div>
                     </div>
@@ -158,27 +158,33 @@
                     <div id="e_wallet_options" class="payment-options hidden space-y-4">
                         <h4 class="text-lg font-semibold text-gray-900">{{ app()->getLocale() === 'ar' ? 'اختر المحفظة الإلكترونية' : 'Choose Digital Wallet' }}</h4>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            @foreach($eWallets as $wallet)
                             <label class="wallet-option cursor-pointer">
-                                <input type="radio" name="e_wallet_type" value="paypal" class="sr-only">
-                                <div class="p-4 border border-gray-300 rounded-xl hover:border-blue-500 transition-all duration-300 text-center">
-                                    <i class="fab fa-paypal text-2xl text-blue-500 mb-2"></i>
-                                    <div class="font-semibold">PayPal</div>
+                                <input type="radio" name="e_wallet_id" value="{{ $wallet->id }}" class="sr-only wallet-radio">
+                                <div class="p-4 border border-gray-300 rounded-xl hover:border-blue-500 transition-all duration-300 text-center payment-option-card">
+                                    @switch($wallet->provider)
+                                        @case('paypal')
+                                            <i class="fab fa-paypal text-2xl text-blue-500 mb-2"></i>
+                                            @break
+                                        @case('apple_pay')
+                                            <i class="fab fa-apple text-2xl text-gray-800 mb-2"></i>
+                                            @break
+                                        @case('google_pay')
+                                            <i class="fab fa-google text-2xl text-green-500 mb-2"></i>
+                                            @break
+                                        @default
+                                            <i class="fas fa-wallet text-2xl text-blue-500 mb-2"></i>
+                                    @endswitch
+                                    <div class="font-semibold">{{ $wallet->wallet_name }}</div>
+                                    <div class="text-sm text-gray-600">{{ $wallet->account_id }}</div>
                                 </div>
                             </label>
-                            <label class="wallet-option cursor-pointer">
-                                <input type="radio" name="e_wallet_type" value="apple_pay" class="sr-only">
-                                <div class="p-4 border border-gray-300 rounded-xl hover:border-gray-800 transition-all duration-300 text-center">
-                                    <i class="fab fa-apple-pay text-2xl text-gray-800 mb-2"></i>
-                                    <div class="font-semibold">Apple Pay</div>
-                                </div>
-                            </label>
-                            <label class="wallet-option cursor-pointer">
-                                <input type="radio" name="e_wallet_type" value="google_pay" class="sr-only">
-                                <div class="p-4 border border-gray-300 rounded-xl hover:border-green-500 transition-all duration-300 text-center">
-                                    <i class="fab fa-google-pay text-2xl text-green-500 mb-2"></i>
-                                    <div class="font-semibold">Google Pay</div>
-                                </div>
-                            </label>
+                            @endforeach
+                        </div>
+                        <!-- تفاصيل المحفظة المختارة -->
+                        <div id="wallet_details" class="hidden mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                            <h5 class="font-semibold mb-3">{{ app()->getLocale() === 'ar' ? 'تفاصيل المحفظة' : 'Wallet Details' }}</h5>
+                            <div class="space-y-2"></div>
                         </div>
                     </div>
 
@@ -186,20 +192,26 @@
                     <div id="bank_account_options" class="payment-options hidden space-y-4">
                         <h4 class="text-lg font-semibold text-gray-900">{{ app()->getLocale() === 'ar' ? 'اختر البنك' : 'Choose Bank' }}</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            @foreach($bankAccounts as $bank)
                             <label class="bank-option cursor-pointer">
-                                <input type="radio" name="bank_account_type" value="al_rajhi" class="sr-only">
-                                <div class="p-4 border border-gray-300 rounded-xl hover:border-blue-600 transition-all duration-300 flex items-center">
-                                    <i class="fas fa-university text-blue-600 mr-3"></i>
-                                    <span class="font-semibold">{{ app()->getLocale() === 'ar' ? 'بنك الراجحي' : 'Al Rajhi Bank' }}</span>
+                                <input type="radio" name="bank_account_id" value="{{ $bank->id }}" class="sr-only bank-radio">
+                                <div class="p-4 border border-gray-300 rounded-xl hover:border-blue-600 transition-all duration-300 payment-option-card">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-university text-blue-600 mr-3"></i>
+                                        <span class="font-semibold">{{ $bank->bank_name }}</span>
+                                    </div>
+                                    <div class="mt-2 text-sm text-gray-600">
+                                        <div>{{ $bank->account_name }}</div>
+                                        <div>IBAN: {{ $bank->iban }}</div>
+                                    </div>
                                 </div>
                             </label>
-                            <label class="bank-option cursor-pointer">
-                                <input type="radio" name="bank_account_type" value="sab" class="sr-only">
-                                <div class="p-4 border border-gray-300 rounded-xl hover:border-green-600 transition-all duration-300 flex items-center">
-                                    <i class="fas fa-university text-green-600 mr-3"></i>
-                                    <span class="font-semibold">{{ app()->getLocale() === 'ar' ? 'البنك السعودي البريطاني' : 'SABB Bank' }}</span>
-                                </div>
-                            </label>
+                            @endforeach
+                        </div>
+                        <!-- تفاصيل الحساب البنكي المختار -->
+                        <div id="bank_details" class="hidden mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                            <h5 class="font-semibold mb-3">{{ app()->getLocale() === 'ar' ? 'تفاصيل الحساب البنكي' : 'Bank Account Details' }}</h5>
+                            <div class="space-y-2"></div>
                         </div>
                     </div>
 
@@ -215,7 +227,7 @@
                                     {{ app()->getLocale() === 'ar' ? 'الاسم الكامل' : 'Full Name' }}
                                     <span class="text-red-500">*</span>
                                 </label>
-                                <input type="text" id="donor_name" name="donor_name" required
+                                <input type="text" id="donor_name" name="name" required
                                        placeholder="{{ app()->getLocale() === 'ar' ? 'أدخل اسمك الكامل' : 'Enter your full name' }}"
                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300">
                             </div>
@@ -225,17 +237,39 @@
                                     {{ app()->getLocale() === 'ar' ? 'البريد الإلكتروني' : 'Email Address' }}
                                     <span class="text-red-500">*</span>
                                 </label>
-                                <input type="email" id="donor_email" name="donor_email" required
+                                <input type="email" id="donor_email" name="email" required
                                        placeholder="{{ app()->getLocale() === 'ar' ? 'example@email.com' : 'example@email.com' }}"
                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300">
                             </div>
                         </div>
 
                         <div class="space-y-2">
+                            <label for="phone" class="block text-sm font-semibold text-gray-900">
+                                {{ app()->getLocale() === 'ar' ? 'رقم الهاتف' : 'Phone Number' }}
+                            </label>
+                            <input type="tel" id="phone" name="phone"
+                                   placeholder="{{ app()->getLocale() === 'ar' ? 'أدخل رقم هاتفك' : 'Enter your phone number' }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="proof_document" class="block text-sm font-semibold text-gray-900">
+                                {{ app()->getLocale() === 'ar' ? 'مستند إثبات الدفع' : 'Payment Proof Document' }}
+                                <span class="text-red-500">*</span>
+                            </label>
+                            <input type="file" id="proof_document" name="proof_document" required
+                                   accept=".jpg,.jpeg,.png,.pdf"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300">
+                            <p class="text-sm text-gray-500 mt-1">
+                                {{ app()->getLocale() === 'ar' ? 'الملفات المسموحة: JPG، JPEG، PNG، PDF. الحد الأقصى: 2 ميجابايت' : 'Allowed files: JPG, JPEG, PNG, PDF. Max size: 2MB' }}
+                            </p>
+                        </div>
+
+                        <div class="space-y-2">
                             <label for="message" class="block text-sm font-semibold text-gray-900">
                                 {{ app()->getLocale() === 'ar' ? 'رسالة (اختيارية)' : 'Message (Optional)' }}
                             </label>
-                            <textarea id="message" name="message" rows="4"
+                            <textarea id="message" name="notes" rows="4"
                                       placeholder="{{ app()->getLocale() === 'ar' ? 'اكتب رسالة تشجيعية أو دعاء...' : 'Write an encouraging message or prayer...' }}"
                                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300 resize-none"></textarea>
                         </div>
@@ -295,8 +329,6 @@
     </div>
 </section>
 
-@endsection
-
 <style>
 </style>
 
@@ -304,11 +336,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     // أزرار المبالغ
     const amountButtons = document.querySelectorAll('.amount-btn');
-    const amountInput = document.getElementById('amount');
+    const amountInput = document.querySelector('input[name="amount"]');
 
     amountButtons.forEach(button => {
         button.addEventListener('click', function() {
-            amountButtons.forEach(btn => btn.classList.remove('active', 'border-yellow-500', 'bg-yellow-50'));
+            // إزالة النمط النشط من جميع الأزرار
+            amountButtons.forEach(btn => {
+                btn.classList.remove('active', 'border-yellow-500', 'bg-yellow-50');
+                btn.classList.add('border-gray-300');
+            });
+            // إضافة النمط النشط للزر المحدد
+            this.classList.remove('border-gray-300');
             this.classList.add('active', 'border-yellow-500', 'bg-yellow-50');
 
             const amount = this.dataset.amount;
@@ -324,20 +362,178 @@ document.addEventListener('DOMContentLoaded', function() {
     const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
     const eWalletOptions = document.getElementById('e_wallet_options');
     const bankAccountOptions = document.getElementById('bank_account_options');
+    const bankDetails = document.getElementById('bank_details');
+    const walletDetails = document.getElementById('wallet_details');
+    let selectedBankId = null;
+    let selectedWalletId = null;
+
+    function hideAllOptions() {
+        eWalletOptions.classList.add('hidden');
+        bankAccountOptions.classList.add('hidden');
+        bankDetails.classList.add('hidden');
+        walletDetails.classList.add('hidden');
+    }
+
+    function clearSelections() {
+        // إلغاء تحديد جميع البنوك
+        document.querySelectorAll('.bank-radio').forEach(radio => {
+            radio.checked = false;
+            radio.closest('.bank-option').classList.remove('selected');
+        });
+        // إلغاء تحديد جميع المحافظ
+        document.querySelectorAll('.wallet-radio').forEach(radio => {
+            radio.checked = false;
+            radio.closest('.wallet-option').classList.remove('selected');
+        });
+    }
 
     paymentMethods.forEach(method => {
         method.addEventListener('change', function() {
-            // إخفاء جميع الخيارات
-            eWalletOptions.classList.add('hidden');
-            bankAccountOptions.classList.add('hidden');
+            hideAllOptions();
+            clearSelections();
 
             // إظهار الخيارات المناسبة
             if (this.value === 'e_wallet') {
                 eWalletOptions.classList.remove('hidden');
+                if (selectedWalletId) {
+                    const walletRadio = document.querySelector(`.wallet-radio[value="${selectedWalletId}"]`);
+                    if (walletRadio) {
+                        walletRadio.checked = true;
+                        walletRadio.dispatchEvent(new Event('change'));
+                    }
+                }
             } else if (this.value === 'bank_account') {
                 bankAccountOptions.classList.remove('hidden');
+                if (selectedBankId) {
+                    const bankRadio = document.querySelector(`.bank-radio[value="${selectedBankId}"]`);
+                    if (bankRadio) {
+                        bankRadio.checked = true;
+                        bankRadio.dispatchEvent(new Event('change'));
+                    }
+                }
             }
+        });
+    });
+
+    // تطبيق النمط المحدد على البطاقة المختارة
+    function applySelectedStyle(element, isSelected) {
+        // تحديث النمط على بطاقة البنك
+        const bankCard = element.closest('.bank-option')?.querySelector('.payment-option-card');
+        if (bankCard) {
+            if (isSelected) {
+                bankCard.classList.add('border-2', 'border-blue-600', 'bg-blue-50');
+            } else {
+                bankCard.classList.remove('border-2', 'border-blue-600', 'bg-blue-50');
+            }
+        }
+
+        // تحديث النمط على بطاقة المحفظة
+        const walletCard = element.closest('.wallet-option')?.querySelector('.payment-option-card');
+        if (walletCard) {
+            if (isSelected) {
+                walletCard.classList.add('border-2', 'border-blue-600', 'bg-blue-50');
+            } else {
+                walletCard.classList.remove('border-2', 'border-blue-600', 'bg-blue-50');
+            }
+        }
+    }
+
+    // عرض تفاصيل البنك عند اختياره
+    document.querySelectorAll('.bank-radio').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const bankId = this.value;
+            selectedBankId = bankId;
+
+            // تحديث النمط المرئي
+            document.querySelectorAll('.bank-radio').forEach(r => {
+                applySelectedStyle(r, r.value === bankId);
+            });
+
+            fetch(`/digital-currency-donations/bank-details/${bankId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const detailsDiv = document.querySelector('#bank_details .space-y-2');
+                    detailsDiv.innerHTML = `
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'اسم البنك' : 'Bank Name' }}</span>
+                            <span class="font-medium">${data.bank_name}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'اسم صاحب الحساب' : 'Account Name' }}</span>
+                            <span class="font-medium">${data.account_name}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'رقم الحساب' : 'Account Number' }}</span>
+                            <span class="font-medium">${data.account_number}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">IBAN</span>
+                            <span class="font-medium">${data.iban}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">SWIFT</span>
+                            <span class="font-medium">${data.swift_code}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'العملة' : 'Currency' }}</span>
+                            <span class="font-medium">${data.currency}</span>
+                        </div>
+                    `;
+                    bankDetails.classList.remove('hidden');
+                });
+        });
+    });
+
+    // عرض تفاصيل المحفظة عند اختيارها
+    document.querySelectorAll('.wallet-radio').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const walletId = this.value;
+            selectedWalletId = walletId;
+
+            // تحديث النمط المرئي
+            document.querySelectorAll('.wallet-radio').forEach(r => {
+                applySelectedStyle(r, r.value === walletId);
+            });
+
+            fetch(`/digital-currency-donations/wallet-details/${walletId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const detailsDiv = document.querySelector('#wallet_details .space-y-2');
+                    detailsDiv.innerHTML = `
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'اسم المحفظة' : 'Wallet Name' }}</span>
+                            <span class="font-medium">${data.wallet_name}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'مزود الخدمة' : 'Provider' }}</span>
+                            <span class="font-medium">${data.provider}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">{{ app()->getLocale() === 'ar' ? 'معرف الحساب' : 'Account ID' }}</span>
+                            <span class="font-medium">${data.account_id}</span>
+                        </div>
+                        ${data.wallet_link ? `
+                        <div class="mt-3">
+                            <a href="${data.wallet_link}" target="_blank" class="text-blue-600 hover:text-blue-800 inline-flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                {{ app()->getLocale() === 'ar' ? 'رابط الدفع المباشر' : 'Direct Payment Link' }}
+                            </a>
+                        </div>
+                        ` : ''}
+                        ${data.instructions ? `
+                        <div class="mt-3 p-3 bg-yellow-50 rounded-lg">
+                            <h6 class="font-semibold mb-2">{{ app()->getLocale() === 'ar' ? 'تعليمات الدفع' : 'Payment Instructions' }}</h6>
+                            <p class="text-sm text-gray-600">${data.instructions}</p>
+                        </div>
+                        ` : ''}
+                    `;
+                    walletDetails.classList.remove('hidden');
+                });
         });
     });
 });
 </script>
+
+
+@endsection
+

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2025 at 07:45 PM
+-- Generation Time: Aug 18, 2025 at 03:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.3.13
 
@@ -225,7 +225,8 @@ CREATE TABLE `digital_currency_donations` (
 INSERT INTO `digital_currency_donations` (`id`, `payment_method`, `bank_account_id`, `e_wallet_id`, `currency_type`, `amount`, `user_id`, `created_at`, `updated_at`, `proof_document`, `name`, `email`, `phone`, `status`) VALUES
 (1, 'e_wallet', NULL, 1, 'Paypal', 100.00, 1, '2024-11-13 22:44:46', '2024-11-13 22:44:46', NULL, 'Mohamed', 'info.mohamedhussein@gmail.com', '01148951078', 'pending'),
 (2, 'e_wallet', NULL, 1, 'Paypal', 100.00, 1, '2024-11-13 22:45:35', '2024-11-18 23:49:04', 'proof_documents/BBc2XDlqWN6ytORIWKwdJSBrXeA41eTAmwWezpdJ.png', 'Mohamed', 'info.mohamedhussein@gmail.com', '01148951078', 'pending'),
-(3, 'e_wallet', NULL, 1, 'Paypal', 50.00, 1, '2024-11-18 23:41:19', '2024-11-18 23:49:08', 'proof_documents/hnG1JeJG12GjrWJVnDBgpBCSJe6kHgg1QmvDvaIZ.png', 'محمد حسين', 'mohamedhussein@gmail.com', '01148951078', 'pending');
+(3, 'e_wallet', NULL, 1, 'Paypal', 50.00, 1, '2024-11-18 23:41:19', '2024-11-18 23:49:08', 'proof_documents/hnG1JeJG12GjrWJVnDBgpBCSJe6kHgg1QmvDvaIZ.png', 'محمد حسين', 'mohamedhussein@gmail.com', '01148951078', 'pending'),
+(4, 'e_wallet', NULL, 1, 'SYP', 100.00, 8, '2025-08-17 22:46:51', '2025-08-17 22:46:51', '1755481611_Mohamed Hussein Resume.pdf', 'hmo', 'hmo@gmail.com', '01148951078', 'pending');
 
 -- --------------------------------------------------------
 
@@ -311,7 +312,20 @@ CREATE TABLE `food_donations` (
 INSERT INTO `food_donations` (`id`, `user_id`, `donation_type`, `is_available`, `amount`, `created_at`, `updated_at`, `name`, `email`, `phone`, `address`, `status`) VALUES
 (1, 1, 'food', 1, NULL, '2024-11-13 22:14:27', '2024-11-18 23:38:10', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
 (2, 1, 'food', 1, NULL, '2024-11-13 22:15:17', '2024-11-13 22:15:17', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
-(3, 1, 'food', 1, NULL, '2024-11-13 22:16:31', '2024-11-18 23:38:15', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending');
+(3, 1, 'food', 1, NULL, '2024-11-13 22:16:31', '2024-11-18 23:38:15', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
+(4, 8, 'food', 1, 44.00, '2025-08-17 21:56:33', '2025-08-17 21:56:33', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(5, 8, 'food', 1, 44.00, '2025-08-17 21:57:51', '2025-08-17 21:57:51', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(6, 8, 'food', 1, 44.00, '2025-08-17 21:58:18', '2025-08-17 21:58:18', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(7, 8, 'food', 1, 44.00, '2025-08-17 21:58:46', '2025-08-17 21:58:46', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(8, 8, 'food', 1, 44.00, '2025-08-17 21:59:35', '2025-08-17 21:59:35', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(9, 8, 'food', 1, 44.00, '2025-08-17 21:59:57', '2025-08-17 21:59:57', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(10, 8, 'food', 1, 44.00, '2025-08-17 22:01:21', '2025-08-17 22:01:21', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(11, 8, 'food', 1, 44.00, '2025-08-17 22:01:37', '2025-08-17 22:01:37', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(12, 8, 'food', 1, 44.00, '2025-08-17 22:01:50', '2025-08-17 22:01:50', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(13, 8, 'food', 1, 44.00, '2025-08-17 22:02:00', '2025-08-17 22:02:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(14, 8, 'food', 1, 44.00, '2025-08-17 22:02:08', '2025-08-17 22:02:08', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(15, 8, 'food', 1, 100.00, '2025-08-17 22:03:00', '2025-08-17 22:03:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(16, 8, 'food', 1, 100.00, '2025-08-17 22:03:10', '2025-08-17 22:03:10', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending');
 
 -- --------------------------------------------------------
 
@@ -416,7 +430,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (99, '2025_08_08_040000_add_content_to_project_translations_table', 15),
 (100, '2025_08_08_040001_add_missing_columns_to_page_translations_table', 16),
 (101, '2025_08_08_040002_add_missing_columns_to_testimonial_translations_table', 17),
-(102, '2025_08_08_040003_fix_testimonial_translations_table', 18);
+(102, '2025_08_08_040003_fix_testimonial_translations_table', 18),
+(103, '2025_08_18_000000_add_user_id_to_volunteers_table', 19),
+(104, '2025_08_18_001000_add_user_id_to_sms_tables', 20),
+(105, '2025_08_18_002000_create_reward_points_tables', 21);
 
 -- --------------------------------------------------------
 
@@ -616,6 +633,37 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `point_settings`
+--
+
+CREATE TABLE `point_settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `donation_type` varchar(255) NOT NULL,
+  `points_per_amount` int(11) NOT NULL,
+  `amount_threshold` decimal(10,2) NOT NULL,
+  `description` text DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `point_settings`
+--
+
+INSERT INTO `point_settings` (`id`, `donation_type`, `points_per_amount`, `amount_threshold`, `description`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'food_donation', 10, 100.00, 'نقاط التبرعات الغذائية', 1, '2025-08-17 20:46:29', '2025-08-17 20:46:29'),
+(2, 'regular_donation', 15, 100.00, 'نقاط التبرعات العادية', 1, '2025-08-17 20:46:29', '2025-08-17 20:46:29'),
+(3, 'sms_donation', 20, 50.00, 'نقاط تبرعات الرسائل', 1, '2025-08-17 20:46:29', '2025-08-17 20:46:29'),
+(4, 'digital_currency_donation', 25, 100.00, 'نقاط التبرعات الرقمية', 1, '2025-08-17 20:46:29', '2025-08-17 20:46:29'),
+(5, 'food_donation', 10, 100.00, 'نقاط التبرعات الغذائية', 1, '2025-08-17 22:01:14', '2025-08-17 22:01:14'),
+(6, 'regular_donation', 15, 100.00, 'نقاط التبرعات العادية', 1, '2025-08-17 22:01:14', '2025-08-17 22:01:14'),
+(7, 'sms_donation', 20, 50.00, 'نقاط تبرعات الرسائل', 1, '2025-08-17 22:01:14', '2025-08-17 22:01:14'),
+(8, 'digital_currency_donation', 25, 100.00, 'نقاط التبرعات الرقمية', 1, '2025-08-17 22:01:14', '2025-08-17 22:01:14');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `projects`
 --
 
@@ -682,6 +730,33 @@ CREATE TABLE `project_translations` (
 INSERT INTO `project_translations` (`id`, `project_id`, `locale`, `title`, `description`, `content`, `created_at`, `updated_at`) VALUES
 (2, 1, 'en', 'test', 'test 2', NULL, '2025-08-08 01:00:10', '2025-08-08 01:00:10'),
 (3, 12, 'en', '22', '22', NULL, '2025-08-08 13:47:23', '2025-08-08 13:47:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reward_points`
+--
+
+CREATE TABLE `reward_points` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `points` int(11) NOT NULL,
+  `donation_type` enum('food_donation','regular_donation','sms_donation','digital_currency_donation','sms_record') NOT NULL,
+  `donation_amount` decimal(10,2) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `donatable_type` varchar(255) NOT NULL,
+  `donatable_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `reward_points`
+--
+
+INSERT INTO `reward_points` (`id`, `user_id`, `points`, `donation_type`, `donation_amount`, `description`, `donatable_type`, `donatable_id`, `created_at`, `updated_at`) VALUES
+(1, 8, 10, 'food_donation', 100.00, 'نقاط مكافأة على التبرع الغذائي', 'App\\Models\\FoodDonation', 16, '2025-08-17 22:03:10', '2025-08-17 22:03:10'),
+(2, 8, 25, 'digital_currency_donation', 100.00, 'نقاط مكافأة على تبرع العملات الرقمية', 'App\\Models\\DigitalCurrencyDonation', 4, '2025-08-17 22:46:51', '2025-08-17 22:46:51');
 
 -- --------------------------------------------------------
 
@@ -784,6 +859,7 @@ CREATE TABLE `setting_translations` (
 
 CREATE TABLE `sms_donations` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
   `sms_code` varchar(255) DEFAULT NULL,
   `message_text` varchar(255) DEFAULT NULL,
@@ -793,6 +869,13 @@ CREATE TABLE `sms_donations` (
   `status` enum('pending','completed','failed') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `sms_donations`
+--
+
+INSERT INTO `sms_donations` (`id`, `user_id`, `amount`, `sms_code`, `message_text`, `phone_number`, `created_at`, `updated_at`, `status`) VALUES
+(1, NULL, NULL, NULL, 'eee', '0123213', '2025-08-17 22:47:21', '2025-08-17 22:47:21', 'pending');
+
 -- --------------------------------------------------------
 
 --
@@ -801,6 +884,7 @@ CREATE TABLE `sms_donations` (
 
 CREATE TABLE `sms_donation_records` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `amount` decimal(10,2) NOT NULL,
   `sms_code` varchar(255) NOT NULL,
   `message_text` varchar(255) NOT NULL,
@@ -950,7 +1034,8 @@ INSERT INTO `users` (`id`, `name`, `phone`, `age`, `email`, `gender`, `email_ver
 (1, 'Admin2', '0123456789', 18, 'admin@email.com', 'male', NULL, '$2y$10$uUtxqFxEbYHCFRDW.wJX4.j2MVNWYUJfJiShpr9L.ZS8VAp6Rs.tu', NULL, '2024-11-13 21:12:38', '2024-11-18 22:28:36', 'admin', 1, 1),
 (2, 'Mohamed Hussein', '01148951078', 18, 'mohamedhussein@gmail.com', 'male', NULL, '$2y$10$CGiwqjobVvnN1z3WsY6EruOdVc0q4cH6Agp16accy9v83XpUos2Tq', NULL, '2024-11-18 23:56:16', '2024-11-19 00:05:10', 'volunteer', 1, NULL),
 (6, 'Hassan Hussein', '01148951078', 14, 'hassanhussei232n@gmail.com', 'male', NULL, '$2y$10$1zRv4owv8R1fgcPpHLf5/uA6r7/OxBJAXyZrsUB//N7WXiH2gKWGu', NULL, '2024-11-19 00:01:17', '2024-11-19 00:05:06', 'beneficiary', 1, NULL),
-(7, 'Valco', '01148951078', 18, 'valco@gmail.com', 'male', NULL, '$2y$10$u8TUfjcnpoWkkPzERa4UTeAW3eIVp/TzI5MfGp8v7QIT0GVfCcWgC', NULL, '2024-11-19 01:09:32', '2024-11-19 01:14:52', 'admin', 1, NULL);
+(7, 'Valco', '01148951078', 18, 'valco@gmail.com', 'male', NULL, '$2y$10$u8TUfjcnpoWkkPzERa4UTeAW3eIVp/TzI5MfGp8v7QIT0GVfCcWgC', NULL, '2024-11-19 01:09:32', '2024-11-19 01:14:52', 'admin', 1, NULL),
+(8, 'حمودي2', '01148951078', 19, 'mino46114@gmail.com', 'male', NULL, '$2y$10$MTpPlYdKQJx/050dB9wf8u93dKUBRd3sevqH4.ZYRDQ7/5NoQ7dGy', NULL, '2025-08-17 21:16:18', '2025-08-17 22:03:32', 'volunteer', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -960,6 +1045,7 @@ INSERT INTO `users` (`id`, `name`, `phone`, `age`, `email`, `gender`, `email_ver
 
 CREATE TABLE `volunteers` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
@@ -978,15 +1064,15 @@ CREATE TABLE `volunteers` (
 -- Dumping data for table `volunteers`
 --
 
-INSERT INTO `volunteers` (`id`, `name`, `email`, `phone`, `address`, `age`, `document_path`, `created_at`, `updated_at`, `charity_experience`, `academic_degree`, `id_document`, `cv`) VALUES
-(10, 'أحمد محمد', 'ahmed.volunteer@example.com', '+963991111111', 'دمشق، سوريا', 25, 'volunteer_documents/ahmed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'عملت متطوعاً لمدة 3 سنوات في جمعيات خيرية مختلفة', 'بكالوريوس في العمل الاجتماعي', NULL, NULL),
-(11, 'فاطمة علي', 'fatima.volunteer@example.com', '+963992222222', 'حلب، سوريا', 30, 'volunteer_documents/fatima_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'معلمة متطوعة في مشاريع التعليم لمدة 5 سنوات', 'بكالوريوس في التربية', NULL, NULL),
-(12, 'محمد حسن', 'mohammed.volunteer@example.com', '+963993333333', 'حمص، سوريا', 28, 'volunteer_documents/mohammed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع توزيع الطعام والمساعدات الإنسانية', 'دبلوم في إدارة الأعمال', NULL, NULL),
-(13, 'سارة أحمد', 'sara.volunteer@example.com', '+963994444444', 'حماة، سوريا', 22, 'volunteer_documents/sara_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة جديدة في مجال التصميم والاتصال', 'بكالوريوس في التصميم الجرافيكي', NULL, NULL),
-(14, 'علي محمود', 'ali.volunteer@example.com', '+963995555555', 'اللاذقية، سوريا', 35, 'volunteer_documents/ali_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'طبيب متطوع في العيادات الميدانية لمدة 8 سنوات', 'دكتوراه في الطب', NULL, NULL),
-(15, 'نور الدين', 'nour.volunteer@example.com', '+963996666666', 'طرطوس، سوريا', 27, 'volunteer_documents/nour_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع إعادة الإعمار وبناء المنازل', 'بكالوريوس في الهندسة المدنية', NULL, NULL),
-(16, 'ليلى كريم', 'layla.volunteer@example.com', '+963997777777', 'دير الزور، سوريا', 24, 'volunteer_documents/layla_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة في مراكز الشباب ومشاريع التعليم', 'بكالوريوس في علم النفس', NULL, NULL),
-(17, 'حسن عبد الله', 'hassan.volunteer@example.com', '+963998888888', 'إدلب، سوريا', 32, 'volunteer_documents/hassan_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'قائد فريق متطوعين في مشاريع إنسانية مختلفة', 'ماجستير في إدارة المشاريع', NULL, NULL);
+INSERT INTO `volunteers` (`id`, `user_id`, `name`, `email`, `phone`, `address`, `age`, `document_path`, `created_at`, `updated_at`, `charity_experience`, `academic_degree`, `id_document`, `cv`) VALUES
+(10, NULL, 'أحمد محمد', 'ahmed.volunteer@example.com', '+963991111111', 'دمشق، سوريا', 25, 'volunteer_documents/ahmed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'عملت متطوعاً لمدة 3 سنوات في جمعيات خيرية مختلفة', 'بكالوريوس في العمل الاجتماعي', NULL, NULL),
+(11, NULL, 'فاطمة علي', 'fatima.volunteer@example.com', '+963992222222', 'حلب، سوريا', 30, 'volunteer_documents/fatima_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'معلمة متطوعة في مشاريع التعليم لمدة 5 سنوات', 'بكالوريوس في التربية', NULL, NULL),
+(12, NULL, 'محمد حسن', 'mohammed.volunteer@example.com', '+963993333333', 'حمص، سوريا', 28, 'volunteer_documents/mohammed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع توزيع الطعام والمساعدات الإنسانية', 'دبلوم في إدارة الأعمال', NULL, NULL),
+(13, NULL, 'سارة أحمد', 'sara.volunteer@example.com', '+963994444444', 'حماة، سوريا', 22, 'volunteer_documents/sara_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة جديدة في مجال التصميم والاتصال', 'بكالوريوس في التصميم الجرافيكي', NULL, NULL),
+(14, NULL, 'علي محمود', 'ali.volunteer@example.com', '+963995555555', 'اللاذقية، سوريا', 35, 'volunteer_documents/ali_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'طبيب متطوع في العيادات الميدانية لمدة 8 سنوات', 'دكتوراه في الطب', NULL, NULL),
+(15, NULL, 'نور الدين', 'nour.volunteer@example.com', '+963996666666', 'طرطوس، سوريا', 27, 'volunteer_documents/nour_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع إعادة الإعمار وبناء المنازل', 'بكالوريوس في الهندسة المدنية', NULL, NULL),
+(16, NULL, 'ليلى كريم', 'layla.volunteer@example.com', '+963997777777', 'دير الزور، سوريا', 24, 'volunteer_documents/layla_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة في مراكز الشباب ومشاريع التعليم', 'بكالوريوس في علم النفس', NULL, NULL),
+(17, NULL, 'حسن عبد الله', 'hassan.volunteer@example.com', '+963998888888', 'إدلب، سوريا', 32, 'volunteer_documents/hassan_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'قائد فريق متطوعين في مشاريع إنسانية مختلفة', 'ماجستير في إدارة المشاريع', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1159,6 +1245,12 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `point_settings`
+--
+ALTER TABLE `point_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
@@ -1171,6 +1263,14 @@ ALTER TABLE `project_translations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `project_translations_project_id_locale_unique` (`project_id`,`locale`),
   ADD KEY `project_translations_locale_index` (`locale`);
+
+--
+-- Indexes for table `reward_points`
+--
+ALTER TABLE `reward_points`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reward_points_user_id_foreign` (`user_id`),
+  ADD KEY `reward_points_donatable_type_donatable_id_index` (`donatable_type`,`donatable_id`);
 
 --
 -- Indexes for table `roles`
@@ -1205,13 +1305,15 @@ ALTER TABLE `setting_translations`
 -- Indexes for table `sms_donations`
 --
 ALTER TABLE `sms_donations`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sms_donations_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `sms_donation_records`
 --
 ALTER TABLE `sms_donation_records`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sms_donation_records_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `testimonials`
@@ -1256,7 +1358,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `volunteers`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `volunteers_email_unique` (`email`);
+  ADD UNIQUE KEY `volunteers_email_unique` (`email`),
+  ADD KEY `volunteers_user_id_foreign` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1308,7 +1411,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `digital_currency_donations`
 --
 ALTER TABLE `digital_currency_donations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `donations`
@@ -1332,7 +1435,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `food_donations`
 --
 ALTER TABLE `food_donations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -1344,7 +1447,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -1383,6 +1486,12 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `point_settings`
+--
+ALTER TABLE `point_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
@@ -1393,6 +1502,12 @@ ALTER TABLE `projects`
 --
 ALTER TABLE `project_translations`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `reward_points`
+--
+ALTER TABLE `reward_points`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1422,7 +1537,7 @@ ALTER TABLE `setting_translations`
 -- AUTO_INCREMENT for table `sms_donations`
 --
 ALTER TABLE `sms_donations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sms_donation_records`
@@ -1458,7 +1573,7 @@ ALTER TABLE `ticket_assignments`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `volunteers`
@@ -1558,6 +1673,12 @@ ALTER TABLE `project_translations`
   ADD CONSTRAINT `project_translations_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `reward_points`
+--
+ALTER TABLE `reward_points`
+  ADD CONSTRAINT `reward_points_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `role_user`
 --
 ALTER TABLE `role_user`
@@ -1569,6 +1690,18 @@ ALTER TABLE `role_user`
 --
 ALTER TABLE `setting_translations`
   ADD CONSTRAINT `setting_translations_setting_id_foreign` FOREIGN KEY (`setting_id`) REFERENCES `settings` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `sms_donations`
+--
+ALTER TABLE `sms_donations`
+  ADD CONSTRAINT `sms_donations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `sms_donation_records`
+--
+ALTER TABLE `sms_donation_records`
+  ADD CONSTRAINT `sms_donation_records_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `testimonials`
@@ -1600,6 +1733,12 @@ ALTER TABLE `ticket_assignments`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `volunteers`
+--
+ALTER TABLE `volunteers`
+  ADD CONSTRAINT `volunteers_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

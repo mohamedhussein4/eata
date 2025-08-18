@@ -21,13 +21,6 @@
                 </nav>
             </div>
 
-            {{-- Action Buttons --}}
-            <div class="flex items-center gap-3">
-                <a href="{{ route('admin.translations.create') }}" class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <i class="fas fa-plus {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                    إضافة ترجمة
-                </a>
-            </div>
         </div>
     </div>
 

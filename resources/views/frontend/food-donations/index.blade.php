@@ -110,6 +110,32 @@
                         </div>
                     </div>
 
+                    <!-- حقل الكمية (يظهر فقط عند اختيار "متوفر الآن") -->
+                    <div id="amountField" style="display: none;" class="bg-green-50 rounded-xl p-6 border border-green-100">
+                        <div class="space-y-2">
+                            <label for="amount" class="block text-sm font-semibold text-gray-900">
+                                {{ app()->getLocale() === 'ar' ? 'الكمية المتوفرة' : 'Available Amount' }}
+                                <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input type="number"
+                                       id="amount"
+                                       name="amount"
+                                       min="0"
+                                       step="1"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300"
+                                       placeholder="{{ app()->getLocale() === 'ar' ? 'أدخل الكمية المتوفرة' : 'Enter available amount' }}">
+                                <div class="absolute top-1/2 transform -translate-y-1/2 {{ app()->getLocale() === 'ar' ? 'left-4' : 'right-4' }} text-gray-400">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">
+                                <i class="fas fa-info-circle {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>
+                                {{ app()->getLocale() === 'ar' ? 'يرجى تحديد الكمية المتوفرة بدقة' : 'Please specify the exact available amount' }}
+                            </p>
+                        </div>
+                    </div>
+
                     <!-- المعلومات الشخصية -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
@@ -266,8 +292,35 @@
     </div>
 </section>
 
+
+@section('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const isAvailableSelect = document.getElementById('is_available');
+    const amountField = document.getElementById('amountField');
+    const amountInput = document.getElementById('amount');
+
+    function toggleAmountField() {
+        if (isAvailableSelect.value === '1') {
+            amountField.style.display = 'block';
+            amountInput.required = true;
+        } else {
+            amountField.style.display = 'none';
+            amountInput.required = false;
+            amountInput.value = ''; // مسح القيمة عند الإخفاء
+        }
+    }
+
+    // تشغيل الفحص عند تغيير الاختيار
+    isAvailableSelect.addEventListener('change', toggleAmountField);
+
+    // تشغيل الفحص عند تحميل الصفحة
+    toggleAmountField();
+});
+</script>
 @endsection
 
+@endsection
 <style>
 .animation-delay-1000 {
     animation-delay: 1000ms;

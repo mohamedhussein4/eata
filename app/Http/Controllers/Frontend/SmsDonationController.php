@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\SmsDonation;
 use App\Models\SmsDonationRecord;
+use App\Traits\RewardPointsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SmsDonationController extends Controller
 {
+    use RewardPointsTrait;
     /**
      * عرض قائمة تبرعات الرسائل النصية
      */
@@ -52,6 +54,13 @@ class SmsDonationController extends Controller
             'status' => 'pending',
         ]);
 
+        // إضافة نقاط المكافأة
+        $this->addRewardPoints(
+            $donation->amount,
+            'sms_donation',
+            $donation
+        );
+
         return redirect()->route('sms-donations.index')
             ->with('success', 'تم إرسال تبرع الرسالة النصية بنجاح وسيتم مراجعته قريباً');
     }
@@ -72,4 +81,4 @@ class SmsDonationController extends Controller
 
         return response()->json(['success' => true, 'record' => $record]);
     }
-} 
+}

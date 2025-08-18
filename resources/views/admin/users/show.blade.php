@@ -56,7 +56,7 @@
                     <p class="text-gray-600">{{ $user->email }}</p>
                     <div class="flex items-center gap-4 mt-2">
                         @php
-                            $role = $user->role ?? 'user';
+                            $role = $user->type ?? 'user';
                             $roleColors = [
                                 'admin' => 'bg-purple-100 text-purple-800',
                                 'user' => 'bg-blue-100 text-blue-800',
@@ -176,7 +176,7 @@
                     <i class="fas fa-chart-bar text-green-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                     إحصائيات المستخدم
                 </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4">
                     <div class="bg-blue-50 rounded-2xl p-4 text-center">
                         <div class="text-2xl font-bold text-blue-600">{{ $user->donations()->count() ?? 0 }}</div>
                         <div class="text-sm text-blue-600">التبرعات</div>
@@ -189,10 +189,6 @@
                         <div class="text-2xl font-bold text-purple-600">{{ $user->tickets()->count() ?? 0 }}</div>
                         <div class="text-sm text-purple-600">التذاكر</div>
                     </div>
-                    <div class="bg-orange-50 rounded-2xl p-4 text-center">
-                        <div class="text-2xl font-bold text-orange-600">{{ $user->testimonials()->count() ?? 0 }}</div>
-                        <div class="text-sm text-orange-600">الآراء</div>
-                    </div>
                 </div>
             </div>
 
@@ -203,7 +199,7 @@
                         @if($user->status === 'active')
                             <form action="{{ route('admin.users.deactivate', $user->id) }}" method="POST" class="inline-block">
                                 @csrf
-                                <button type="submit" 
+                                <button type="submit"
                                         class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-orange-700 bg-orange-100 hover:bg-orange-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                                         onclick="return confirm('هل أنت متأكد من إلغاء تفعيل هذا المستخدم؟')">
                                     <i class="fas fa-user-times {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
@@ -213,7 +209,7 @@
                         @else
                             <form action="{{ route('admin.users.activate', $user->id) }}" method="POST" class="inline-block">
                                 @csrf
-                                <button type="submit" 
+                                <button type="submit"
                                         class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                     <i class="fas fa-user-check {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                                     تفعيل
@@ -222,7 +218,7 @@
                         @endif
                         <form action="{{ route('admin.users.reset-password', $user->id) }}" method="POST" class="inline-block">
                             @csrf
-                            <button type="submit" 
+                            <button type="submit"
                                     class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                     onclick="return confirm('هل أنت متأكد من إعادة تعيين كلمة المرور؟')">
                                 <i class="fas fa-key {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
@@ -234,7 +230,7 @@
                         <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline-block">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" 
+                            <button type="submit"
                                     class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                     onclick="return confirm('هل أنت متأكد من حذف هذا المستخدم؟')">
                                 <i class="fas fa-trash {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
@@ -247,4 +243,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

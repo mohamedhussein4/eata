@@ -16,7 +16,7 @@ class UsersController extends Controller
         return view('frontend.users.profile', compact('user'));
     }
 
-    public function updateProfile(Request $request)
+    public function update(Request $request)
     {
         $user = Auth::user();
 
@@ -33,14 +33,14 @@ class UsersController extends Controller
             if ($user->avatar) {
                 \Storage::disk('public')->delete(str_replace('storage/', '', $user->avatar));
             }
-            
+
             $avatarPath = $request->file('avatar')->store('avatars', 'public');
             $validated['avatar'] = 'storage/' . $avatarPath;
         }
 
         $user->update($validated);
 
-        return redirect()->route('users.profile')->with('success', 'تم تحديث الملف الشخصي بنجاح');
+        return redirect()->back()->with('success', 'تم تحديث الملف الشخصي بنجاح');
     }
 
     public function changePassword(Request $request)
@@ -60,7 +60,7 @@ class UsersController extends Controller
             'password' => Hash::make($validated['new_password'])
         ]);
 
-        return redirect()->route('users.profile')->with('success', 'تم تغيير كلمة المرور بنجاح');
+        return redirect()->back()->with('success', 'تم تغيير كلمة المرور بنجاح');
     }
 
     public function deleteAccount(Request $request)
@@ -90,18 +90,18 @@ class UsersController extends Controller
     public function getDonationHistory()
     {
         $user = Auth::user();
-        
+
         $donations = $user->donations()->with('project')->orderBy('created_at', 'desc')->paginate(10);
-        
+
         return view('frontend.users.donation-history', compact('donations'));
     }
 
     public function getVolunteerHistory()
     {
         $user = Auth::user();
-        
+
         $volunteerActivities = $user->volunteerActivities()->orderBy('created_at', 'desc')->paginate(10);
-        
+
         return view('frontend.users.volunteer-history', compact('volunteerActivities'));
     }
-} 
+}

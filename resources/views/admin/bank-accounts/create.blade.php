@@ -169,7 +169,7 @@
 
             {{-- Form Actions --}}
             <div class="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
-                <a href="{{ route('dashboard.banks.index') }}"
+                <a href="{{ route('admin.bank-accounts.index') }}"
                    class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                     <i class="fas fa-times {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                     إلغاء

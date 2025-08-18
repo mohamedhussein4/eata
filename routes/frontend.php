@@ -48,6 +48,12 @@ Route::get('/volunteers', [VolunteerController::class, 'index'])->name('voluntee
 Route::post('/volunteers', [VolunteerController::class, 'store'])->name('volunteers.store');
 
 // المستفيدين
+
+// الملف الشخصي وتحديث البيانات
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [UsersController::class, 'profile'])->name('profile');
+    Route::put('/profile/update', [UsersController::class, 'update'])->name('profile.update');
+});
 Route::get('/beneficiaries', [BeneficiaryController::class, 'index'])->name('beneficiaries.index');
 Route::post('/beneficiaries', [BeneficiaryController::class, 'store'])->name('beneficiaries.store');
 
@@ -63,6 +69,9 @@ Route::post('/food-donations', [FoodDonationController::class, 'store'])->name('
 
 // تبرعات العملات الرقمية
 Route::get('/digital-currency-donations', [DigitalCurrencyDonationController::class, 'index'])->name('digital-currency-donations.index');
+Route::post('/digital-currency-donations', [DigitalCurrencyDonationController::class, 'store'])->name('digital-currency-donations.store');
+Route::get('/digital-currency-donations/bank-details/{id}', [DigitalCurrencyDonationController::class, 'getBankDetails'])->name('digital-currency-donations.bank-details');
+Route::get('/digital-currency-donations/wallet-details/{id}', [DigitalCurrencyDonationController::class, 'getWalletDetails'])->name('digital-currency-donations.wallet-details');
 Route::post('/digital-currency-donations', [DigitalCurrencyDonationController::class, 'store'])->name('digital-currency-donations.store');
 
 // تبرعات SMS
@@ -116,11 +125,11 @@ Route::get('/page/{slug}', [PageController::class, 'show'])->name('pages.show');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [UsersController::class, 'profile'])->name('users.profile');
     Route::post('/profile', [UsersController::class, 'updateProfile'])->name('users.update-profile');
-    
+
     Route::get('/history', [UsersController::class, 'history'])->name('users.history');
     Route::get('/history/donations', [UsersController::class, 'donationHistory'])->name('users.donation-history');
     Route::get('/history/volunteers', [UsersController::class, 'volunteerHistory'])->name('users.volunteer-history');
-    
+
     Route::get('/donations/create', [DonationController::class, 'create'])->name('donations.create');
     Route::post('/donations/process', [DonationController::class, 'process'])->name('donations.process');
 
@@ -130,4 +139,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/stories/{story}/edit', [BeneficiaryStoryController::class, 'edit'])->name('stories.edit');
     Route::put('/stories/{story}', [BeneficiaryStoryController::class, 'update'])->name('stories.update');
     Route::delete('/stories/{story}', [BeneficiaryStoryController::class, 'destroy'])->name('stories.destroy');
-}); 
+});

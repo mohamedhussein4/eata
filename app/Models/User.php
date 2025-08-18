@@ -103,5 +103,40 @@ class User extends Authenticatable
     {
         return $this->type === 'admin';
     }
+
+    /**
+     * العلاقة مع طلبات التطوع
+     */
+    public function volunteers()
+    {
+        return $this->hasMany(Volunteer::class);
+    }
+
+    /**
+     * العلاقة مع نقاط المكافآت
+     */
+    public function rewardPoints()
+    {
+        return $this->hasMany(RewardPoint::class);
+    }
+
+    /**
+     * حساب مجموع نقاط المستخدم
+     */
+    public function getTotalPoints()
+    {
+        return $this->rewardPoints()->sum('points');
+    }
+
+    /**
+     * الحصول على إحصائيات النقاط حسب نوع التبرع
+     */
+    public function getPointsStatistics()
+    {
+        return $this->rewardPoints()
+                    ->selectRaw('donation_type, SUM(points) as total_points, COUNT(*) as donations_count')
+                    ->groupBy('donation_type')
+                    ->get();
+    }
 }
 

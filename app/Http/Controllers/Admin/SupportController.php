@@ -34,7 +34,7 @@ class SupportController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        $ticket->load(['user', 'messages.user']);
+        $ticket->load(['user', 'messages.sender']);
         return view('admin.support.tickets.show', compact('ticket'));
     }
 
@@ -44,7 +44,7 @@ class SupportController extends Controller
     public function close(Ticket $ticket)
     {
         $ticket->update(['status' => 'closed']);
-        
+
         // إنشاء رسالة نظام
         Message::create([
             'ticket_id' => $ticket->id,
@@ -61,7 +61,7 @@ class SupportController extends Controller
     public function reopen(Ticket $ticket)
     {
         $ticket->update(['status' => 'open']);
-        
+
         // إنشاء رسالة نظام
         Message::create([
             'ticket_id' => $ticket->id,
@@ -94,4 +94,4 @@ class SupportController extends Controller
 
         return back()->with('success', 'تم إرسال الرد بنجاح');
     }
-} 
+}
