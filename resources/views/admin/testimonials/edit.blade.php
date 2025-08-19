@@ -121,7 +121,7 @@
                     </label>
                     @if($testimonial->image)
                         <div class="mb-2">
-                            <img src="{{ asset('storage/' . $testimonial->image) }}" alt="{{ $testimonial->name }}" class="w-32 h-32 object-cover rounded-lg">
+                            <img src="{{ asset('/' . $testimonial->image) }}" alt="{{ $testimonial->name }}" class="w-32 h-32 object-cover rounded-lg">
                         </div>
                     @endif
                     <input type="file" id="image" name="image" accept="image/*"
@@ -196,12 +196,12 @@
                     </form>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('admin.testimonials.index') }}" 
+                    <a href="{{ route('admin.testimonials.index') }}"
                        class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                         <i class="fas fa-times {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                         إلغاء
                     </a>
-                    <button type="submit" 
+                    <button type="submit"
                             class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg hover:shadow-xl">
                         <i class="fas fa-save {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                         حفظ التعديلات

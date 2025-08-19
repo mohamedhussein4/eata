@@ -30,11 +30,11 @@
             <!-- Content -->
             <div class="mt-8">
                 <p class="text-gray-600 mb-6 leading-relaxed">{{ $testimonial->content }}</p>
-                
+
                 <!-- Author Info -->
                 <div class="flex items-center">
                     @if($testimonial->image)
-                        <img src="{{ asset('storage/' . $testimonial->image) }}" alt="{{ $testimonial->name }}" 
+                        <img src="{{ asset('/' . $testimonial->image) }}" alt="{{ $testimonial->name }}"
                              class="w-12 h-12 rounded-full object-cover border-2 border-charity-500">
                     @else
                         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-charity-400 to-charity-600 flex items-center justify-center text-white">
@@ -89,7 +89,7 @@
             <p class="text-white/90 mb-6">
                 {{ app()->getLocale() === 'ar' ? 'هل لديك قصة نجاح مع مؤسستنا؟ شاركها معنا وألهم الآخرين' : 'Do you have a success story with our organization? Share it with us and inspire others' }}
             </p>
-            <a href="{{ route('contact.index') }}" 
+            <a href="{{ route('contact.index') }}"
                class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-charity-600 bg-white rounded-full hover:bg-gray-50 transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
                 <i class="fas fa-pen {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                 {{ app()->getLocale() === 'ar' ? 'أضف توصيتك' : 'Add Your Testimonial' }}
@@ -97,4 +97,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

@@ -141,7 +141,7 @@
                 <div class="bg-gray-50 rounded-2xl p-6">
                     @if($story->image)
                         <div class="mb-6">
-                            <img src="{{ asset('storage/' . $story->image) }}" alt="{{ $story->title }}" class="w-full h-64 object-cover rounded-xl">
+                            <img src="{{ asset('/' . $story->image) }}" alt="{{ $story->title }}" class="w-full h-64 object-cover rounded-xl">
                         </div>
                     @endif
                     <div class="prose max-w-none">

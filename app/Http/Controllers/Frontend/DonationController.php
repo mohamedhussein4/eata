@@ -17,13 +17,19 @@ class DonationController extends Controller
     /**
      * عرض صفحة التبرع
      */
-    public function index()
+    public function index(Request $request)
     {
         $projects = Project::all();
         $bankAccounts = BankAccount::all();
         $eWallets = EWallet::all();
-        
-        return view('frontend.donations.index', compact('projects', 'bankAccounts', 'eWallets'));
+
+        // إذا تم تمرير project_id من صفحة المشروع
+        $selectedProject = null;
+        if ($request->has('project_id')) {
+            $selectedProject = Project::find($request->project_id);
+        }
+
+        return view('frontend.donations.create', compact('projects', 'bankAccounts', 'eWallets', 'selectedProject'));
     }
 
     /**
@@ -32,37 +38,41 @@ class DonationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'total_price' => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:1',
             'project_id' => 'nullable|exists:projects,id',
-            'payment_method' => 'required|in:bank,wallet,card',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
-            'notes' => 'nullable|string',
+            'payment_method' => 'required|in:bank_account,e_wallet,cash',
+            'bank_account_id' => 'required_if:payment_method,bank_account|exists:bank_accounts,id',
+            'e_wallet_id' => 'required_if:payment_method,e_wallet|exists:e_wallets,id',
+            'donor_name' => 'required|string|max:255',
+            'donor_email' => 'required|email|max:255',
+            'donor_phone' => 'required|string|max:20',
+            'payment_proof' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
+            'notes' => 'nullable|string|max:1000',
         ]);
 
         try {
             DB::beginTransaction();
 
+            // رفع ملف إثبات الدفع إن وجد
+            $paymentProofPath = null;
+            if ($request->hasFile('payment_proof')) {
+                $paymentProofPath = $request->file('payment_proof')->store('payment_proofs', 'public');
+            }
+
             // إنشاء التبرع
             $donation = Donation::create([
                 'user_id' => auth()->id(),
                 'project_id' => $request->project_id,
-                'amount' => $request->total_price,
+                'amount' => $request->amount,
+                'donor_name' => $request->donor_name,
+                'donor_email' => $request->donor_email,
+                'donor_phone' => $request->donor_phone,
                 'payment_method' => $request->payment_method,
+                'bank_account_id' => $request->payment_method === 'bank_account' ? $request->bank_account_id : null,
+                'e_wallet_id' => $request->payment_method === 'e_wallet' ? $request->e_wallet_id : null,
+                'payment_proof' => $paymentProofPath,
                 'status' => 'pending',
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
                 'notes' => $request->notes,
-            ]);
-
-            // إنشاء عملية الدفع
-            $payment = Payment::create([
-                'donation_id' => $donation->id,
-                'amount' => $request->total_price,
-                'payment_method' => $request->payment_method,
-                'status' => 'pending',
             ]);
 
             // إنشاء إشعار للمسؤول
@@ -70,24 +80,16 @@ class DonationController extends Controller
                 'user_id' => 1, // المسؤول
                 'type' => 'donation',
                 'title' => app()->getLocale() === 'ar' ? 'تبرع جديد' : 'New Donation',
-                'message' => app()->getLocale() === 'ar' 
-                    ? sprintf('تم استلام تبرع جديد بقيمة %s من %s', number_format($request->total_price), $request->name)
-                    : sprintf('New donation received of %s from %s', number_format($request->total_price), $request->name),
+                'message' => app()->getLocale() === 'ar'
+                    ? sprintf('تم استلام تبرع جديد بقيمة %s من %s', number_format($request->amount), $request->donor_name)
+                    : sprintf('New donation received of %s from %s', number_format($request->amount), $request->donor_name),
             ]);
 
             DB::commit();
 
-            // تحويل المستخدم إلى صفحة الدفع حسب الطريقة المختارة
-            switch($request->payment_method) {
-                case 'bank':
-                    return redirect()->route('bank-accounts.index')
-                        ->with('success', app()->getLocale() === 'ar' ? 'تم تسجيل التبرع بنجاح. يرجى إكمال عملية التحويل البنكي.' : 'Donation registered successfully. Please complete the bank transfer.');
-                case 'wallet':
-                    return redirect()->route('e-wallets.index')
-                        ->with('success', app()->getLocale() === 'ar' ? 'تم تسجيل التبرع بنجاح. يرجى إكمال عملية الدفع عبر المحفظة.' : 'Donation registered successfully. Please complete the wallet payment.');
-                default:
-                    return redirect()->route('payments.process', $payment->id);
-            }
+            return redirect()->route('donations.success')
+                ->with('success', app()->getLocale() === 'ar' ? 'تم تسجيل التبرع بنجاح! سيتم مراجعة طلبك وإشعارك بالنتيجة.' : 'Donation registered successfully! Your request will be reviewed and you will be notified of the result.');
+
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', app()->getLocale() === 'ar' ? 'حدث خطأ أثناء معالجة التبرع. يرجى المحاولة مرة أخرى.' : 'An error occurred while processing the donation. Please try again.');
@@ -110,26 +112,40 @@ class DonationController extends Controller
         return view('frontend.donations.cancel');
     }
 
+    /**
+     * الحصول على تفاصيل البنك
+     */
     public function getBankDetails($id)
     {
-        $bank = BankAccount::findOrFail($id);
+        $bank = BankAccount::find($id);
+        if (!$bank) {
+            return response()->json(['error' => 'Bank not found'], 404);
+        }
+
         return response()->json([
             'bank_name' => $bank->bank_name,
-            'account_name' => $bank->account_name,
             'account_number' => $bank->account_number,
             'iban' => $bank->iban,
             'swift_code' => $bank->swift_code,
+            'account_name' => $bank->account_name,
         ]);
     }
 
+    /**
+     * الحصول على تفاصيل المحفظة
+     */
     public function getWalletDetails($id)
     {
-        $wallet = EWallet::findOrFail($id);
+        $wallet = EWallet::find($id);
+        if (!$wallet) {
+            return response()->json(['error' => 'Wallet not found'], 404);
+        }
+
         return response()->json([
             'provider' => $wallet->provider,
             'account_id' => $wallet->account_id,
-            'wallet_link' => $wallet->wallet_link,
             'currency_type' => $wallet->currency_type,
+            'wallet_link' => $wallet->wallet_link,
         ]);
     }
-} 
+}

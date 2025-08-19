@@ -16,7 +16,7 @@
         <!-- Header Image/Banner -->
         <div class="h-64 bg-gradient-to-br from-charity-400 to-charity-600 flex items-center justify-center relative">
             @if($page->image)
-                <img src="{{ asset('storage/' . $page->image) }}" alt="{{ $page->title }}" class="w-full h-full object-cover">
+                <img src="{{ asset('/' . $page->image) }}" alt="{{ $page->title }}" class="w-full h-full object-cover">
             @else
                 <div class="text-white text-6xl">
                     <i class="fas fa-file-alt"></i>

@@ -19,7 +19,7 @@
     <div class="bg-white rounded-3xl shadow-xl overflow-hidden mb-8" data-aos="fade-up">
         <div class="h-64 bg-gradient-to-br from-charity-400 to-charity-600 flex items-center justify-center relative">
             @if($project->image_or_video)
-                <img src="{{ asset('storage/' . $project->image_or_video) }}" alt="{{ $project->translated_title }}" class="w-full h-full object-cover">
+                <img src="{{ asset('/' . $project->image_or_video) }}" alt="{{ $project->translated_title }}" class="w-full h-full object-cover">
             @else
                 <i class="fas fa-hands-helping text-white text-6xl"></i>
             @endif
@@ -163,7 +163,7 @@
                 <p class="text-white/90 mb-4">
                     {{ app()->getLocale() === 'ar' ? 'ساعدنا في تحقيق هذا المشروع بتبرعك' : 'Help us achieve this project with your donation' }}
                 </p>
-                <a href="{{ route('donations.index') }}"
+                <a href="{{ route('donations.index', ['project_id' => $project->id]) }}"
                    class="block w-full bg-white text-charity-600 text-center py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors transform hover:scale-105">
                     {{ app()->getLocale() === 'ar' ? 'تبرع الآن' : 'Donate Now' }}
                 </a>

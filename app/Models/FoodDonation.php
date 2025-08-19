@@ -12,13 +12,18 @@ class FoodDonation extends Model
     protected $fillable = [
         'user_id',
         'donation_type',
+        'supply_category',
+        'supply_type',
+        'quantity',
+        'unit',
+        'description',
         'is_available',
         'amount',
         'status',
         'name',
         'email',
         'phone',
-        'address',     
+        'address',
     ];
 
     public function user()

@@ -119,52 +119,6 @@
                     @enderror
                     <p class="text-xs text-gray-500">رمز SWIFT للحوالات الدولية (اختياري)</p>
                 </div>
-
-                {{-- Currency Type --}}
-                <div class="space-y-2">
-                    <label for="currency" class="block text-sm font-medium text-gray-700">
-                        <i class="fas fa-coins text-yellow-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                        عملة الحساب
-                    </label>
-                    <select id="currency" name="currency" required class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300">
-                        <option value="">اختر عملة الحساب</option>
-                        <option value="SYP">ليرة سورية (SYP)</option>
-                        <option value="USD">دولار أمريكي (USD)</option>
-                        <option value="EUR">يورو (EUR)</option>
-                        <option value="EGP">جنيه مصري (EGP)</option>
-                        <option value="SAR">ريال سعودي (SAR)</option>
-                        <option value="AED">درهم إماراتي (AED)</option>
-                        <option value="JOD">دينار أردني (JOD)</option>
-                        <option value="LBP">ليرة لبنانية (LBP)</option>
-                    </select>
-                    @error('currency')
-                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-
-            {{-- Additional Information --}}
-            <div class="space-y-2">
-                <label for="description" class="block text-sm font-medium text-gray-700">
-                    <i class="fas fa-info-circle text-blue-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                    وصف أو ملاحظات (اختياري)
-                </label>
-                <textarea id="description" name="description" rows="4"
-                          class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-300 resize-none"
-                          placeholder="أدخل أي معلومات إضافية عن الحساب (مثل: نوع الحساب، الغرض من استخدامه، إلخ...)"></textarea>
-                @error('description')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            {{-- Status --}}
-            <div class="flex items-center">
-                <input type="checkbox" id="is_active" name="is_active" value="1" checked
-                       class="h-5 w-5 text-green-600 border-2 border-gray-300 rounded focus:ring-2 focus:ring-green-500 transition-all duration-300">
-                <label for="is_active" class="{{ app()->getLocale() === 'ar' ? 'mr-3' : 'ml-3' }} text-sm font-medium text-gray-700">
-                    <i class="fas fa-toggle-on text-green-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                    تفعيل الحساب فور الإنشاء
-                </label>
             </div>
 
             {{-- Form Actions --}}

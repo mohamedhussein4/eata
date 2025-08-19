@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2025 at 03:48 AM
+-- Generation Time: Aug 19, 2025 at 04:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.3.13
 
@@ -63,7 +63,8 @@ CREATE TABLE `bank_accounts` (
 --
 
 INSERT INTO `bank_accounts` (`id`, `bank_name`, `account_number`, `iban`, `swift_code`, `created_at`, `updated_at`, `account_name`) VALUES
-(1, 'Alex Bank', '2143243', '24234ytytr', 'Swe3435353', '2024-11-13 21:14:37', '2024-11-13 21:14:37', 'Eata');
+(1, 'Alex Bank', '2143243', '24234ytytr', 'Swe3435353', '2024-11-13 21:14:37', '2024-11-13 21:14:37', 'Eata'),
+(2, 'بنك مصر', '133333333333333333333333', '333333333333333', '23222', '2025-08-18 22:07:01', '2025-08-18 22:07:01', 'محمد حسين');
 
 -- --------------------------------------------------------
 
@@ -188,7 +189,7 @@ INSERT INTO `contacts` (`id`, `user_id`, `name`, `email`, `phone`, `message`, `r
 (2, NULL, 'Mohamed Hussein', 'mohamedhussein@gmail.com', '01148951078', 'Hello World', NULL, '2024-11-18 22:08:15', '2024-11-18 22:08:15'),
 (3, NULL, 'أحمد محمد', 'ahmed.contact@example.com', '+963991111111', 'أريد معرفة المزيد عن طرق التبرع وكيف يمكنني المساعدة في مشاريعكم.', NULL, '2025-08-07 23:07:37', '2025-08-07 23:07:37'),
 (4, NULL, 'فاطمة علي', 'fatima.contact@example.com', '+963992222222', 'أحتاج مساعدة لعائلتي، هل يمكنكم مساعدتنا في توفير الطعام والملابس؟', NULL, '2025-08-07 23:07:37', '2025-08-07 23:07:37'),
-(5, NULL, 'محمد حسن', 'mohammed.contact@example.com', '+963993333333', 'أريد التطوع معكم، ما هي المتطلبات وكيف يمكنني الانضمام؟', NULL, '2025-08-07 23:07:38', '2025-08-07 23:07:38'),
+(5, NULL, 'محمد حسن', 'mohammed.contact@example.com', '+963993333333', 'أريد التطوع معكم، ما هي المتطلبات وكيف يمكنني الانضمام؟', '2025-08-18 22:34:49', '2025-08-07 23:07:38', '2025-08-18 22:34:49'),
 (6, NULL, 'سارة أحمد', 'sara.contact@example.com', '+963994444444', 'أريد معرفة المزيد عن مشروع التعليم وكيف يمكنني دعمه.', NULL, '2025-08-07 23:07:38', '2025-08-07 23:07:38'),
 (7, NULL, 'علي محمود', 'ali.contact@example.com', '+963995555555', 'لدي شكوى حول تأخر وصول المساعدات، أرجو التحقق من الأمر.', NULL, '2025-08-07 23:07:38', '2025-08-07 23:07:38'),
 (8, NULL, 'نور الدين', 'nour.contact@example.com', '+963996666666', 'أقترح عليكم إضافة مشروع جديد لمساعدة كبار السن، هل يمكن تنفيذه؟', NULL, '2025-08-07 23:07:38', '2025-08-07 23:07:38'),
@@ -239,11 +240,27 @@ CREATE TABLE `donations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
+  `donor_name` varchar(255) DEFAULT NULL,
+  `donor_email` varchar(255) DEFAULT NULL,
+  `donor_phone` varchar(255) DEFAULT NULL,
+  `payment_method` enum('bank_account','e_wallet','cash') NOT NULL DEFAULT 'cash',
+  `bank_account_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `e_wallet_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `payment_proof` varchar(255) DEFAULT NULL,
+  `status` enum('pending','confirmed','rejected') NOT NULL DEFAULT 'pending',
+  `notes` text DEFAULT NULL,
   `project_id` bigint(20) UNSIGNED NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `donation_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `donations`
+--
+
+INSERT INTO `donations` (`id`, `created_at`, `updated_at`, `user_id`, `donor_name`, `donor_email`, `donor_phone`, `payment_method`, `bank_account_id`, `e_wallet_id`, `payment_proof`, `status`, `notes`, `project_id`, `amount`, `donation_date`, `deleted_at`) VALUES
+(1, '2025-08-18 22:54:00', '2025-08-18 23:02:55', 1, 'Admin2', 'admin@email.com', '435345345', 'bank_account', 1, NULL, 'payment_proofs/3dU3hIocDG2lSE6rjZyFof608XgpBzrwsMHsiOcx.pdf', 'confirmed', NULL, 12, 100.00, '2025-08-19 01:54:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -266,7 +283,8 @@ CREATE TABLE `e_wallets` (
 --
 
 INSERT INTO `e_wallets` (`id`, `provider`, `account_id`, `created_at`, `updated_at`, `currency_type`, `wallet_link`) VALUES
-(1, 'MTN Cash', '21312312312', '2024-11-13 21:15:20', '2024-11-19 00:15:18', 'LY', NULL);
+(1, 'MTN Cash', '21312312312', '2024-11-13 21:15:20', '2024-11-19 00:15:18', 'LY', NULL),
+(2, 'باي بال', '3243432', '2025-08-18 22:31:14', '2025-08-18 22:31:14', 'SYP', 'https://mostaql.com/');
 
 -- --------------------------------------------------------
 
@@ -294,6 +312,11 @@ CREATE TABLE `food_donations` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `donation_type` varchar(255) DEFAULT NULL,
+  `supply_category` varchar(255) DEFAULT NULL,
+  `supply_type` varchar(255) DEFAULT NULL,
+  `quantity` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `is_available` tinyint(1) NOT NULL DEFAULT 1,
   `amount` decimal(10,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -309,23 +332,23 @@ CREATE TABLE `food_donations` (
 -- Dumping data for table `food_donations`
 --
 
-INSERT INTO `food_donations` (`id`, `user_id`, `donation_type`, `is_available`, `amount`, `created_at`, `updated_at`, `name`, `email`, `phone`, `address`, `status`) VALUES
-(1, 1, 'food', 1, NULL, '2024-11-13 22:14:27', '2024-11-18 23:38:10', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
-(2, 1, 'food', 1, NULL, '2024-11-13 22:15:17', '2024-11-13 22:15:17', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
-(3, 1, 'food', 1, NULL, '2024-11-13 22:16:31', '2024-11-18 23:38:15', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
-(4, 8, 'food', 1, 44.00, '2025-08-17 21:56:33', '2025-08-17 21:56:33', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(5, 8, 'food', 1, 44.00, '2025-08-17 21:57:51', '2025-08-17 21:57:51', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(6, 8, 'food', 1, 44.00, '2025-08-17 21:58:18', '2025-08-17 21:58:18', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(7, 8, 'food', 1, 44.00, '2025-08-17 21:58:46', '2025-08-17 21:58:46', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(8, 8, 'food', 1, 44.00, '2025-08-17 21:59:35', '2025-08-17 21:59:35', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(9, 8, 'food', 1, 44.00, '2025-08-17 21:59:57', '2025-08-17 21:59:57', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(10, 8, 'food', 1, 44.00, '2025-08-17 22:01:21', '2025-08-17 22:01:21', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(11, 8, 'food', 1, 44.00, '2025-08-17 22:01:37', '2025-08-17 22:01:37', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(12, 8, 'food', 1, 44.00, '2025-08-17 22:01:50', '2025-08-17 22:01:50', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(13, 8, 'food', 1, 44.00, '2025-08-17 22:02:00', '2025-08-17 22:02:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(14, 8, 'food', 1, 44.00, '2025-08-17 22:02:08', '2025-08-17 22:02:08', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(15, 8, 'food', 1, 100.00, '2025-08-17 22:03:00', '2025-08-17 22:03:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(16, 8, 'food', 1, 100.00, '2025-08-17 22:03:10', '2025-08-17 22:03:10', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending');
+INSERT INTO `food_donations` (`id`, `user_id`, `donation_type`, `supply_category`, `supply_type`, `quantity`, `unit`, `description`, `is_available`, `amount`, `created_at`, `updated_at`, `name`, `email`, `phone`, `address`, `status`) VALUES
+(1, 1, 'food', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2024-11-13 22:14:27', '2024-11-18 23:38:10', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
+(2, 1, 'food', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2024-11-13 22:15:17', '2024-11-13 22:15:17', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
+(3, 1, 'food', NULL, NULL, NULL, NULL, NULL, 1, NULL, '2024-11-13 22:16:31', '2024-11-18 23:38:15', 'Mohamed Hussein', 'mino46114@gmail.com', '01148951078', '6 October', 'pending'),
+(4, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 21:56:33', '2025-08-17 21:56:33', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(5, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 21:57:51', '2025-08-17 21:57:51', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(6, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 21:58:18', '2025-08-17 21:58:18', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(7, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 21:58:46', '2025-08-17 21:58:46', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(8, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 21:59:35', '2025-08-17 21:59:35', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(9, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 21:59:57', '2025-08-17 21:59:57', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(10, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 22:01:21', '2025-08-17 22:01:21', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(11, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 22:01:37', '2025-08-17 22:01:37', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(12, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 22:01:50', '2025-08-17 22:01:50', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(13, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 22:02:00', '2025-08-17 22:02:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(14, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 22:02:08', '2025-08-17 22:02:08', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(15, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 100.00, '2025-08-17 22:03:00', '2025-08-17 22:03:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(16, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 100.00, '2025-08-17 22:03:10', '2025-08-17 22:03:10', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending');
 
 -- --------------------------------------------------------
 
@@ -433,7 +456,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (102, '2025_08_08_040003_fix_testimonial_translations_table', 18),
 (103, '2025_08_18_000000_add_user_id_to_volunteers_table', 19),
 (104, '2025_08_18_001000_add_user_id_to_sms_tables', 20),
-(105, '2025_08_18_002000_create_reward_points_tables', 21);
+(105, '2025_08_18_002000_create_reward_points_tables', 21),
+(106, '2025_08_19_014211_add_donation_details_to_donations_table', 22),
+(107, '2025_08_19_020809_add_supply_details_to_food_donations_table', 23);
 
 -- --------------------------------------------------------
 
@@ -468,7 +493,8 @@ INSERT INTO `notifications` (`id`, `user_id`, `type`, `title`, `message`, `is_re
 (9, 1, 'order', 'تحديث حالة طلب تبرع بالمستلزمات', 'تم تحديث حالة طلبك إلى: completed', 0, '2024-11-18 23:38:10', '2024-11-18 23:38:10'),
 (10, 1, 'order', 'تحديث حالة طلب تبرع بالمستلزمات', 'تم تحديث حالة طلبك إلى: rejected', 0, '2024-11-18 23:38:15', '2024-11-18 23:38:15'),
 (11, 1, 'digital_donation', 'تحديث حالة طلب تبرع بالعملات الرقمية', 'تم تحديث حالة طلبك إلى: completed', 0, '2024-11-18 23:49:04', '2024-11-18 23:49:04'),
-(12, 1, 'digital_donation', 'تحديث حالة طلب تبرع بالعملات الرقمية', 'تم تحديث حالة طلبك إلى: rejected', 0, '2024-11-18 23:49:08', '2024-11-18 23:49:08');
+(12, 1, 'digital_donation', 'تحديث حالة طلب تبرع بالعملات الرقمية', 'تم تحديث حالة طلبك إلى: rejected', 0, '2024-11-18 23:49:08', '2024-11-18 23:49:08'),
+(13, 1, 'donation', 'تبرع جديد', 'تم استلام تبرع جديد بقيمة 100 من Admin2', 0, '2025-08-18 22:54:00', '2025-08-18 22:54:00');
 
 -- --------------------------------------------------------
 
@@ -700,7 +726,7 @@ INSERT INTO `projects` (`id`, `title`, `description`, `total_amount`, `remaining
 (9, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
 (10, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
 (11, 'إعادة تأهيل المنازل', 'مشروع لإعادة تأهيل المنازل المتضررة وتوفير المأوى للأسر', 8000000.00, 4000000.00, NULL, 300, 60, 80, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'completed', NULL),
-(12, 'مساعدة الأسر المحتاجة', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', 5000000.00, 2500000.00, NULL, 172, 25, 50, '2025-08-07 23:08:26', '2025-08-08 00:33:43', 0, 'active', NULL),
+(12, 'مساعدة الأسر المحتاجة', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', 5000000.00, 2500000.00, NULL, 174, 25, 50, '2025-08-07 23:08:26', '2025-08-18 22:53:18', 0, 'active', NULL),
 (13, 'بناء مدرسة في الريف', 'مشروع لبناء مدرسة في المناطق الريفية لتوفير التعليم للأطفال', 10000000.00, 7000000.00, NULL, 202, 40, 200, '2025-08-07 23:08:26', '2025-08-08 00:42:41', 0, 'active', NULL),
 (14, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'active', NULL),
 (15, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'active', NULL),
@@ -1148,7 +1174,9 @@ ALTER TABLE `digital_currency_donations`
 ALTER TABLE `donations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `donations_user_id_foreign` (`user_id`),
-  ADD KEY `donations_project_id_foreign` (`project_id`);
+  ADD KEY `donations_project_id_foreign` (`project_id`),
+  ADD KEY `donations_bank_account_id_foreign` (`bank_account_id`),
+  ADD KEY `donations_e_wallet_id_foreign` (`e_wallet_id`);
 
 --
 -- Indexes for table `e_wallets`
@@ -1375,7 +1403,7 @@ ALTER TABLE `admin_notifications`
 -- AUTO_INCREMENT for table `bank_accounts`
 --
 ALTER TABLE `bank_accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `beneficiaries`
@@ -1417,13 +1445,13 @@ ALTER TABLE `digital_currency_donations`
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `e_wallets`
 --
 ALTER TABLE `e_wallets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1447,13 +1475,13 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1622,6 +1650,8 @@ ALTER TABLE `digital_currency_donations`
 -- Constraints for table `donations`
 --
 ALTER TABLE `donations`
+  ADD CONSTRAINT `donations_bank_account_id_foreign` FOREIGN KEY (`bank_account_id`) REFERENCES `bank_accounts` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `donations_e_wallet_id_foreign` FOREIGN KEY (`e_wallet_id`) REFERENCES `e_wallets` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `donations_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `donations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 

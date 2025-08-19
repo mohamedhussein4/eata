@@ -22,10 +22,10 @@ class EWalletController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'wallet_name' => 'required|string|max:255',
-            'wallet_number' => 'required|string|max:255',
-            'account_holder' => 'required|string|max:255',
-            'is_active' => 'boolean',
+            'provider' => 'required|string|max:255',
+            'account_id' => 'required|string|max:255',
+            'currency_type' => 'nullable|string|max:50',
+            'wallet_link' => 'nullable|string|max:255',
         ]);
 
         EWallet::create($validated);
@@ -46,10 +46,10 @@ class EWalletController extends Controller
     public function update(Request $request, EWallet $eWallet)
     {
         $validated = $request->validate([
-            'wallet_name' => 'required|string|max:255',
-            'wallet_number' => 'required|string|max:255',
-            'account_holder' => 'required|string|max:255',
-            'is_active' => 'boolean',
+            'provider' => 'required|string|max:255',
+            'account_id' => 'required|string|max:255',
+            'currency_type' => 'nullable|string|max:50',
+            'wallet_link' => 'nullable|string|max:255',
         ]);
 
         $eWallet->update($validated);
@@ -62,10 +62,4 @@ class EWalletController extends Controller
         $eWallet->delete();
         return redirect()->route('admin.e-wallets.index')->with('success', 'تم حذف المحفظة الإلكترونية بنجاح');
     }
-
-    public function toggleStatus(EWallet $eWallet)
-    {
-        $eWallet->update(['is_active' => !$eWallet->is_active]);
-        return redirect()->back()->with('success', 'تم تحديث حالة المحفظة الإلكترونية بنجاح');
-    }
-} 
+}

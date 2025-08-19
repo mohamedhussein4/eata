@@ -33,7 +33,7 @@
             {{-- Testimonial Header --}}
             <div class="relative">
                 @if($testimonial->image)
-                    <img src="{{ asset('storage/' . $testimonial->image) }}" alt="{{ $testimonial->name }}" class="w-full h-48 object-cover">
+                    <img src="{{ asset('/' . $testimonial->image) }}" alt="{{ $testimonial->name }}" class="w-full h-48 object-cover">
                 @else
                     <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
                         <i class="fas fa-quote-right text-4xl text-gray-400"></i>

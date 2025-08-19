@@ -162,7 +162,6 @@
                                         @if(!$contact->read_at)
                                         <form action="{{ route('admin.contacts.mark-read', $contact->id) }}" method="POST" class="inline-block">
                                             @csrf
-                                            @method('PUT')
                                             <button type="submit" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-lg text-green-700 bg-green-100 hover:bg-green-200 transition-colors duration-200">
                                                 <i class="fas fa-check {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>
                                                 تعليم كمقروءة

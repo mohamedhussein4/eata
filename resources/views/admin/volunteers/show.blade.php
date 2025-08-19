@@ -142,7 +142,7 @@
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">السيرة الذاتية</dt>
                                 <dd class="mt-1">
-                                    <a href="{{ asset('storage/' . $volunteer->cv) }}" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+                                    <a href="{{ asset('/' . $volunteer->cv) }}" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800">
                                         <i class="fas fa-file-pdf {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>
                                         عرض السيرة الذاتية
                                     </a>
@@ -206,7 +206,7 @@
                         @if(!$volunteer->is_approved)
                             <form action="{{ route('admin.volunteers.approve', $volunteer->id) }}" method="POST" class="inline-block">
                                 @csrf
-                                <button type="submit" 
+                                <button type="submit"
                                         class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                     <i class="fas fa-check {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                                     الموافقة على التطوع
@@ -215,7 +215,7 @@
                         @else
                             <form action="{{ route('admin.volunteers.reject', $volunteer->id) }}" method="POST" class="inline-block">
                                 @csrf
-                                <button type="submit" 
+                                <button type="submit"
                                         class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-orange-700 bg-orange-100 hover:bg-orange-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                                         onclick="return confirm('هل أنت متأكد من رفض هذا المتطوع؟')">
                                     <i class="fas fa-times {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
@@ -228,7 +228,7 @@
                         <form action="{{ route('admin.volunteers.destroy', $volunteer->id) }}" method="POST" class="inline-block">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" 
+                            <button type="submit"
                                     class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                     onclick="return confirm('هل أنت متأكد من حذف هذا المتطوع؟')">
                                 <i class="fas fa-trash {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
@@ -241,4 +241,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

@@ -47,7 +47,7 @@
         <div class="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 overflow-hidden" data-aos="fade-up">
             <div class="h-48 bg-gradient-to-br from-charity-400 to-charity-600 flex items-center justify-center relative">
                 @if($project->image_or_video)
-                    <img src="{{ asset('storage/' . $project->image_or_video) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <img src="{{ asset('/' . $project->image_or_video) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 @else
                 <i class="fas fa-hands-helping text-white text-4xl"></i>
                 @endif

@@ -10,7 +10,9 @@ class DonationController extends Controller
 {
     public function index()
     {
-        $donations = Donation::with(['user', 'project'])->orderBy('created_at', 'desc')->paginate(15);
+        $donations = Donation::with(['user', 'project', 'bankAccount', 'eWallet'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
         return view('admin.donations.index', compact('donations'));
     }
 
@@ -28,7 +30,7 @@ class DonationController extends Controller
     {
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0',
-            'status' => 'required|in:pending,approved,rejected',
+            'status' => 'required|in:pending,confirmed,rejected',
             'notes' => 'nullable|string',
         ]);
 
@@ -45,7 +47,7 @@ class DonationController extends Controller
 
     public function approve(Donation $donation)
     {
-        $donation->update(['status' => 'approved']);
+        $donation->update(['status' => 'confirmed']);
         return redirect()->back()->with('success', 'تم الموافقة على التبرع بنجاح');
     }
 
@@ -54,4 +56,13 @@ class DonationController extends Controller
         $donation->update(['status' => 'rejected']);
         return redirect()->back()->with('success', 'تم رفض التبرع بنجاح');
     }
-} 
+
+    public function updateStatus(Request $request, $id)
+    {
+        $donation = Donation::findOrFail($id);
+        $donation->update(['status' => $request->status]);
+
+        $statusText = $request->status === 'confirmed' ? 'تم قبول' : 'تم رفض';
+        return redirect()->back()->with('success', $statusText . ' التبرع بنجاح');
+    }
+}

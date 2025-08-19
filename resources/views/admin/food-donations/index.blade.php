@@ -146,14 +146,38 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="text-sm text-gray-900">
+                                        @if($donation->supply_category && $donation->supply_type)
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fas fa-tag text-blue-500"></i>
+                                            <span class="font-medium">{{ $donation->supply_category }}</span>
+                                            <span class="text-gray-400">-</span>
+                                            <span>{{ $donation->supply_type }}</span>
+                                        </div>
+                                        @endif
+
+                                        @if($donation->quantity && $donation->unit)
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <i class="fas fa-weight text-emerald-500"></i>
+                                            <span>{{ $donation->quantity }} {{ $donation->unit }}</span>
+                                        </div>
+                                        @endif
+
                                         <div class="flex items-center gap-2 mb-1">
                                             <i class="fas fa-map-marker-alt text-gray-400"></i>
-                                            <span>{{ $donation->address ?: 'غير محدد' }}</span>
+                                            <span class="truncate">{{ $donation->address ?: 'غير محدد' }}</span>
                                         </div>
+
                                         <div class="flex items-center gap-2">
                                             <i class="fas fa-{{ $donation->is_available ? 'check-circle text-green-500' : 'times-circle text-red-500' }}"></i>
                                             <span>{{ $donation->is_available ? 'متاح' : 'غير متاح' }}</span>
                                         </div>
+
+                                        @if($donation->description)
+                                        <div class="mt-2 p-2 bg-gray-50 rounded text-xs text-gray-600">
+                                            <i class="fas fa-info-circle {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>
+                                            {{ Str::limit($donation->description, 50) }}
+                                        </div>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">

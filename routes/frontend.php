@@ -62,6 +62,8 @@ Route::get('/donations', [DonationController::class, 'index'])->name('donations.
 Route::post('/donations', [DonationController::class, 'store'])->name('donations.store');
 Route::get('/donations/success', [DonationController::class, 'success'])->name('donations.success');
 Route::get('/donations/cancel', [DonationController::class, 'cancel'])->name('donations.cancel');
+Route::get('/donations/bank-details/{id}', [DonationController::class, 'getBankDetails'])->name('donations.bank-details');
+Route::get('/donations/wallet-details/{id}', [DonationController::class, 'getWalletDetails'])->name('donations.wallet-details');
 
 // تبرعات الطعام
 Route::get('/food-donations', [FoodDonationController::class, 'index'])->name('food-donations.index');

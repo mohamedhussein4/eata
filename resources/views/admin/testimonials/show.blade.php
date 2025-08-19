@@ -151,7 +151,7 @@
                 <div class="bg-gray-50 rounded-2xl p-6">
                     @if($testimonial->image)
                         <div class="mb-6">
-                            <img src="{{ asset('storage/' . $testimonial->image) }}" alt="{{ $testimonial->name }}" class="w-32 h-32 object-cover rounded-lg">
+                            <img src="{{ asset('/' . $testimonial->image) }}" alt="{{ $testimonial->name }}" class="w-32 h-32 object-cover rounded-lg">
                         </div>
                     @endif
                     <div class="prose max-w-none">
@@ -188,4 +188,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

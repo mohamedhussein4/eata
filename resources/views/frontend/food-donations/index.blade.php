@@ -110,6 +110,87 @@
                         </div>
                     </div>
 
+                    <!-- تفاصيل اللوازم -->
+                    <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">
+                            <i class="fas fa-list-alt {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }} text-blue-600"></i>
+                            {{ app()->getLocale() === 'ar' ? 'تفاصيل اللوازم' : 'Supply Details' }}
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="supply_category" class="block text-sm font-semibold text-gray-900">
+                                    {{ app()->getLocale() === 'ar' ? 'فئة اللوازم' : 'Supply Category' }}
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <select id="supply_category" name="supply_category" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
+                                    <option value="">{{ app()->getLocale() === 'ar' ? 'اختر الفئة' : 'Select Category' }}</option>
+                                    <option value="grains">{{ app()->getLocale() === 'ar' ? '🌾 حبوب' : '🌾 Grains' }}</option>
+                                    <option value="vegetables">{{ app()->getLocale() === 'ar' ? '🥕 خضروات' : '🥕 Vegetables' }}</option>
+                                    <option value="fruits">{{ app()->getLocale() === 'ar' ? '🍎 فواكه' : '🍎 Fruits' }}</option>
+                                    <option value="dairy">{{ app()->getLocale() === 'ar' ? '🥛 منتجات ألبان' : '🥛 Dairy Products' }}</option>
+                                    <option value="meat">{{ app()->getLocale() === 'ar' ? '🥩 لحوم' : '🥩 Meat' }}</option>
+                                    <option value="clothes">{{ app()->getLocale() === 'ar' ? '👕 ملابس' : '👕 Clothes' }}</option>
+                                    <option value="medicine">{{ app()->getLocale() === 'ar' ? '💊 أدوية' : '💊 Medicine' }}</option>
+                                    <option value="hygiene">{{ app()->getLocale() === 'ar' ? '🧼 مواد نظافة' : '🧼 Hygiene Items' }}</option>
+                                    <option value="other">{{ app()->getLocale() === 'ar' ? '📦 أخرى' : '📦 Other' }}</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="supply_type" class="block text-sm font-semibold text-gray-900">
+                                    {{ app()->getLocale() === 'ar' ? 'نوع اللوازم تحديداً' : 'Specific Supply Type' }}
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="supply_type" name="supply_type" required
+                                       placeholder="{{ app()->getLocale() === 'ar' ? 'مثال: أرز، باراسيتامول، قمصان...' : 'Example: Rice, Paracetamol, Shirts...' }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                            <div class="space-y-2">
+                                <label for="quantity" class="block text-sm font-semibold text-gray-900">
+                                    {{ app()->getLocale() === 'ar' ? 'الكمية' : 'Quantity' }}
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="quantity" name="quantity" required
+                                       placeholder="{{ app()->getLocale() === 'ar' ? 'مثال: 5، 10، 100...' : 'Example: 5, 10, 100...' }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="unit" class="block text-sm font-semibold text-gray-900">
+                                    {{ app()->getLocale() === 'ar' ? 'وحدة القياس' : 'Unit of Measurement' }}
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <select id="unit" name="unit" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
+                                    <option value="">{{ app()->getLocale() === 'ar' ? 'اختر الوحدة' : 'Select Unit' }}</option>
+                                    <option value="kg">{{ app()->getLocale() === 'ar' ? 'كيلوجرام' : 'Kilogram' }}</option>
+                                    <option value="gram">{{ app()->getLocale() === 'ar' ? 'جرام' : 'Gram' }}</option>
+                                    <option value="liter">{{ app()->getLocale() === 'ar' ? 'لتر' : 'Liter' }}</option>
+                                    <option value="piece">{{ app()->getLocale() === 'ar' ? 'قطعة' : 'Piece' }}</option>
+                                    <option value="box">{{ app()->getLocale() === 'ar' ? 'صندوق' : 'Box' }}</option>
+                                    <option value="bag">{{ app()->getLocale() === 'ar' ? 'كيس' : 'Bag' }}</option>
+                                    <option value="bottle">{{ app()->getLocale() === 'ar' ? 'زجاجة' : 'Bottle' }}</option>
+                                    <option value="can">{{ app()->getLocale() === 'ar' ? 'علبة' : 'Can' }}</option>
+                                    <option value="pack">{{ app()->getLocale() === 'ar' ? 'عبوة' : 'Pack' }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <div class="space-y-2">
+                                <label for="description" class="block text-sm font-semibold text-gray-900">
+                                    {{ app()->getLocale() === 'ar' ? 'وصف إضافي' : 'Additional Description' }}
+                                </label>
+                                <textarea id="description" name="description" rows="3"
+                                          placeholder="{{ app()->getLocale() === 'ar' ? 'أي تفاصيل إضافية عن اللوازم (حالة المنتج، تاريخ انتهاء الصلاحية، إلخ)...' : 'Any additional details about the supplies (product condition, expiry date, etc.)...' }}"
+                                          class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- حقل الكمية (يظهر فقط عند اختيار "متوفر الآن") -->
                     <div id="amountField" style="display: none;" class="bg-green-50 rounded-xl p-6 border border-green-100">
                         <div class="space-y-2">

@@ -38,6 +38,11 @@ class FoodDonationController extends Controller
     {
         $rules = [
             'donation_type' => 'required|string|max:255',
+            'supply_category' => 'required|string|max:255',
+            'supply_type' => 'required|string|max:255',
+            'quantity' => 'required|string|max:255',
+            'unit' => 'required|string|max:100',
+            'description' => 'nullable|string|max:1000',
             'is_available' => 'required|boolean',
             'amount' => 'nullable|numeric|min:0',
             'name' => 'required|string|max:255',
@@ -59,6 +64,11 @@ class FoodDonationController extends Controller
         $donationData = [
             'user_id' => Auth::id(),
             'donation_type' => $validated['donation_type'],
+            'supply_category' => $validated['supply_category'],
+            'supply_type' => $validated['supply_type'],
+            'quantity' => $validated['quantity'],
+            'unit' => $validated['unit'],
+            'description' => $validated['description'] ?? null,
             'is_available' => $validated['is_available'],
             'name' => $validated['name'],
             'email' => $validated['email'],

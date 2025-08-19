@@ -44,7 +44,7 @@
         <form action="{{ route('admin.volunteers.update', $volunteer->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            
+
             <div class="p-6 lg:p-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {{-- Basic Information --}}
@@ -181,7 +181,7 @@
                             </label>
                             @if($volunteer->cv)
                                 <div class="mb-3">
-                                    <a href="{{ asset('storage/' . $volunteer->cv) }}" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+                                    <a href="{{ asset('/' . $volunteer->cv) }}" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800">
                                         <i class="fas fa-file-pdf {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                                         عرض السيرة الذاتية الحالية
                                     </a>
@@ -198,7 +198,7 @@
                         {{-- Approval Status --}}
                         <div>
                             <label for="is_approved" class="flex items-center">
-                                <input type="checkbox" id="is_approved" name="is_approved" value="1" 
+                                <input type="checkbox" id="is_approved" name="is_approved" value="1"
                                        {{ old('is_approved', $volunteer->is_approved) ? 'checked' : '' }}
                                        class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
                                 <span class="text-sm text-gray-700 {{ app()->getLocale() === 'ar' ? 'mr-2' : 'ml-2' }}">موافقة على التطوع</span>
@@ -218,7 +218,7 @@
                     <form action="{{ route('admin.volunteers.destroy', $volunteer->id) }}" method="POST" class="inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" 
+                        <button type="submit"
                                 class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 onclick="return confirm('هل أنت متأكد من حذف هذا المتطوع؟')">
                             <i class="fas fa-trash {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
@@ -238,4 +238,4 @@
         </form>
     </div>
 </div>
-@endsection 
+@endsection

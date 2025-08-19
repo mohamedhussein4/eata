@@ -46,48 +46,30 @@
 
             {{-- Form Fields --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {{-- Wallet Type --}}
+                {{-- Provider --}}
                 <div class="space-y-2">
-                    <label for="wallet_type" class="block text-sm font-medium text-gray-700">
+                    <label for="provider" class="block text-sm font-medium text-gray-700">
                         <i class="fas fa-layer-group text-blue-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                        نوع المحفظة
+                        مقدم الخدمة
                     </label>
-                    <select id="wallet_type" name="wallet_type" required class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
-                        <option value="">اختر نوع المحفظة</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="mobile_money">محفظة جوال</option>
-                        <option value="crypto">عملة رقمية</option>
-                        <option value="other">أخرى</option>
-                    </select>
-                    @error('wallet_type')
-                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Wallet Name --}}
-                <div class="space-y-2">
-                    <label for="wallet_name" class="block text-sm font-medium text-gray-700">
-                        <i class="fas fa-wallet text-green-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                        اسم المحفظة
-                    </label>
-                    <input type="text" id="wallet_name" name="wallet_name" required
+                    <input type="text" id="provider" name="provider" required
                            class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-                           placeholder="أدخل اسم المحفظة (مثل: محفظة التبرعات الرئيسية)">
-                    @error('wallet_name')
+                           placeholder="أدخل مقدم الخدمة (مثل: PayPal, MTN Cash)">
+                    @error('provider')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
-                {{-- Wallet ID/Address --}}
+                {{-- Account ID --}}
                 <div class="space-y-2">
-                    <label for="wallet_id" class="block text-sm font-medium text-gray-700">
+                    <label for="account_id" class="block text-sm font-medium text-gray-700">
                         <i class="fas fa-id-card text-purple-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                        معرف المحفظة أو العنوان
+                        معرف الحساب
                     </label>
-                    <input type="text" id="wallet_id" name="wallet_id" required
+                    <input type="text" id="account_id" name="account_id" required
                            class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 font-mono"
-                           placeholder="أدخل معرف المحفظة أو العنوان">
-                    @error('wallet_id')
+                           placeholder="أدخل معرف الحساب أو رقم المحفظة">
+                    @error('account_id')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -98,11 +80,12 @@
                         <i class="fas fa-coins text-yellow-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                         نوع العملة
                     </label>
-                    <select id="currency_type" name="currency_type" required class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
-                        <option value="">اختر نوع العملة</option>
+                    <select id="currency_type" name="currency_type" class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
+                        <option value="">اختر نوع العملة (اختياري)</option>
                         <option value="USD">دولار أمريكي (USD)</option>
                         <option value="EUR">يورو (EUR)</option>
                         <option value="SYP">ليرة سورية (SYP)</option>
+                        <option value="LY">دينار ليبي (LY)</option>
                         <option value="EGP">جنيه مصري (EGP)</option>
                         <option value="SAR">ريال سعودي (SAR)</option>
                         <option value="AED">درهم إماراتي (AED)</option>
@@ -113,30 +96,20 @@
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
 
-            {{-- Additional Information --}}
-            <div class="space-y-2">
-                <label for="additional_info" class="block text-sm font-medium text-gray-700">
-                    <i class="fas fa-info-circle text-indigo-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                    معلومات إضافية (اختياري)
-                </label>
-                <textarea id="additional_info" name="additional_info" rows="4"
-                          class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none"
-                          placeholder="أدخل أي معلومات إضافية عن المحفظة (مثل: تعليمات خاصة، قيود، إلخ...)"></textarea>
-                @error('additional_info')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            {{-- Status --}}
-            <div class="flex items-center">
-                <input type="checkbox" id="is_active" name="is_active" value="1" checked
-                       class="h-5 w-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-2 focus:ring-blue-500 transition-all duration-300">
-                <label for="is_active" class="{{ app()->getLocale() === 'ar' ? 'mr-3' : 'ml-3' }} text-sm font-medium text-gray-700">
-                    <i class="fas fa-toggle-on text-green-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                    تفعيل المحفظة فور الإنشاء
-                </label>
+                {{-- Wallet Link --}}
+                <div class="space-y-2">
+                    <label for="wallet_link" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-link text-indigo-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
+                        رابط المحفظة (اختياري)
+                    </label>
+                    <input type="url" id="wallet_link" name="wallet_link"
+                           class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
+                           placeholder="أدخل رابط المحفظة إن وجد">
+                    @error('wallet_link')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
 
             {{-- Form Actions --}}
@@ -155,34 +128,4 @@
         </form>
     </div>
 </div>
-
-<script>
-// Dynamic form behavior
-document.getElementById('wallet_type').addEventListener('change', function() {
-    const walletIdLabel = document.querySelector('label[for="wallet_id"]');
-    const walletIdInput = document.getElementById('wallet_id');
-
-    switch(this.value) {
-        case 'paypal':
-            walletIdLabel.innerHTML = '<i class="fas fa-envelope text-purple-500 {{ app()->getLocale() === "ar" ? "ml-2" : "mr-2" }}"></i>البريد الإلكتروني لـ PayPal';
-            walletIdInput.placeholder = 'أدخل البريد الإلكتروني لحساب PayPal';
-            walletIdInput.type = 'email';
-            break;
-        case 'mobile_money':
-            walletIdLabel.innerHTML = '<i class="fas fa-mobile-alt text-purple-500 {{ app()->getLocale() === "ar" ? "ml-2" : "mr-2" }}"></i>رقم الهاتف';
-            walletIdInput.placeholder = 'أدخل رقم الهاتف المرتبط بالمحفظة';
-            walletIdInput.type = 'tel';
-            break;
-        case 'crypto':
-            walletIdLabel.innerHTML = '<i class="fas fa-wallet text-purple-500 {{ app()->getLocale() === "ar" ? "ml-2" : "mr-2" }}"></i>عنوان المحفظة';
-            walletIdInput.placeholder = 'أدخل عنوان المحفظة الرقمية';
-            walletIdInput.type = 'text';
-            break;
-        default:
-            walletIdLabel.innerHTML = '<i class="fas fa-id-card text-purple-500 {{ app()->getLocale() === "ar" ? "ml-2" : "mr-2" }}"></i>معرف المحفظة أو العنوان';
-            walletIdInput.placeholder = 'أدخل معرف المحفظة أو العنوان';
-            walletIdInput.type = 'text';
-    }
-});
-</script>
 @endsection

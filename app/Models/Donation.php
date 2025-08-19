@@ -14,9 +14,14 @@ class Donation extends Model
         'user_id',
         'project_id',
         'amount',
+        'donor_name',
+        'donor_email',
+        'donor_phone',
         'payment_method',
+        'bank_account_id',
+        'e_wallet_id',
+        'payment_proof',
         'status',
-        'transaction_id',
         'notes',
     ];
 
@@ -36,9 +41,15 @@ class Donation extends Model
         return $this->belongsTo(User::class);
     }
 
-    // العلاقة مع الدفع
-    public function payment()
+    // العلاقة مع الحساب البنكي
+    public function bankAccount()
     {
-        return $this->hasOne(Payment::class);
+        return $this->belongsTo(BankAccount::class);
+    }
+
+    // العلاقة مع المحفظة الإلكترونية
+    public function eWallet()
+    {
+        return $this->belongsTo(EWallet::class);
     }
 }

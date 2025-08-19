@@ -273,12 +273,12 @@
             </div>
 
             {{-- Orders --}}
-            <a href="{{ route('admin.orders.index') }}"
+            <a href="{{ route('admin.donations.index') }}"
                class="flex items-center px-4 py-3 text-white rounded-2xl transition-all duration-300 hover:bg-white hover:bg-opacity-20 {{ request()->routeIs('admin.orders.*') ? 'bg-white bg-opacity-20' : '' }}">
                 <div class="flex items-center justify-center w-8 h-8 {{ app()->getLocale() === 'ar' ? 'ml-3' : 'mr-3' }}">
                     <i class="fas fa-shopping-cart text-lg"></i>
                 </div>
-                <span class="font-medium">الطلبات</span>
+                <span class="font-medium">طلبات التبرع</span>
             </a>
 
             {{-- إدارة المستخدمين --}}

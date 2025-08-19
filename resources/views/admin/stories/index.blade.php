@@ -93,7 +93,7 @@
             {{-- Story Header --}}
             <div class="relative">
                 @if($story->image)
-                    <img src="{{ asset('storage/' . $story->image) }}" alt="{{ $story->title }}" class="w-full h-48 object-cover">
+                    <img src="{{ asset('/' . $story->image) }}" alt="{{ $story->title }}" class="w-full h-48 object-cover">
                 @else
                     <div class="w-full h-48 bg-gray-100 flex items-center justify-center">
                         <i class="fas fa-image text-4xl text-gray-400"></i>
@@ -123,7 +123,7 @@
             <div class="p-6">
                 <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $story->title }}</h3>
                 <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ Str::limit(strip_tags($story->content), 150) }}</p>
-                
+
                 <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
                     <span>
                         <i class="fas fa-calendar {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>

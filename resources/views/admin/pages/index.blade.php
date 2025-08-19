@@ -150,7 +150,7 @@
                             <div class="flex items-center">
                                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center {{ app()->getLocale() === 'ar' ? 'ml-4' : 'mr-4' }}">
                                     @if($page->featured_image)
-                                        <img src="{{ asset('storage/' . $page->featured_image) }}"
+                                        <img src="{{ asset('/' . $page->featured_image) }}"
                                              alt="{{ $page->translated_title ?: $page->title }}"
                                              class="w-12 h-12 rounded-lg object-cover">
                                     @else

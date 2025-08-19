@@ -30,9 +30,7 @@ class ContactController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
-            'subject' => 'required|string|max:255',
             'message' => 'required|string',
-            'is_read' => 'boolean',
         ]);
 
         $contact->update($validated);
@@ -48,19 +46,19 @@ class ContactController extends Controller
 
     public function markAsRead(Contact $contact)
     {
-        $contact->update(['is_read' => true]);
+        $contact->update(['read_at' => now()]);
         return redirect()->back()->with('success', 'تم تحديد الرسالة كمقروءة');
     }
 
     public function markAllAsRead()
     {
-        Contact::where('is_read', false)->update(['is_read' => true]);
+        Contact::whereNull('read_at')->update(['read_at' => now()]);
         return redirect()->back()->with('success', 'تم تحديد جميع الرسائل كمقروءة');
     }
 
     public function getUnreadCount()
     {
-        $count = Contact::where('is_read', false)->count();
+        $count = Contact::whereNull('read_at')->count();
         return response()->json(['count' => $count]);
     }
-} 
+}

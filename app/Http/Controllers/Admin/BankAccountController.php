@@ -24,9 +24,9 @@ class BankAccountController extends Controller
         $validated = $request->validate([
             'bank_name' => 'required|string|max:255',
             'account_number' => 'required|string|max:255',
-            'account_holder' => 'required|string|max:255',
+            'account_name' => 'required|string|max:255',
             'iban' => 'nullable|string|max:255',
-            'is_active' => 'boolean',
+            'swift_code' => 'nullable|string|max:255',
         ]);
 
         BankAccount::create($validated);
@@ -49,9 +49,9 @@ class BankAccountController extends Controller
         $validated = $request->validate([
             'bank_name' => 'required|string|max:255',
             'account_number' => 'required|string|max:255',
-            'account_holder' => 'required|string|max:255',
+            'account_name' => 'required|string|max:255',
             'iban' => 'nullable|string|max:255',
-            'is_active' => 'boolean',
+            'swift_code' => 'nullable|string|max:255',
         ]);
 
         $bankAccount->update($validated);
@@ -70,4 +70,4 @@ class BankAccountController extends Controller
         $bankAccount->update(['is_active' => !$bankAccount->is_active]);
         return redirect()->back()->with('success', 'تم تحديث حالة الحساب البنكي بنجاح');
     }
-} 
+}

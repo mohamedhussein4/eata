@@ -66,6 +66,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     // إدارة التبرعات
     Route::resource('donations', DonationController::class);
+    Route::put('donations/{donation}/status', [DonationController::class, 'updateStatus'])->name('donations.update-status');
     Route::post('donations/{donation}/approve', [DonationController::class, 'approve'])->name('donations.approve');
     Route::post('donations/{donation}/reject', [DonationController::class, 'reject'])->name('donations.reject');
 
@@ -159,27 +160,27 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::post('/sync', [TranslationController::class, 'sync'])->name('sync');
         Route::post('/import', [TranslationController::class, 'import'])->name('import');
         Route::get('/export', [TranslationController::class, 'export'])->name('export');
-        
+
         // ترجمة المشاريع
         Route::get('/projects', [TranslationController::class, 'projects'])->name('projects');
         Route::get('/projects/{project}/edit', [TranslationController::class, 'editProject'])->name('projects.edit');
         Route::put('/projects/{project}', [TranslationController::class, 'updateProject'])->name('projects.update');
-        
+
         // ترجمة الصفحات
         Route::get('/pages', [TranslationController::class, 'pages'])->name('pages');
         Route::get('/pages/{page}/edit', [TranslationController::class, 'editPage'])->name('pages.edit');
         Route::put('/pages/{page}', [TranslationController::class, 'updatePage'])->name('pages.update');
-        
+
         // ترجمة آراء العملاء
         Route::get('/testimonials', [TranslationController::class, 'testimonials'])->name('testimonials');
         Route::get('/testimonials/{testimonial}/edit', [TranslationController::class, 'editTestimonial'])->name('testimonials.edit');
         Route::put('/testimonials/{testimonial}', [TranslationController::class, 'updateTestimonial'])->name('testimonials.update');
-        
+
         // ترجمة القصص
         Route::get('/stories', [TranslationController::class, 'stories'])->name('stories');
         Route::get('/stories/{story}/edit', [TranslationController::class, 'editStory'])->name('stories.edit');
         Route::put('/stories/{story}', [TranslationController::class, 'updateStory'])->name('stories.update');
-        
+
         // إحصائيات الترجمات
         Route::get('/statistics', [TranslationController::class, 'statistics'])->name('statistics');
     });
@@ -199,4 +200,4 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('messages/{message}/mark-read', [MessageController::class, 'markAsRead'])->name('messages.mark-read');
     Route::post('messages/mark-all-read', [MessageController::class, 'markAllAsRead'])->name('messages.mark-all-read');
 
-}); 
+});
