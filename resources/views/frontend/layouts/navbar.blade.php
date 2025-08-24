@@ -184,7 +184,7 @@
                             </div>
                         </button>
                         <div
-                            class="absolute top-full {{ app()->getLocale() === 'ar' ? 'right-0' : 'left-0' }} mt-3 w-80 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            class="absolute top-full {{ app()->getLocale() === 'ar' ? 'left-0' : 'right-0' }} mt-3 w-80 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                             <div class="p-6">
                                 <div class="grid grid-cols-1 gap-4">
                                     <a href="{{ route('food-donations.index') }}"
@@ -269,7 +269,7 @@
                             </div>
                         </button>
                         <div
-                            class="absolute top-full {{ app()->getLocale() === 'ar' ? 'right-0' : 'left-0' }} mt-3 w-64 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            class="absolute top-full {{ app()->getLocale() === 'ar' ? 'left-0' : 'right-0' }} mt-3 w-64 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                             <div class="py-4">
                                 @php
                                     $pages = \App\Models\Page::where('is_active', true)
@@ -323,7 +323,7 @@
                                     class="fas fa-chevron-down text-xs group-hover:rotate-180 transition-transform duration-300"></i>
                             </button>
                             <div
-                                class="absolute top-full {{ app()->getLocale() === 'ar' ? 'right-0' : 'left-0' }} mt-2 w-48 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                class="absolute top-full {{ app()->getLocale() === 'ar' ? 'left-0' : 'right-0' }} mt-2 w-48 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                                 <div class="py-3">
                                     <a href="{{ route('users.profile') }}"
                                         class="flex items-center px-4 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 hover:text-emerald-600 transition-all duration-200">
@@ -345,12 +345,12 @@
                         </form>
                     @else
                         <a href="{{ route('login') }}"
-                            class="flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} px-6 py-3 text-emerald-600 hover:text-emerald-700 font-semibold transition-all duration-300">
+                            class="auth-btn flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} px-6 py-3 text-emerald-600 hover:text-emerald-700 font-semibold transition-all duration-300">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>{{ app()->getLocale() === 'ar' ? 'تسجيل دخول' : 'Login' }}</span>
                         </a>
                         <a href="{{ route('volunteers.index') }}"
-                            class="flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                            class="auth-btn flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                             <i class="fas fa-heart"></i>
                             <span>{{ app()->getLocale() === 'ar' ? 'انضم إلينا' : 'Join Us' }}</span>
                         </a>
@@ -598,6 +598,182 @@
         backdrop-filter: blur(12px);
     }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('overlay');
+    const menuIcon = document.querySelector('.mobile-menu-icon');
+    const closeIcon = document.querySelector('.mobile-close-icon');
+
+    mobileMenuBtn.addEventListener('click', function() {
+        const isOpen = mobileMenu.classList.contains('show');
+
+        if (isOpen) {
+            // Close menu
+            mobileMenu.classList.remove('show');
+            overlay.classList.add('hidden');
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            document.body.style.overflow = '';
+        } else {
+            // Open menu
+            mobileMenu.classList.add('show');
+            overlay.classList.remove('hidden');
+            menuIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    });
+
+    // Mobile accordion functionality
+    document.querySelectorAll('.mobile-accordion-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('.accordion-icon');
+
+            // Close other accordions
+            document.querySelectorAll('.mobile-accordion-content').forEach(otherContent => {
+                if (otherContent !== content) {
+                    otherContent.classList.remove('show');
+                    otherContent.previousElementSibling.querySelector('.accordion-icon').classList.remove('rotated');
+                }
+            });
+
+            // Toggle current accordion
+            content.classList.toggle('show');
+            icon.classList.toggle('rotated');
+        });
+    });
+
+    // Notifications sidebar
+    const notificationsBtn = document.getElementById('notifications-btn');
+    const mobileNotificationsBtn = document.getElementById('mobile-notifications-btn');
+    const notificationsSidebar = document.getElementById('notifications-sidebar');
+    const closeNotifications = document.getElementById('close-notifications');
+
+    function openNotifications() {
+        notificationsSidebar.classList.remove('{{ app()->getLocale() === 'ar' ? '-translate-x-full' : 'translate-x-full' }}');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        // Close mobile menu if open
+        if (mobileMenu.classList.contains('show')) {
+            mobileMenu.classList.remove('show');
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+        }
+    }
+
+    function closeNotificationsFunc() {
+        notificationsSidebar.classList.add('{{ app()->getLocale() === 'ar' ? '-translate-x-full' : 'translate-x-full' }}');
+        if (!mobileMenu.classList.contains('show')) {
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (notificationsBtn) {
+        notificationsBtn.addEventListener('click', openNotifications);
+    }
+
+    if (mobileNotificationsBtn) {
+        mobileNotificationsBtn.addEventListener('click', openNotifications);
+    }
+
+    if (closeNotifications) {
+        closeNotifications.addEventListener('click', closeNotificationsFunc);
+    }
+
+    // Overlay click handler
+    overlay.addEventListener('click', function() {
+        // Close notifications
+        closeNotificationsFunc();
+
+        // Close mobile menu
+        if (mobileMenu.classList.contains('show')) {
+            mobileMenu.classList.remove('show');
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+        }
+
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) {
+            // Close mobile menu on desktop
+            mobileMenu.classList.remove('show');
+            overlay.classList.add('hidden');
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Navbar scroll effect
+    let lastScrollY = window.scrollY;
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', function() {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > 100) {
+            navbar.classList.add('shadow-xl');
+            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+        } else {
+            navbar.classList.remove('shadow-xl');
+            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+        }
+
+        // Auto-hide navbar on scroll down (mobile only)
+        if (window.innerWidth < 1024) {
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling down
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                navbar.style.transform = 'translateY(0)';
+            }
+        }
+
+        lastScrollY = currentScrollY;
+    });
+
+    // Touch gesture improvements for mobile
+    if ('ontouchstart' in window) {
+        // Add touch feedback
+        document.querySelectorAll('.mobile-nav-item, .nav-link, .btn-primary, .btn-secondary').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+
+            element.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            // Close mobile menu and notifications on Escape
+            if (mobileMenu.classList.contains('show')) {
+                mobileMenuBtn.click();
+            }
+            if (!notificationsSidebar.classList.contains('{{ app()->getLocale() === 'ar' ? '-translate-x-full' : 'translate-x-full' }}')) {
+                closeNotificationsFunc();
+            }
+        }
+    });
+
+    console.log('🚀 Modern Navbar initialized successfully!');
+});
+</script>
 
 <script>
     // مبدل اللغات السويتش - لا يحتاج JavaScript! 🎉

@@ -10,7 +10,7 @@
             <div>
                 <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">إدارة التبرعات الرقمية</h1>
                 <p class="text-gray-600 mt-2">عرض وإدارة جميع التبرعات بالعملات الرقمية</p>
-                
+
                 {{-- Breadcrumbs --}}
                 <nav class="flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} mt-4">
                     <a href="{{ route('admin.dashboard') }}" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
@@ -20,13 +20,10 @@
                     <span class="text-gray-700 font-medium">التبرعات الرقمية</span>
                 </nav>
             </div>
-            
+
             {{-- Action Buttons --}}
             <div class="flex items-center gap-3">
-                <button class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                    <i class="fas fa-download {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                    تصدير
-                </button>
+
             </div>
         </div>
     </div>
@@ -159,7 +156,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     @if($order->proof_document)
-                                        <a href="{{ asset('/' . $order->proof_document) }}" target="_blank" 
+                                        <a href="{{ asset('/' . $order->proof_document) }}" target="_blank"
                                            class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors duration-200">
                                             <i class="fas fa-file-image text-blue-600"></i>
                                             <span class="text-blue-700 text-sm">عرض المستند</span>
@@ -244,7 +241,7 @@
 document.getElementById('digitalDonationSearch').addEventListener('keyup', function() {
     const searchValue = this.value.toLowerCase();
     const rows = document.querySelectorAll('tbody tr');
-    
+
     rows.forEach(row => {
         const text = row.textContent.toLowerCase();
         if (text.includes(searchValue)) {

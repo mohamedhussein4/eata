@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2025 at 04:09 AM
+-- Generation Time: Aug 24, 2025 at 07:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.3.13
 
@@ -40,6 +40,15 @@ CREATE TABLE `admin_notifications` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `read_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admin_notifications`
+--
+
+INSERT INTO `admin_notifications` (`id`, `title`, `message`, `type`, `icon`, `record_id`, `url`, `is_read`, `created_at`, `updated_at`, `read_at`) VALUES
+(1, 'تبرع جديد', 'تم استلام تبرع جديد بقيمة 500 ليرة سورية', 'donation', 'fas fa-hand-holding-heart', NULL, NULL, 0, '2025-08-24 02:11:54', '2025-08-24 02:11:54', NULL),
+(2, 'متطوع جديد', 'طلب تطوع جديد من أحمد محمد', 'volunteer', 'fas fa-users', NULL, NULL, 0, '2025-08-24 02:11:54', '2025-08-24 02:11:54', NULL),
+(3, 'مشروع جديد', 'تم إضافة مشروع جديد للموافقة عليه', 'project', 'fas fa-project-diagram', NULL, NULL, 1, '2025-08-24 02:11:54', '2025-08-24 02:11:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -348,7 +357,8 @@ INSERT INTO `food_donations` (`id`, `user_id`, `donation_type`, `supply_category
 (13, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 22:02:00', '2025-08-17 22:02:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
 (14, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 44.00, '2025-08-17 22:02:08', '2025-08-17 22:02:08', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
 (15, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 100.00, '2025-08-17 22:03:00', '2025-08-17 22:03:00', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
-(16, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 100.00, '2025-08-17 22:03:10', '2025-08-17 22:03:10', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending');
+(16, 8, 'food', NULL, NULL, NULL, NULL, NULL, 1, 100.00, '2025-08-17 22:03:10', '2025-08-17 22:03:10', 'محمد حسين', 'hamo@gmail.com', '01148951078', 'عنوان جديد', 'pending'),
+(17, 1, 'food', 'vegetables', 'جزر', '10', 'kg', 'بب', 1, 10.00, '2025-08-18 23:12:17', '2025-08-18 23:12:17', 'محمد', 'mohamed@gmail.com', '214431434', '213213', 'pending');
 
 -- --------------------------------------------------------
 
@@ -458,7 +468,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (104, '2025_08_18_001000_add_user_id_to_sms_tables', 20),
 (105, '2025_08_18_002000_create_reward_points_tables', 21),
 (106, '2025_08_19_014211_add_donation_details_to_donations_table', 22),
-(107, '2025_08_19_020809_add_supply_details_to_food_donations_table', 23);
+(107, '2025_08_19_020809_add_supply_details_to_food_donations_table', 23),
+(108, '2025_08_24_043410_add_gender_to_volunteers_table', 24),
+(109, '2025_08_24_050134_add_category_to_projects_table', 25);
 
 -- --------------------------------------------------------
 
@@ -697,6 +709,7 @@ CREATE TABLE `projects` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `category` varchar(255) DEFAULT NULL,
   `total_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
   `remaining_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
   `image_or_video` varchar(255) DEFAULT NULL,
@@ -714,23 +727,24 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `title`, `description`, `total_amount`, `remaining_amount`, `image_or_video`, `visits`, `donation_count`, `beneficiaries_count`, `created_at`, `updated_at`, `is_featured`, `status`, `deleted_at`) VALUES
-(1, 'مشروع جديد', 'مشروع جديد 2025', 500.00, 500.00, 'I4XksxASDp6tJTRNIhesyPsGtWrnrvyFQyjGdzrQ.jpg', 0, 8, 0, '2024-11-13 21:13:54', '2024-11-13 21:13:54', 0, 'active', NULL),
-(2, 'مساعدة الأسر المحتاجة', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', 5000000.00, 2500000.00, NULL, 150, 25, 50, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
-(3, 'بناء مدرسة في الريف', 'مشروع لبناء مدرسة في المناطق الريفية لتوفير التعليم للأطفال', 10000000.00, 7000000.00, NULL, 200, 40, 200, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
-(4, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
-(5, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
-(6, 'إعادة تأهيل المنازل', 'مشروع لإعادة تأهيل المنازل المتضررة وتوفير المأوى للأسر', 8000000.00, 4000000.00, NULL, 300, 60, 80, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'completed', NULL),
-(7, 'مساعدة الأسر المحتاجة', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', 5000000.00, 2500000.00, NULL, 150, 25, 50, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
-(8, 'بناء مدرسة في الريف', 'مشروع لبناء مدرسة في المناطق الريفية لتوفير التعليم للأطفال', 10000000.00, 7000000.00, NULL, 200, 40, 200, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
-(9, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
-(10, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
-(11, 'إعادة تأهيل المنازل', 'مشروع لإعادة تأهيل المنازل المتضررة وتوفير المأوى للأسر', 8000000.00, 4000000.00, NULL, 300, 60, 80, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'completed', NULL),
-(12, 'مساعدة الأسر المحتاجة', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', 5000000.00, 2500000.00, NULL, 174, 25, 50, '2025-08-07 23:08:26', '2025-08-18 22:53:18', 0, 'active', NULL),
-(13, 'بناء مدرسة في الريف', 'مشروع لبناء مدرسة في المناطق الريفية لتوفير التعليم للأطفال', 10000000.00, 7000000.00, NULL, 202, 40, 200, '2025-08-07 23:08:26', '2025-08-08 00:42:41', 0, 'active', NULL),
-(14, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'active', NULL),
-(15, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'active', NULL),
-(16, 'إعادة تأهيل المنازل', 'مشروع لإعادة تأهيل المنازل المتضررة وتوفير المأوى للأسر', 8000000.00, 4000000.00, NULL, 300, 60, 80, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'completed', NULL);
+INSERT INTO `projects` (`id`, `title`, `description`, `category`, `total_amount`, `remaining_amount`, `image_or_video`, `visits`, `donation_count`, `beneficiaries_count`, `created_at`, `updated_at`, `is_featured`, `status`, `deleted_at`) VALUES
+(1, 'مشروع جديد', 'مشروع جديد 2025', NULL, 500.00, 500.00, 'I4XksxASDp6tJTRNIhesyPsGtWrnrvyFQyjGdzrQ.jpg', 0, 8, 0, '2024-11-13 21:13:54', '2024-11-13 21:13:54', 0, 'active', NULL),
+(2, 'مساعدة الأسر المحتاجة', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', NULL, 5000000.00, 2500000.00, NULL, 150, 25, 50, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
+(3, 'بناء مدرسة في الريف', 'مشروع لبناء مدرسة في المناطق الريفية لتوفير التعليم للأطفال', NULL, 10000000.00, 7000000.00, NULL, 200, 40, 200, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
+(4, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', NULL, 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
+(5, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', NULL, 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'active', NULL),
+(6, 'إعادة تأهيل المنازل', 'مشروع لإعادة تأهيل المنازل المتضررة وتوفير المأوى للأسر', NULL, 8000000.00, 4000000.00, NULL, 300, 60, 80, '2025-08-07 23:03:39', '2025-08-07 23:03:39', 0, 'completed', NULL),
+(7, 'مساعدة الأسر المحتاجة', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', NULL, 5000000.00, 2500000.00, NULL, 150, 25, 50, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
+(8, 'بناء مدرسة في الريف', 'مشروع لبناء مدرسة في المناطق الريفية لتوفير التعليم للأطفال', NULL, 10000000.00, 7000000.00, NULL, 200, 40, 200, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
+(9, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', NULL, 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
+(10, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', NULL, 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'active', NULL),
+(11, 'إعادة تأهيل المنازل', 'مشروع لإعادة تأهيل المنازل المتضررة وتوفير المأوى للأسر', NULL, 8000000.00, 4000000.00, NULL, 300, 60, 80, '2025-08-07 23:08:01', '2025-08-07 23:08:01', 0, 'completed', NULL),
+(12, 'مساعدة الأسر المحتاجة211', 'مشروع لتقديم المساعدة المادية والعينية للأسر المحتاجة في مختلف المناطق', 'emergency', 5000000.00, 2500000.00, NULL, 174, 25, 50, '2025-08-07 23:08:26', '2025-08-24 02:03:46', 0, 'active', NULL),
+(13, 'بناء مدرسة في الريف', 'مشروع لبناء مدرسة في المناطق الريفية لتوفير التعليم للأطفال', NULL, 10000000.00, 7000000.00, NULL, 202, 40, 200, '2025-08-07 23:08:26', '2025-08-08 00:42:41', 0, 'active', NULL),
+(14, 'توفير المياه النظيفة', 'مشروع لحفر آبار وتوفير المياه النظيفة للمناطق المحرومة', NULL, 3000000.00, 1500000.00, NULL, 100, 15, 300, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'active', NULL),
+(15, 'مساعدة المرضى', 'مشروع لتوفير العلاج والدواء للمرضى المحتاجين', NULL, 2000000.00, 1200000.00, NULL, 80, 12, 100, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'active', NULL),
+(16, 'إعادة تأهيل المنازل', 'مشروع لإعادة تأهيل المنازل المتضررة وتوفير المأوى للأسر', NULL, 8000000.00, 4000000.00, NULL, 300, 60, 80, '2025-08-07 23:08:26', '2025-08-07 23:08:26', 0, 'completed', NULL),
+(17, 'مشروع تجريبي', 'sss', 'food', 222.00, 222.00, 'projects/2n4lnQniLUGcirRKrmN8Uybxzfqk5IvWLr6vI5lY.jpg', 0, 0, 222, '2025-08-24 02:01:55', '2025-08-24 02:01:55', 0, 'active', NULL);
 
 -- --------------------------------------------------------
 
@@ -755,7 +769,8 @@ CREATE TABLE `project_translations` (
 
 INSERT INTO `project_translations` (`id`, `project_id`, `locale`, `title`, `description`, `content`, `created_at`, `updated_at`) VALUES
 (2, 1, 'en', 'test', 'test 2', NULL, '2025-08-08 01:00:10', '2025-08-08 01:00:10'),
-(3, 12, 'en', '22', '22', NULL, '2025-08-08 13:47:23', '2025-08-08 13:47:23');
+(3, 12, 'en', '22', '22', NULL, '2025-08-08 13:47:23', '2025-08-08 13:47:23'),
+(4, 17, 'en', 'TEST Project', 'sss', NULL, '2025-08-24 02:01:55', '2025-08-24 02:01:55');
 
 -- --------------------------------------------------------
 
@@ -1077,6 +1092,7 @@ CREATE TABLE `volunteers` (
   `phone` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `age` int(11) NOT NULL,
+  `gender` enum('male','female') DEFAULT NULL,
   `document_path` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1090,15 +1106,15 @@ CREATE TABLE `volunteers` (
 -- Dumping data for table `volunteers`
 --
 
-INSERT INTO `volunteers` (`id`, `user_id`, `name`, `email`, `phone`, `address`, `age`, `document_path`, `created_at`, `updated_at`, `charity_experience`, `academic_degree`, `id_document`, `cv`) VALUES
-(10, NULL, 'أحمد محمد', 'ahmed.volunteer@example.com', '+963991111111', 'دمشق، سوريا', 25, 'volunteer_documents/ahmed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'عملت متطوعاً لمدة 3 سنوات في جمعيات خيرية مختلفة', 'بكالوريوس في العمل الاجتماعي', NULL, NULL),
-(11, NULL, 'فاطمة علي', 'fatima.volunteer@example.com', '+963992222222', 'حلب، سوريا', 30, 'volunteer_documents/fatima_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'معلمة متطوعة في مشاريع التعليم لمدة 5 سنوات', 'بكالوريوس في التربية', NULL, NULL),
-(12, NULL, 'محمد حسن', 'mohammed.volunteer@example.com', '+963993333333', 'حمص، سوريا', 28, 'volunteer_documents/mohammed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع توزيع الطعام والمساعدات الإنسانية', 'دبلوم في إدارة الأعمال', NULL, NULL),
-(13, NULL, 'سارة أحمد', 'sara.volunteer@example.com', '+963994444444', 'حماة، سوريا', 22, 'volunteer_documents/sara_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة جديدة في مجال التصميم والاتصال', 'بكالوريوس في التصميم الجرافيكي', NULL, NULL),
-(14, NULL, 'علي محمود', 'ali.volunteer@example.com', '+963995555555', 'اللاذقية، سوريا', 35, 'volunteer_documents/ali_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'طبيب متطوع في العيادات الميدانية لمدة 8 سنوات', 'دكتوراه في الطب', NULL, NULL),
-(15, NULL, 'نور الدين', 'nour.volunteer@example.com', '+963996666666', 'طرطوس، سوريا', 27, 'volunteer_documents/nour_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع إعادة الإعمار وبناء المنازل', 'بكالوريوس في الهندسة المدنية', NULL, NULL),
-(16, NULL, 'ليلى كريم', 'layla.volunteer@example.com', '+963997777777', 'دير الزور، سوريا', 24, 'volunteer_documents/layla_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة في مراكز الشباب ومشاريع التعليم', 'بكالوريوس في علم النفس', NULL, NULL),
-(17, NULL, 'حسن عبد الله', 'hassan.volunteer@example.com', '+963998888888', 'إدلب، سوريا', 32, 'volunteer_documents/hassan_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'قائد فريق متطوعين في مشاريع إنسانية مختلفة', 'ماجستير في إدارة المشاريع', NULL, NULL);
+INSERT INTO `volunteers` (`id`, `user_id`, `name`, `email`, `phone`, `address`, `age`, `gender`, `document_path`, `created_at`, `updated_at`, `charity_experience`, `academic_degree`, `id_document`, `cv`) VALUES
+(10, NULL, 'أحمد محمد', 'ahmed.volunteer@example.com', '+963991111111', 'دمشق، سوريا', 25, NULL, 'volunteer_documents/ahmed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'عملت متطوعاً لمدة 3 سنوات في جمعيات خيرية مختلفة', 'بكالوريوس في العمل الاجتماعي', NULL, NULL),
+(11, NULL, 'فاطمة علي', 'fatima.volunteer@example.com', '+963992222222', 'حلب، سوريا', 30, NULL, 'volunteer_documents/fatima_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'معلمة متطوعة في مشاريع التعليم لمدة 5 سنوات', 'بكالوريوس في التربية', NULL, NULL),
+(12, NULL, 'محمد حسن', 'mohammed.volunteer@example.com', '+963993333333', 'حمص، سوريا', 28, NULL, 'volunteer_documents/mohammed_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع توزيع الطعام والمساعدات الإنسانية', 'دبلوم في إدارة الأعمال', NULL, NULL),
+(13, NULL, 'سارة أحمد', 'sara.volunteer@example.com', '+963994444444', 'حماة، سوريا', 22, NULL, 'volunteer_documents/sara_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة جديدة في مجال التصميم والاتصال', 'بكالوريوس في التصميم الجرافيكي', NULL, NULL),
+(14, NULL, 'علي محمود', 'ali.volunteer@example.com', '+963995555555', 'اللاذقية، سوريا', 35, NULL, 'volunteer_documents/ali_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'طبيب متطوع في العيادات الميدانية لمدة 8 سنوات', 'دكتوراه في الطب', NULL, NULL),
+(15, NULL, 'نور الدين', 'nour.volunteer@example.com', '+963996666666', 'طرطوس، سوريا', 27, NULL, 'volunteer_documents/nour_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوع في مشاريع إعادة الإعمار وبناء المنازل', 'بكالوريوس في الهندسة المدنية', NULL, NULL),
+(16, NULL, 'ليلى كريم', 'layla.volunteer@example.com', '+963997777777', 'دير الزور، سوريا', 24, NULL, 'volunteer_documents/layla_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'متطوعة في مراكز الشباب ومشاريع التعليم', 'بكالوريوس في علم النفس', NULL, NULL),
+(17, NULL, 'حسن عبد الله', 'hassan.volunteer@example.com', '+963998888888', 'إدلب، سوريا', 32, NULL, 'volunteer_documents/hassan_cv.pdf', '2025-08-07 23:08:26', '2025-08-07 23:08:26', 'قائد فريق متطوعين في مشاريع إنسانية مختلفة', 'ماجستير في إدارة المشاريع', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1397,7 +1413,7 @@ ALTER TABLE `volunteers`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `bank_accounts`
@@ -1463,7 +1479,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `food_donations`
 --
 ALTER TABLE `food_donations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -1475,7 +1491,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -1523,13 +1539,13 @@ ALTER TABLE `point_settings`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `project_translations`
 --
 ALTER TABLE `project_translations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `reward_points`

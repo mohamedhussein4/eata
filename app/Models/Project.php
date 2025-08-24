@@ -21,6 +21,7 @@ class Project extends Model
         'visits',
         'beneficiaries_count',
         'image_or_video',
+        'is_featured',
     ];
 
     protected $casts = [

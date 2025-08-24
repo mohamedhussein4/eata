@@ -10,7 +10,7 @@
             <div>
                 <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">إدارة المستفيدين</h1>
                 <p class="text-gray-600 mt-2">عرض وإدارة جميع المستفيدين المسجلين في النظام</p>
-                
+
                 {{-- Breadcrumbs --}}
                 <nav class="flex items-center space-x-2 {{ app()->getLocale() === 'ar' ? 'space-x-reverse' : '' }} mt-4">
                     <a href="{{ route('admin.dashboard') }}" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
@@ -20,13 +20,10 @@
                     <span class="text-gray-700 font-medium">إدارة المستفيدين</span>
                 </nav>
             </div>
-            
+
             {{-- Action Buttons --}}
             <div class="flex items-center gap-3">
-                <button class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                    <i class="fas fa-download {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
-                    تصدير
-                </button>
+
                 <button class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 rounded-2xl transition-all duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
                     <i class="fas fa-print {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                     طباعة
@@ -161,21 +158,21 @@
 
                 {{-- Status Badges --}}
                 <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
                         @if($beneficiary->marital_status === 'متزوج') bg-blue-100 text-blue-800
                         @elseif($beneficiary->marital_status === 'أعزب') bg-green-100 text-green-800
                         @elseif($beneficiary->marital_status === 'مطلق') bg-orange-100 text-orange-800
                         @else bg-gray-100 text-gray-800 @endif">
                         {{ $beneficiary->marital_status ?: 'غير محدد' }}
                     </span>
-                    
+
                     @if($beneficiary->has_diseases)
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                             <i class="fas fa-heartbeat {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>
                             يعاني من أمراض
                         </span>
                     @endif
-                    
+
                     @if($beneficiary->is_supporting_others)
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                             <i class="fas fa-hands-helping {{ app()->getLocale() === 'ar' ? 'ml-1' : 'mr-1' }}"></i>
@@ -197,23 +194,23 @@
                 {{-- Documents --}}
                 <div class="grid grid-cols-3 gap-2 mb-6">
                     @if($beneficiary->document_path)
-                        <a href="{{ asset($beneficiary->document_path) }}" target="_blank" 
+                        <a href="{{ asset($beneficiary->document_path) }}" target="_blank"
                            class="flex flex-col items-center p-3 bg-blue-50 hover:bg-blue-100 rounded-2xl transition-colors duration-200">
                             <i class="fas fa-file-alt text-blue-600 mb-1"></i>
                             <span class="text-xs text-blue-700 font-medium">المستند</span>
                         </a>
                                             @endif
-                    
+
                     @if($beneficiary->id_document)
-                        <a href="{{ asset($beneficiary->id_document) }}" target="_blank" 
+                        <a href="{{ asset($beneficiary->id_document) }}" target="_blank"
                            class="flex flex-col items-center p-3 bg-green-50 hover:bg-green-100 rounded-2xl transition-colors duration-200">
                             <i class="fas fa-id-card text-green-600 mb-1"></i>
                             <span class="text-xs text-green-700 font-medium">الهوية</span>
                         </a>
                                             @endif
-                    
+
                     @if($beneficiary->family_book)
-                        <a href="{{ asset($beneficiary->family_book) }}" target="_blank" 
+                        <a href="{{ asset($beneficiary->family_book) }}" target="_blank"
                            class="flex flex-col items-center p-3 bg-purple-50 hover:bg-purple-100 rounded-2xl transition-colors duration-200">
                             <i class="fas fa-book text-purple-600 mb-1"></i>
                             <span class="text-xs text-purple-700 font-medium">كتاب العائلة</span>
@@ -227,11 +224,11 @@
                         <i class="fas fa-eye {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
                         عرض التفاصيل
                     </button>
-                    
+
                     <form action="{{ route('beneficiaries.destroy', $beneficiary->id) }}" method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                        <button type="submit" 
+                        <button type="submit"
                                 class="inline-flex items-center justify-center w-10 h-10 text-red-600 bg-red-100 hover:bg-red-200 rounded-2xl transition-all duration-300 hover:scale-110"
                                 onclick="return confirm('هل أنت متأكد من حذف هذا المستفيد؟')">
                             <i class="fas fa-trash text-sm"></i>
@@ -268,7 +265,7 @@
 document.getElementById('beneficiarySearch').addEventListener('keyup', function() {
     const searchValue = this.value.toLowerCase();
     const cards = document.querySelectorAll('.grid > div:not(.col-span-full)');
-    
+
     cards.forEach(card => {
         const text = card.textContent.toLowerCase();
         if (text.includes(searchValue)) {

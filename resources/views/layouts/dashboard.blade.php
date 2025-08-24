@@ -529,13 +529,97 @@
                         </button>
 
                         {{-- Notifications --}}
-                        <div class="relative">
-                            <button
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open"
                                 class="p-2 lg:p-3 text-gray-600 hover:text-white hover:bg-slate-600 rounded-xl transition-all duration-300 relative shadow-sm hover:shadow-md">
                                 <i class="fas fa-bell text-lg"></i>
-                                <div class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse">
+                                @if($unreadNotificationsCount > 0)
+                                <div class="notification-badge absolute -top-1 {{ app()->getLocale() === 'ar' ? '-left-1' : '-right-1' }} min-w-[20px] h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+                                    {{ $unreadNotificationsCount > 99 ? '99+' : $unreadNotificationsCount }}
                                 </div>
+                                @endif
                             </button>
+
+                            {{-- Notifications Dropdown --}}
+                            <div x-show="open" @click.away="open = false" x-transition
+                                class="absolute {{ app()->getLocale() === 'ar' ? 'left-0' : 'right-0' }} mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 max-h-96 overflow-hidden">
+                                
+                                {{-- Header --}}
+                                <div class="p-4 border-b border-gray-100 bg-gradient-to-r from-slate-50 to-gray-50">
+                                    <div class="flex items-center justify-between">
+                                        <h3 class="font-bold text-gray-900 text-sm">الإشعارات</h3>
+                                        @if($unreadNotificationsCount > 0)
+                                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-medium">
+                                            {{ $unreadNotificationsCount }} جديد
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                {{-- Notifications List --}}
+                                <div class="max-h-80 overflow-y-auto">
+                                    @forelse($adminNotifications as $notification)
+                                    <div class="p-3 border-b border-gray-50 hover:bg-gray-50 transition-colors duration-200 {{ !$notification->is_read ? 'bg-blue-50' : '' }}">
+                                        <a href="{{ $notification->url ? url($notification->url) : '#' }}" 
+                                           class="block"
+                                           onclick="markNotificationAsRead({{ $notification->id }})">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0
+                                                    @if($notification->type === 'donation') bg-green-100 text-green-600
+                                                    @elseif($notification->type === 'ticket') bg-blue-100 text-blue-600
+                                                    @elseif($notification->type === 'volunteer') bg-purple-100 text-purple-600
+                                                    @elseif($notification->type === 'beneficiary') bg-orange-100 text-orange-600
+                                                    @else bg-gray-100 text-gray-600
+                                                    @endif">
+                                                    @if($notification->icon)
+                                                        <i class="{{ $notification->icon }} text-sm"></i>
+                                                    @else
+                                                        <i class="fas fa-bell text-sm"></i>
+                                                    @endif
+                                                </div>
+                                                <div class="flex-1 min-w-0">
+                                                    <h4 class="text-sm font-medium text-gray-900 mb-1 {{ !$notification->is_read ? 'font-bold' : '' }}">
+                                                        {{ $notification->title }}
+                                                    </h4>
+                                                    <p class="text-xs text-gray-600 line-clamp-2">
+                                                        {{ $notification->message }}
+                                                    </p>
+                                                    <p class="text-xs text-gray-400 mt-1">
+                                                        {{ $notification->created_at->diffForHumans() }}
+                                                    </p>
+                                                </div>
+                                                @if(!$notification->is_read)
+                                                <div class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+                                                @endif
+                                            </div>
+                                        </a>
+                                    </div>
+                                    @empty
+                                    <div class="p-6 text-center text-gray-500">
+                                        <i class="fas fa-bell-slash text-3xl text-gray-300 mb-3"></i>
+                                        <p class="text-sm">لا توجد إشعارات</p>
+                                    </div>
+                                    @endforelse
+                                </div>
+
+                                {{-- Footer --}}
+                                @if($adminNotifications->count() > 0)
+                                <div class="p-3 border-t border-gray-100 bg-gray-50">
+                                    <div class="flex items-center justify-between">
+                                        <a href="{{ route('admin.notifications.index') }}" 
+                                           class="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors">
+                                            عرض كل الإشعارات
+                                        </a>
+                                        @if($unreadNotificationsCount > 0)
+                                        <button onclick="markAllNotificationsAsRead()" 
+                                                class="text-xs text-gray-600 hover:text-gray-800 font-medium transition-colors">
+                                            تعليم الكل كمقروء
+                                        </button>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
                         </div>
 
                         {{-- User Profile --}}
@@ -649,7 +733,71 @@
                 transform: translateY(0);
             }
         }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
+
+    {{-- Notifications JavaScript --}}
+    <script>
+        // تعليم إشعار واحد كمقروء
+        function markNotificationAsRead(notificationId) {
+            fetch(`/admin/notifications/${notificationId}/mark-read`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // تحديث العداد
+                    updateNotificationCount();
+                }
+            }).catch(error => {
+                console.error('Error marking notification as read:', error);
+            });
+        }
+
+        // تعليم كل الإشعارات كمقروءة
+        function markAllNotificationsAsRead() {
+            fetch('/admin/notifications/mark-all-read', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // إعادة تحميل الصفحة لتحديث الإشعارات
+                    location.reload();
+                }
+            }).catch(error => {
+                console.error('Error marking all notifications as read:', error);
+            });
+        }
+
+        // تحديث عداد الإشعارات
+        function updateNotificationCount() {
+            fetch('/admin/notifications/unread-count')
+                .then(response => response.json())
+                .then(data => {
+                    const badge = document.querySelector('.notification-badge');
+                    if (data.count > 0) {
+                        if (badge) {
+                            badge.textContent = data.count > 99 ? '99+' : data.count;
+                        }
+                    } else {
+                        if (badge) {
+                            badge.style.display = 'none';
+                        }
+                    }
+                });
+        }
+    </script>
 </body>
 
 </html>

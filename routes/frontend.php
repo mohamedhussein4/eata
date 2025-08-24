@@ -28,6 +28,8 @@ use App\Http\Controllers\Frontend\PageController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/home', [FrontEndController::class, 'index'])->name('home');
+
 // الصفحة الرئيسية
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 

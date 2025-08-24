@@ -24,12 +24,20 @@ class NotificationController extends Controller
         $notification = AdminNotification::findOrFail($id);
         $notification->update(['is_read' => true]);
         
+        if (request()->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
+        
         return redirect()->back()->with('success', 'تم تحديد الإشعار كمقروء');
     }
 
     public function markAllAsRead()
     {
         AdminNotification::where('is_read', false)->update(['is_read' => true]);
+        
+        if (request()->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
         
         return redirect()->back()->with('success', 'تم تحديد جميع الإشعارات كمقروءة');
     }

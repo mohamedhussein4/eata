@@ -317,6 +317,13 @@
         .toast.info {
             border-left-color: #3b82f6;
         }
+
+        @media (max-width: 768px) {
+            #notifications-btn,
+            .auth-btn {
+                display: none !important;
+            }
+        }
     </style>
 
     @yield('styles')

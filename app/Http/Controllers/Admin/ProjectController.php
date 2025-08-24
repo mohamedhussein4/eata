@@ -50,21 +50,54 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_en' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'total_amount' => 'required|numeric|min:0',
-            'image_or_video' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:2048',
-            'is_active' => 'boolean',
-            'is_featured' => 'boolean',
+            'description_en' => 'nullable|string',
+            'target_amount' => 'required|numeric|min:0',
+            'beneficiaries_count' => 'nullable|integer|min:0',
+            'category' => 'nullable|string|max:255',
+            'image_or_video' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:10240',
+            'is_featured' => 'nullable|boolean',
+            'allow_donations' => 'nullable|boolean',
+            'action' => 'required|in:draft,publish',
         ]);
 
+        // تحديد الحالة بناء على الإجراء
+        $status = $validated['action'] === 'publish' ? 'active' : 'draft';
+
+        // إنشاء المشروع
+        $projectData = [
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'total_amount' => $validated['target_amount'], // تحويل من target_amount إلى total_amount
+            'remaining_amount' => $validated['target_amount'], // في البداية المبلغ المتبقي = المبلغ المستهدف
+            'beneficiaries_count' => $validated['beneficiaries_count'] ?? 0,
+            'category' => $validated['category'] ?? null,
+            'status' => $status,
+            'is_featured' => $validated['is_featured'] ?? false,
+            'visits' => 0,
+        ];
+
+        // معالجة الصورة/الفيديو
         if ($request->hasFile('image_or_video')) {
             $imagePath = $request->file('image_or_video')->store('projects', 'public');
-            $validated['image_or_video'] = $imagePath;
+            $projectData['image_or_video'] = $imagePath;
         }
 
-        Project::create($validated);
+        $project = Project::create($projectData);
 
-        return redirect()->route('admin.projects.index')->with('success', 'تم إنشاء المشروع بنجاح');
+        // إضافة الترجمات إذا كانت موجودة
+        if (!empty($validated['title_en']) || !empty($validated['description_en'])) {
+            $project->translations()->create([
+                'locale' => 'en',
+                'title' => $validated['title_en'],
+                'description' => $validated['description_en'],
+            ]);
+        }
+
+        $message = $status === 'active' ? 'تم إنشاء ونشر المشروع بنجاح' : 'تم حفظ المشروع كمسودة بنجاح';
+        
+        return redirect()->route('admin.projects.index')->with('success', $message);
     }
 
     /**
@@ -90,13 +123,28 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'title_en' => 'nullable|string|max:255',
             'description' => 'required|string',
-            'total_amount' => 'required|numeric|min:0',
-            'image_or_video' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:2048',
-            'is_active' => 'boolean',
-            'is_featured' => 'boolean',
+            'description_en' => 'nullable|string',
+            'target_amount' => 'required|numeric|min:0',
+            'beneficiaries_count' => 'nullable|integer|min:0',
+            'category' => 'nullable|string|max:255',
+            'image_or_video' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4|max:10240',
+            'is_featured' => 'nullable|boolean',
+            'allow_donations' => 'nullable|boolean',
         ]);
 
+        // تحديث بيانات المشروع
+        $projectData = [
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'total_amount' => $validated['target_amount'], // تحويل من target_amount إلى total_amount
+            'beneficiaries_count' => $validated['beneficiaries_count'] ?? 0,
+            'category' => $validated['category'] ?? null,
+            'is_featured' => $validated['is_featured'] ?? false,
+        ];
+
+        // معالجة الصورة/الفيديو الجديدة
         if ($request->hasFile('image_or_video')) {
             // حذف الصورة القديمة
             if ($project->image_or_video) {
@@ -104,10 +152,21 @@ class ProjectController extends Controller
             }
             
             $imagePath = $request->file('image_or_video')->store('projects', 'public');
-            $validated['image_or_video'] = $imagePath;
+            $projectData['image_or_video'] = $imagePath;
         }
 
-        $project->update($validated);
+        $project->update($projectData);
+
+        // تحديث أو إضافة الترجمات
+        if (!empty($validated['title_en']) || !empty($validated['description_en'])) {
+            $project->translations()->updateOrCreate(
+                ['locale' => 'en'],
+                [
+                    'title' => $validated['title_en'],
+                    'description' => $validated['description_en'],
+                ]
+            );
+        }
 
         return redirect()->route('admin.projects.index')->with('success', 'تم تحديث المشروع بنجاح');
     }

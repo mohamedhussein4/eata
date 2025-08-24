@@ -134,6 +134,27 @@
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+
+                {{-- Project Category --}}
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-tags text-indigo-500 {{ app()->getLocale() === 'ar' ? 'ml-2' : 'mr-2' }}"></i>
+                        فئة المشروع
+                    </label>
+                    <select id="category" name="category"
+                            class="block w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 @error('category') border-red-500 @enderror">
+                        <option value="">اختر فئة المشروع</option>
+                        <option value="health" {{ old('category', $project->category) === 'health' ? 'selected' : '' }}>الصحة</option>
+                        <option value="education" {{ old('category', $project->category) === 'education' ? 'selected' : '' }}>التعليم</option>
+                        <option value="food" {{ old('category', $project->category) === 'food' ? 'selected' : '' }}>الغذاء</option>
+                        <option value="housing" {{ old('category', $project->category) === 'housing' ? 'selected' : '' }}>الإسكان</option>
+                        <option value="emergency" {{ old('category', $project->category) === 'emergency' ? 'selected' : '' }}>الطوارئ</option>
+                        <option value="other" {{ old('category', $project->category) === 'other' ? 'selected' : '' }}>أخرى</option>
+                    </select>
+                    @error('category')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
         </div>
 
